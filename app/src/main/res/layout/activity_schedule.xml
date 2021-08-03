@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.schedule.ScheduleActivity">
+
+    <RelativeLayout
+        android:id="@+id/rv_where_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_back_arrow"
+            android:src="@drawable/back_arrow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/rv_where_top_bar"
+            tools:ignore="NotSibling" />
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:hint="@string/schedule_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_back_arrow"
+            android:layout_toLeftOf="@+id/iv_close_mark"
+            />
+
+        <ImageView
+            android:id="@+id/iv_close_mark"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/close_mark"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:ignore="NotSibling"
+            android:layout_toRightOf="@id/rv_where_top_bar" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_margin="20dp"
+        android:textSize="20sp"
+        android:background="@drawable/bg_gis_result_items_count"
+        android:text="삭제"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_margin="20dp"
+        android:textSize="20sp"
+        android:background="@drawable/bg_gis_result_items_count"
+        android:text="지역 추가하기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:src="@drawable/logo"
+        android:id="@+id/where_advertisement"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+
+</LinearLayout>

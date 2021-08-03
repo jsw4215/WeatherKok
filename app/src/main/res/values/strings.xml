@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">WeatherKok</string>
+    <string name="who_go_with">누구랑 가세요?</string>
+    <string name="where_to_go">어디로 가세요?</string>
+    <string name="when_to_go">언제 가세요?</string>
+    <string name="start_the_app">날씨콕 시작하기</string>
+    <string name="what_is_this_app">날씨콕이 뭔가요?</string>
+    <string name="what_is_this_app_title">날씨콕</string>
+    <string name="when_calendar">달력</string>
+    <string name="where_hint_search">동/읍/면 주소 입력</string>
+    <string name="input_error_title">일정이 입력되지 않았습니다!</string>
+    <string name="input_error_contents">- 정보를 확인해 주세요</string>
+    <string name="schedule_hint">등록된 날씨콕</string>
+    <string name="what_is_this_app_contents">가고자하는 지역, 가는날짜를 지정해두시면\n
+        날씨제공사에서 날씨정보가\n
+        업데이트 됨과 동시에 알려드립니다.\n
+        설정된 정보를 바탕으로 특정 날짜의\n
+        해당지역 날씨변화도 함께 알려드릴께요!</string>
+    <string name="title_home">홈</string>
+    <string name="title_search">검색</string>
+    <string name="title_coming_soon">공개 예정</string>
+    <string name="title_saved_contents">저장한 콘텐츠 목록</string>
+    <string name="title_else">더 보기</string>
+    <string name="rules"><u>이용 약관</u></string>
+    <string name="loading">로딩중입니다.</string>
+    <string name="network_error">네트워크 연결이 원활하지 않습니다.</string>
+</resources>

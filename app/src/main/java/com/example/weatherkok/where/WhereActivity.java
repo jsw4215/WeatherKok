@@ -137,9 +137,11 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
         //mResult = result;
 
         if(result.getFeatureCollection().getFeatures().get(0).getProperties().getFull_nm()==null) {
-            fromResultToList(result);
+            fromSidoToList(result);
+        } else if(result.getFeatureCollection().getFeatures().get(0).getProperties().getSig_kor_nm()!=null) {
+            fromSiggToList(result);
         } else {
-            fromFullnmToList(result);
+            fromEmdToList(result);
         }
 
     }
@@ -149,7 +151,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
         Log.d("Failure : ", message);
     }
 
-    public void fromResultToList(Result result) {
+    public void fromSidoToList(Result result) {
         //리스트 데이터 초기화
         mSidoList.clear();
 
@@ -178,7 +180,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
     }
 
-    public void fromFullnmToList(Result result) {
+    public void fromSiggToList(Result result) {
         //리스트 데이터 초기화
         mSidoList.clear();
 
@@ -190,15 +192,41 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
             Log.i(TAG, mSidoList.get(i));
         }
 
+        mWhereRecyclerViewAdapter = new WhereRecyclerViewAdapter(mSidoList);
+        mWhereRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mWhereRecyclerView.setAdapter(mWhereRecyclerViewAdapter);
+
+        WhereService whereService = new WhereService(this);
+        mWhereRecyclerViewAdapter.setOnItemClickListener(new WhereRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+                Log.i(TAG,"click lisener on activity");
+                whereService.getEmdList(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data3);
+
+            }
+        });
+    }
+
+    private void fromEmdToList(Result result) {
+
+        //리스트 데이터 초기화
+        mSidoList.clear();
+
+        for(int i =0;i<result.getFeatureCollection().getFeatures().size();i++){
+            mSidoList.add(result.getFeatureCollection().getFeatures().get(i).getProperties().getFull_nm());
+        }
+        //리스트에 읍,면,동 데이터가 들어와있음
+        for(int i=0;i<mSidoList.size();i++){
+            Log.i(TAG, mSidoList.get(i));
+        }
+
 
         mWhereRecyclerViewAdapter = new WhereRecyclerViewAdapter(mSidoList);
         mWhereRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mWhereRecyclerView.setAdapter(mWhereRecyclerViewAdapter);
 
-
     }
-
-
 
 
 }

@@ -13,6 +13,26 @@ public class Properties {
     @SerializedName("full_nm")
     String full_nm;
 
+    String sig_kor_nm;
+
+    String emd_kor_nm;
+
+    public String getSig_kor_nm() {
+        return sig_kor_nm;
+    }
+
+    public void setSig_kor_nm(String sig_kor_nm) {
+        this.sig_kor_nm = sig_kor_nm;
+    }
+
+    public String getEmd_kor_nm() {
+        return emd_kor_nm;
+    }
+
+    public void setEmd_kor_nm(String emd_kor_nm) {
+        this.emd_kor_nm = emd_kor_nm;
+    }
+
     public String getFull_nm() {
         return full_nm;
     }

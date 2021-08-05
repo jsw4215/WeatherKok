@@ -15,6 +15,7 @@ public interface WhereContract {
 
     interface Presenter {
 
+        void fromSidoToSigungu();
 
 
     }

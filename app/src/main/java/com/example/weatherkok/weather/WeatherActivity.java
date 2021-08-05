@@ -41,10 +41,6 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Act
 
 
 
-
-
-
-
     }
 
     @Override

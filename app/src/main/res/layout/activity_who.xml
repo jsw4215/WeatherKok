@@ -4,15 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_register_total"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_gis_result_items_count"
     android:orientation="vertical"
     tools:context=".main.MainActivity">
 
-<ImageView
-    android:layout_margin="10dp"
-    android:src="@drawable/logo"
-    android:id="@+id/who_kakao"
-    android:layout_width="100dp"
-    android:layout_height="100dp"/>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/who_kakao"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/kakao_logo" />
+
+        <ImageView
+            android:id="@+id/who_kakao_story"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/kakao_story" />
+
+        <ImageView
+            android:id="@+id/who_line"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/line_logo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/who_face_book"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/face_book_logo" />
+
+        <ImageView
+            android:id="@+id/who_sms"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/sms_image" />
+
+        <ImageView
+            android:id="@+id/who_email"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/email_image" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

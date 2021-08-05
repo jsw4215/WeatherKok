@@ -9,6 +9,7 @@
     tools:context=".main.MainActivity">
 
     <LinearLayout
+        android:id="@+id/ll_main_what_is_the_app"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_main_where"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +42,7 @@
             android:layout_height="100dp" />
 
         <TextView
+            android:id="@+id/tv_main_where"
             android:layout_gravity="center_vertical"
             android:textSize="30sp"
             android:layout_width="wrap_content"
@@ -49,6 +52,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_main_when"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,6 +74,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_main_who"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,6 +96,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_main_start"
         android:gravity="bottom"
         android:background="@drawable/bg_gis_result_items_count"
         android:textSize="30sp"

@@ -23,17 +23,17 @@ public class WhereService {
         this.mWhereContractActivityView = mWhereContractActivityView;
     }
 
-    void getSidoList(String key,
-                     String domain,
-                     String request,
-                     String format,
-                     int size,
-                     int page,
-                     boolean geometry,
-                     boolean attribute,
-                     String crs,
-                     String geomfilter,
-                     String data) {
+    public void getSidoList(String key,
+                            String domain,
+                            String request,
+                            String format,
+                            int size,
+                            int page,
+                            boolean geometry,
+                            boolean attribute,
+                            String crs,
+                            String geomfilter,
+                            String data) {
         final WhereRetrofitInterface whereRetrofitInterface = getRetrofit().create(WhereRetrofitInterface.class);
         //new WhereRequestBody(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data)
         whereRetrofitInterface.getSidoList(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data).enqueue(new Callback<ResponseParams>() {

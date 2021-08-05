@@ -24,4 +24,9 @@
     <string name="rules"><u>이용 약관</u></string>
     <string name="loading">로딩중입니다.</string>
     <string name="network_error">네트워크 연결이 원활하지 않습니다.</string>
+
+    <string name="kakao_app_key">c205ec1957a41d51611ca6e373e3d815</string>
+    <string name="kakao_scheme">kakaoc205ec1957a41d51611ca6e373e3d815</string>
+    <string name="kakao_link">kakaolink.com</string>
+
 </resources>

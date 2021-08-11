@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+// 스케줄 정보를 담는 스케줄데이터 클래스. 날짜, 위치, 날씨예보에 관한 데이터
 public class ScheduleData {
     private static final String TAG = ScheduleData.class.getSimpleName();
     private static String Day;
@@ -26,16 +26,14 @@ public class ScheduleData {
     public ScheduleData(Date date, String address, ArrayList<Wx> fcst) {
         this.date = date;
         this.address = address;
-        Fcst = fcst;
+        this.Fcst = fcst;
     }
-
-    public static String getDay() {
+    //getter/setter 함수를 구현
+    public String getDay() {
         return Day;
     }
 
-    public Date getDate() {
-        return date;
-    }
+    public Date getDate() { return date; }
 
     public void setDate(Date date) {
         this.date = date;
@@ -63,7 +61,7 @@ public class ScheduleData {
      * @return
      * @throws Exception
      */
-    public static String getDateDay(String date) throws Exception {
+    public String getDateDay(String date) throws Exception {
 
         String day = "";
 

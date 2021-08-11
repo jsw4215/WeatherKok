@@ -1,6 +1,9 @@
 package com.example.weatherkok.main.schedule;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.location.Address;
@@ -8,6 +11,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.weatherkok.R;
@@ -15,6 +20,7 @@ import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.datalist.data.wxdata.Wx;
 import com.example.weatherkok.datalist.data.wxdata.am.AM;
 import com.example.weatherkok.datalist.data.wxdata.pm.PM;
+import com.example.weatherkok.main.schedule.utils.ScheduleRecyclerViewAdapter;
 import com.example.weatherkok.where.utils.GpsTracker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,13 +34,28 @@ import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity {
     String TAG = "ScheduleActivity";
+    ArrayList<ScheduleData> mScheduleList = new ArrayList<>();
     //Preference를 불러오기 위한 키
     public static String PREFERENCE_KEY = "WeatherKok.SharedPreference";
+
+    private ScheduleRecyclerViewAdapter mScheduleRecyclerViewAdapter;
+    private RecyclerView mScheduleRecyclerView;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+
+        Log.i("리사이클러뷰", "onCreate 실행");
+
+        mScheduleRecyclerView = findViewById(R.id.rv_schedule_contents);
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mScheduleRecyclerView.setLayoutManager(mLayoutManager);
+        //어댑터 연결
+        mScheduleRecyclerViewAdapter = new ScheduleRecyclerViewAdapter(mScheduleList);
+        mScheduleRecyclerView.setAdapter(mScheduleRecyclerViewAdapter);
 
         String test_date = "2021-08-15 09:15:00";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -42,9 +63,10 @@ public class ScheduleActivity extends AppCompatActivity {
         try {
             date = dateFormat.parse(test_date);
         } catch (ParseException e) {
+
+
             e.printStackTrace();
         }
-
 
         //Schedule Test 객체 만들기
         AM am = new AM();
@@ -68,6 +90,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
         ArrayList<Wx> WxList = new ArrayList<>();
         WxList.add(wx);
+
+
+
 
         ScheduleData scheduleData = new ScheduleData();
         scheduleData.setFcst(WxList);
@@ -130,5 +155,8 @@ public class ScheduleActivity extends AppCompatActivity {
         Log.i("loaded : ", a);
         Log.i("loaded : ", loadedFromSP.getDate().toString());
         Log.i("loaded : ", loadedFromSP.getFcst().get(0).getAm().getCloud());
+
+
     }
+
 }

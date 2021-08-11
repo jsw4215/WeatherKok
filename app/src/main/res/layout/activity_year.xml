@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".when.YearActivity">
+
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/tv_year_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="14dp"
+        android:text="^" />
+
+    <TextView
+        android:padding="10dp"
+        android:layout_weight="1"
+        android:text="연간달력"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <LinearLayout
+        android:layout_weight="3"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_jan"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:layout_gravity="fill"
+            android:id="@+id/rv_year_feb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:layout_gravity="fill"
+            android:id="@+id/rv_year_march"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_weight="3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_april"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_may"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_june"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_weight="3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_july"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_aug"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_sep"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_weight="3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_oct"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_nov"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:id="@+id/rv_year_dec"
+            android:layout_gravity="fill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_weight="1"
+            android:text="dd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

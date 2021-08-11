@@ -9,6 +9,10 @@ public interface WhereContract {
 
         void validateSuccess(boolean isSuccess, Record record, Result result);
 
+        void validateSggSuccess(boolean isSuccess, Record record, Result result);
+
+        void validateEmdSuccess(boolean isSuccess, Record record, Result result);
+
         void validateFailure(String message);
 
     }

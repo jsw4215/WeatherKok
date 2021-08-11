@@ -31,9 +31,10 @@ public class ApplicationClass extends Application {
     public static MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=uft-8");
     public static MediaType MEDIA_TYPE_JPEG = MediaType.parse("image/jpeg");
 
-    // 테스트 서버 주소
+    // 서버 주소
     public static String BASE_URL = "https://api.vworld.kr/req/";
     public static String BASE_URL2 = "http://apis.data.go.kr/1360000/MidFcstInfoService/";
+    public static String BASE_URL3 = "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/";
     // 실서버 주소
 //    public static String BASE_URL = "https://template.softsquared.com/";
 
@@ -85,17 +86,6 @@ public class ApplicationClass extends Application {
                 .setLenient()
                 .create();
 
-//        Gson gson = null;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            gson = new GsonBuilder().
-//                    registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-//                        @Override public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-//                            return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-//                        } }).create();
-//        }
-        //return gson.fromJson(resultStr, User.class);
-
-
         if (retrofit == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -114,6 +104,34 @@ public class ApplicationClass extends Application {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
+        }
+
+        return retrofit;
+    }
+
+
+    public static Retrofit getRetrofitForRest() {
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        if (retrofit == null) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .readTimeout(5000, TimeUnit.MILLISECONDS)
+                    .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                    .addNetworkInterceptor(new XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+                    .addInterceptor(interceptor)
+                    .build();
+
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL3)
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
         }
 
         return retrofit;

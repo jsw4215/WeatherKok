@@ -19,11 +19,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherKok">
-        <activity android:name=".datalist.DataListActivity">
+        <activity android:name=".when.YearActivity">
         </activity>
-        <activity android:name=".weather.WeatherActivity"></activity>
-        <activity android:name=".main.schedule.ScheduleActivity">
-        </activity>
+        <activity android:name=".datalist.DataListActivity"></activity>
+        <activity android:name=".weather.WeatherActivity" />
+        <activity android:name=".main.schedule.ScheduleActivity"></activity>
         <activity android:name=".who.kakao.kotlin.WhoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -50,13 +50,16 @@
         </activity>
         <activity android:name=".when.WhenActivity" />
         <activity android:name=".where.WhereActivity">
+        </activity>
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity"></activity>
+        <activity android:name=".when.CalendarActivity">
+        </activity>
     </application>
 
 </manifest>

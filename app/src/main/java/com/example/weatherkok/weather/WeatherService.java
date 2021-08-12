@@ -31,14 +31,14 @@ public class WeatherService {
         weatherRetrofitInterface.getMidLandFcst(key, numOfRows, pageNo, dataType, regId, tmFc).enqueue(new Callback<ResponseParams>() {
             @Override
             public void onResponse(Call<ResponseParams> call, Response<ResponseParams> response) {
-                final ResponseParams wxResponse = response.body();
-                if (wxResponse == null) {
+                final ResponseParams responseparams = response.body();
+                if (responseparams == null) {
                     mWeatherContractActivityView.validateFailure(null);
                     return;
                 }
                 Log.i(TAG, "Success");
-                Log.i(TAG, wxResponse.getResponse().getBody().items.item.get(0).wf3Am);
-                mWeatherContractActivityView.validateSuccess(response.isSuccessful(), wxResponse.getResponse().getBody().getDataType());
+                Log.i(TAG, responseparams.getResponse().getBody().items.item.get(0).wf3Am);
+                mWeatherContractActivityView.validateSuccess(response.isSuccessful(), responseparams.getResponse());
             }
 
             @Override

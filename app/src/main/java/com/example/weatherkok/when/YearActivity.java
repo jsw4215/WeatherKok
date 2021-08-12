@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,8 +48,10 @@ public class YearActivity extends BaseActivity{
     RecyclerView Oct;
     RecyclerView Nov;
     RecyclerView Dec;
+    RecyclerView Choose;
     TextView mTvDialog;
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
+    String mYearForCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +64,9 @@ public class YearActivity extends BaseActivity{
         //null이든 null이 아니든 intent를 가져온다.
         if(!TextUtils.isEmpty(intent.getStringExtra("year"))) {
 
-            String year = intent.getStringExtra("year");
-            setCurrentYearMonth(year);
-            setYearCalendar(year);
+            mYearForCalendar = intent.getStringExtra("year");
+            setCurrentYearMonth(mYearForCalendar);
+            setYearCalendar(mYearForCalendar);
 
         } else {
 
@@ -87,6 +91,18 @@ public class YearActivity extends BaseActivity{
 
             }
         });
+    }
+
+    //월 달력 터치시 해당월로 이동
+    public void goToMonthCal(String month){
+
+        Log.i(TAG, "click jan!!");
+        Intent intent = new Intent(getBaseContext(), CalendarActivity.class);
+        intent.putExtra("year",mYearForCalendar);
+        intent.putExtra("month",month);
+
+        startActivity(intent);
+
     }
 
     private void initView(){
@@ -240,6 +256,8 @@ public class YearActivity extends BaseActivity{
 
     private void setUpRecView(BaseDateInfoList baseDateInfoList, int rv, RecyclerView recyclerView, String yearMonth) {
 
+        setRv(recyclerView);
+
         Log.i(TAG, "starting setUpRecView" + baseDateInfoList.getBaseDateInfoList().size());
         adapter = new YearRecyclerViewAdapter(this, baseDateInfoList, yearMonth);
         recyclerView = (RecyclerView) findViewById(rv);
@@ -259,6 +277,14 @@ public class YearActivity extends BaseActivity{
         SharedPreferences sp = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
 
+    }
+
+    public void setRv(RecyclerView recyclerView){
+        this.Choose = recyclerView;
+    }
+
+    public RecyclerView getRv(){
+        return Choose;
     }
 
     private void loadScheduleData(String year, String month){

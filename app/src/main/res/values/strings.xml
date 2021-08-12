@@ -28,5 +28,7 @@
     <string name="kakao_app_key">c205ec1957a41d51611ca6e373e3d815</string>
     <string name="kakao_scheme">kakaoc205ec1957a41d51611ca6e373e3d815</string>
     <string name="kakao_link">kakaolink.com</string>
-
+    <string name="nav_header_desc">"nav_header_desc"</string>
+    <string name="nav_header_title">"nav_header_title"</string>
+    <string name="nav_header_subtitle">"nav_header_subtitle"</string>
 </resources>

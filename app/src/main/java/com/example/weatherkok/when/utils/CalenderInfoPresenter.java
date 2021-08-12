@@ -8,6 +8,7 @@ import com.example.weatherkok.when.CalendarService;
 import com.example.weatherkok.when.interfaces.RestContract;
 import com.example.weatherkok.when.models.ResponseParams;
 import com.example.weatherkok.when.models.Schedule;
+import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.when.models.base.BaseDateInfo;
 import com.example.weatherkok.when.models.base.BaseDateInfoList;
 import com.example.weatherkok.when.models.single.ResponseSingle;
@@ -363,6 +364,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         String dummy_date_3 = "11";
         String dummy_date_4 = "12";
         String dummy_where = "성동구 성수동 서울숲";
+        String dummy_where2 = "전라북도 익산시 월성동";
         String dummy_who = "홍고은";
         String dummy_who2 = "장석우";
         ArrayList<String> whoList = new ArrayList<>();
@@ -383,7 +385,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         dum2.setYear(dummy_year);
         dum2.setMonth(dummy_month_aug);
         dum2.setDate(dummy_date_2);
-        dum2.setWhere(dummy_where);
+        dum2.setWhere(dummy_where2);
         dum2.setWho(whoList);
 
         dum3.setYear(dummy_year);
@@ -400,24 +402,79 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         //리스트를 불러옴
         baseDateInfoList = getDateInfoFromSP("2021", "08");
 
-        setSchedule(baseDateInfoList, dum1);
+        setScheduleInDateList(baseDateInfoList, dum1);
 
-        setSchedule(baseDateInfoList, dum2);
+        setScheduleInDateList(baseDateInfoList, dum2);
 
         setDateInfoToSP(baseDateInfoList, "2021", "08");
 
         baseDateInfoList = getDateInfoFromSP("2021", "09");
 
-        setSchedule(baseDateInfoList, dum3);
+        setScheduleInDateList(baseDateInfoList, dum3);
 
-        setSchedule(baseDateInfoList, dum4);
+        setScheduleInDateList(baseDateInfoList, dum4);
 
         setDateInfoToSP(baseDateInfoList, "2021", "09");
         //더미 preference 저장 완료
 
+        //스케쥴에도 저장해야한다.
+        ScheduleList scheduleList = new ScheduleList();
+
+        ArrayList<Schedule> temp = new ArrayList<>();
+        //null처리
+        scheduleList.setScheduleArrayList(temp);
+
+        //scheduleList = getScheduleFromSp();
+
+        scheduleList.getScheduleArrayList().add(dum1);
+        scheduleList.getScheduleArrayList().add(dum2);
+
+        setScheduleInToSp(scheduleList);
     }
 
-    private BaseDateInfoList setSchedule(BaseDateInfoList baseDateInfoList, Schedule dum1) {
+    private void setScheduleInToSp(ScheduleList scheduleList) {
+
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        //Preference에 정보 객체 저장하기
+        //JSON으로 변환
+        String jsonString = gson.toJson(scheduleList, ScheduleList.class);
+        Log.i("jsonString : ", jsonString);
+
+        //초기화
+        //editor.remove(year + month);
+
+        editor.putString("schedule", jsonString);
+        editor.commit();
+        //저장완료
+
+    }
+
+    private ScheduleList getScheduleFromSp() {
+
+        //Preference에 날씨 정보 객체 불러오기
+
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        ScheduleList scheduleList = new ScheduleList();
+
+        //null일 경우 처리할것.
+        String loaded = pref.getString("schedule", "");
+
+        scheduleList = gson.fromJson(loaded, ScheduleList.class);
+        //Preference에 저장된 데이터 class 형태로 불러오기 완료
+
+        return scheduleList;
+
+    }
+
+    private BaseDateInfoList setScheduleInDateList(BaseDateInfoList baseDateInfoList, Schedule dum1) {
         //스케쥴 날짜
         int temp = Integer.parseInt(dum1.getDate());
 
@@ -432,8 +489,6 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
                 baseDateInfoList.getBaseDateInfoList().get(i).setSchedule(dum1);
             }
         }
-
-
         return baseDateInfoList;
     }
 

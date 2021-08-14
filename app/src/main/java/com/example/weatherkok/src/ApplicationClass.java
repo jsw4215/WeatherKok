@@ -4,20 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
 import com.example.weatherkok.config.XAccessTokenInterceptor;
-import com.example.weatherkok.weather.WeatherService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -35,8 +26,7 @@ public class ApplicationClass extends Application {
     public static String BASE_URL = "https://api.vworld.kr/req/";
     public static String BASE_URL2 = "http://apis.data.go.kr/1360000/MidFcstInfoService/";
     public static String BASE_URL3 = "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/";
-    // 실서버 주소
-//    public static String BASE_URL = "https://template.softsquared.com/";
+    public static String BASE_URL4 = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/";
 
     public static SharedPreferences sSharedPreferences = null;
 
@@ -133,6 +123,35 @@ public class ApplicationClass extends Application {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
+        return retrofit;
+    }
+
+    public static Retrofit getRetrofitForShortWx() {
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .readTimeout(5000, TimeUnit.MILLISECONDS)
+                    .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                    .addNetworkInterceptor(new XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+                    .addInterceptor(interceptor)
+                    .build();
+
+
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL4)
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+
 
         return retrofit;
     }

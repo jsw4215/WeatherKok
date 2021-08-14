@@ -408,6 +408,8 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
 
         setDateInfoToSP(baseDateInfoList, "2021", "08");
 
+        setLunaOnThePreference("2021","09");
+
         baseDateInfoList = getDateInfoFromSP("2021", "09");
 
         setScheduleInDateList(baseDateInfoList, dum3);

@@ -6,18 +6,9 @@ import android.location.Geocoder;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.weatherkok.weather.models.geom.LatLon;
+import com.example.weatherkok.weather.models.LatLon;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +32,11 @@ public class LatLonCalculator {
         }
 
         if(list.size()==0){
-            Toast.makeText(context, "주소와 일치하는 위도, 경도값을 찾을 수 없습니다.",1);
+            Toast.makeText(context, "주소와 일치하는 위도, 경도값을 찾을 수 없습니다.", Toast.LENGTH_SHORT);
         }
 
-        resultLatLon.setLatitude(list.get(0).getLatitude());
-        resultLatLon.setLongitude(list.get(0).getLongitude());
+        resultLatLon.setLat(list.get(0).getLatitude());
+        resultLatLon.setLon(list.get(0).getLongitude());
 
         return resultLatLon;
     }

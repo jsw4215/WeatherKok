@@ -31,6 +31,16 @@ public class WhereSearchedRvAdapter extends RecyclerView.Adapter<WhereSearchedRv
     public static String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     String mSearchWord;
     int mSearchWordLength;
+    boolean checker = false;
+
+    public WhereSearchedRvAdapter() {
+    }
+
+    public void initial(ArrayList<SearchedIndexOf> mWhereList, String searchWord){
+        this.mWhereList = mWhereList;
+        this.mSearchWord = searchWord;
+        this.mSearchWordLength = searchWord.length();
+    }
 
     public WhereSearchedRvAdapter(ArrayList<SearchedIndexOf> mWhereList, String searchWord) {
         this.mWhereList = mWhereList;
@@ -44,6 +54,7 @@ public class WhereSearchedRvAdapter extends RecyclerView.Adapter<WhereSearchedRv
         mContext = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.where_contents, parent, false);
+        checker=false;
         return new Holder(view);
     }
 
@@ -52,9 +63,14 @@ public class WhereSearchedRvAdapter extends RecyclerView.Adapter<WhereSearchedRv
         //지역이름에 포함되는 검색어 부분 색칠하기
         //받은 리스트의 객체를 순서대로 뽑아서,
         SearchedIndexOf temp = mWhereList.get(position);
-        //검색어의 길이를 확인하고
-        TextView tvColored = setColorInPartitial(temp.getAddress(), temp.getStartIndex(), temp.getStartIndex()+mSearchWordLength, holder.tv);
 
+
+
+        //검색어의 길이를 확인하고
+        if(!checker) {
+            TextView tvColored = setColorInPartitial(temp.getAddress(), temp.getStartIndex(), temp.getStartIndex() + mSearchWordLength, holder.tv);
+            checker = true;
+        }
     }
 
     @Override
@@ -79,7 +95,6 @@ public class WhereSearchedRvAdapter extends RecyclerView.Adapter<WhereSearchedRv
         public Holder(@NonNull View itemView) {
             super(itemView);
             tv = itemView.findViewById(R.id.tv_where_contents);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,7 +138,7 @@ public class WhereSearchedRvAdapter extends RecyclerView.Adapter<WhereSearchedRv
     private TextView setColorInPartitial(String string, int firstIndex, int lastIndex, TextView textView){
         SpannableStringBuilder builder = new SpannableStringBuilder(string);
         builder.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.red)), firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        textView.append(builder);
+        textView.setText(builder);
         return textView;
     }
 

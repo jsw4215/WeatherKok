@@ -1,4 +1,4 @@
-package com.example.weatherkok.weather.models;
+package com.example.weatherkok.weather.models.midWx;
 
 import java.util.List;
 

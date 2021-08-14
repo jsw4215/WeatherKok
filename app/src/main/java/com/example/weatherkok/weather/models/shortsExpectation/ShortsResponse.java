@@ -1,10 +1,27 @@
-package com.example.weatherkok.weather.models;
+package com.example.weatherkok.weather.models.shortsExpectation;
 
 import java.util.List;
 
 public class ShortsResponse {
     private static final String TAG = ShortsResponse.class.getSimpleName();
-    
+
+    Response response;
+
+    public ShortsResponse() {
+    }
+
+    public ShortsResponse(Response response) {
+        this.response = response;
+    }
+
+    public Response getResponse() {
+        return response;
+    }
+
+    public void setResponse(Response response) {
+        this.response = response;
+    }
+
     public class Header{
         public String resultCode;
 
@@ -162,7 +179,7 @@ public class ShortsResponse {
         }
     }
 
-    public class Response{
+    public class Response {
         public Header header;
         public Body body;
 
@@ -180,18 +197,6 @@ public class ShortsResponse {
 
         public void setBody(Body body) {
             this.body = body;
-        }
-    }
-
-    public class Root{
-        public Response response;
-
-        public Response getResponse() {
-            return response;
-        }
-
-        public void setResponse(Response response) {
-            this.response = response;
         }
     }
 

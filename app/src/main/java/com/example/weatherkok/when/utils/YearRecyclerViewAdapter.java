@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.weatherkok.R;
+import com.example.weatherkok.when.YearActivity;
 import com.example.weatherkok.when.models.base.BaseDateInfoList;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,13 +31,22 @@ public class YearRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     String mYearMonth;
     Context mContext;
 
-
     public YearRecyclerViewAdapter(Context context, BaseDateInfoList List, String yearMonth) {
         Log.i(TAG, "Constructor");
         this.mContext = context;
         this.List = List;
         this.mYearMonth = yearMonth;
 
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+
+    private RecyclerViewAdapter.OnItemClickListener mListener;
+
+    public void setOnItemClickListener(RecyclerViewAdapter.OnItemClickListener listener) {
+        this.mListener = listener;
     }
 
     @Override
@@ -172,6 +182,14 @@ public class YearRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             tv = view.findViewById(R.id.tv_solarcal_item);
             tvScheduled = view.findViewById(R.id.tv_solarcal_item_scheduled);
 
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ((YearActivity)mContext).goToMonthCal(mYearMonth.substring(4));
+
+                }
+            });
         }
 
     }

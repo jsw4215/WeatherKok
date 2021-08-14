@@ -1,6 +1,4 @@
-package com.example.weatherkok.weather.models;
-
-import com.google.gson.annotations.SerializedName;
+package com.example.weatherkok.weather.models.midWx;
 
 public class ResponseParams {
     private static final String TAG = ResponseParams.class.getSimpleName();

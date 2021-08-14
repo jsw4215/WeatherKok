@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:textSize="30sp"
+            android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/what_is_this_app" />
@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/tv_main_where"
             android:layout_gravity="center_vertical"
-            android:textSize="30sp"
+            android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/where_to_go" />
@@ -65,8 +65,9 @@
             android:layout_height="100dp" />
 
         <TextView
+            android:id="@+id/tv_main_when"
             android:layout_gravity="center_vertical"
-            android:textSize="30sp"
+            android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/when_to_go" />
@@ -87,8 +88,9 @@
             android:layout_height="100dp" />
 
         <TextView
+            android:id="@+id/tv_main_who"
             android:layout_gravity="center_vertical"
-            android:textSize="30sp"
+            android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/who_go_with" />
@@ -99,7 +101,7 @@
         android:id="@+id/tv_main_start"
         android:gravity="bottom"
         android:background="@drawable/bg_gis_result_items_count"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:layout_gravity="end"
         android:text="@string/start_the_app"
         android:layout_width="wrap_content"

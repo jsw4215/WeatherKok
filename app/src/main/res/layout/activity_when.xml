@@ -41,7 +41,7 @@
 
     </RelativeLayout>
 
-    <CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/cv_when_cal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -93,7 +93,7 @@ public class WhereService {
                 Log.d("Status : ", responseParams.getResponse().getStatus());
                 Log.d("Record : ", String.valueOf(responseParams.getResponse().getRecord().getTotal()));
                 Log.d("result : ", responseParams.getResponse().getResult().getFeatureCollection().getFeatures().get(1).getProperties().getFull_nm());
-                mWhereContractActivityView.validateSuccess(response.isSuccessful(), responseParams.getResponse().getRecord(), responseParams.getResponse().getResult());
+                mWhereContractActivityView.validateSggSuccess(response.isSuccessful(), responseParams.getResponse().getRecord(), responseParams.getResponse().getResult());
             }
 
             @Override
@@ -133,7 +133,7 @@ public class WhereService {
                 Log.d("Status : ", responseParams.getResponse().getStatus());
                 Log.d("Record : ", String.valueOf(responseParams.getResponse().getRecord().getTotal()));
                 Log.d("result : ", responseParams.getResponse().getResult().getFeatureCollection().getFeatures().get(1).getProperties().getFull_nm());
-                mWhereContractActivityView.validateSuccess(response.isSuccessful(), responseParams.getResponse().getRecord(), responseParams.getResponse().getResult());
+                mWhereContractActivityView.validateEmdSuccess(response.isSuccessful(), responseParams.getResponse().getRecord(), responseParams.getResponse().getResult());
             }
 
             @Override

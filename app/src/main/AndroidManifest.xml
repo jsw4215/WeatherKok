@@ -21,6 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherKok">
+<<<<<<< HEAD
         <activity android:name=".datalist.DataListActivity">
         </activity>
         <activity android:name=".weather.WeatherActivity"></activity>
@@ -33,6 +34,13 @@
             </intent-filter>
         </activity>
 
+=======
+        <activity android:name=".when.YearActivity">
+        </activity>
+        <activity android:name=".datalist.DataListActivity"></activity>
+        <activity android:name=".weather.WeatherActivity" />
+        <activity android:name=".main.schedule.ScheduleActivity"></activity>
+>>>>>>> 585d8a44667a74fdedc897def9fa437ef773b232
         <activity android:name=".who.kakao.kotlin.WhoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -59,10 +67,22 @@
         </activity>
         <activity android:name=".when.WhenActivity" />
         <activity android:name=".where.WhereActivity">
+<<<<<<< HEAD
+=======
+        </activity>
+        <activity android:name=".main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+>>>>>>> 585d8a44667a74fdedc897def9fa437ef773b232
 
         </activity>
+<<<<<<< HEAD
 
         <activity android:name=".main.MainActivity"></activity>
+=======
+        <activity android:name=".when.CalendarActivity">
+        </activity>
+>>>>>>> 585d8a44667a74fdedc897def9fa437ef773b232
     </application>
 
 

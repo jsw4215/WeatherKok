@@ -88,15 +88,20 @@ public class WhereRecyclerViewAdapter extends RecyclerView.Adapter<WhereRecycler
                     SharedPreferences.Editor editor = pref.edit();
                     // key값에 value값을 저장한다.
                     // String, boolean, int, float, long 값 모두 저장가능하다.
+                    //기존에 있던 주소를 잠시 저장해두고,
+                    String temp = pref.getString("where", "");
+                    //이어붙인다.
+                    if(temp!="") {
+                        where_from_holder = temp + " " + where_from_holder;
+                    }
                     editor.putString("where", where_from_holder);
 
                     // 메모리에 있는 데이터를 저장장치에 저장한다.
                     editor.commit();
 
+                    String temp2 = pref.getString("where", where_from_holder);
 
-                    String temp = pref.getString("where", where_from_holder);
-
-                    Log.i(TAG, "from the preference : " + temp);
+                    Log.i(TAG, "from the preference : " + temp2);
 
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){

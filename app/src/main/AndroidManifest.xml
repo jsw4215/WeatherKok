@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 인터넷 연결 확인 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+
+
     <application
         android:name=".who.kakao.kotlin.KakaoApplication"
         android:allowBackup="true"
@@ -19,16 +21,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherKok">
-        <activity android:name=".when.YearActivity"></activity>
-        <activity android:name=".datalist.DataListActivity" />
-        <activity android:name="com.example.weatherkok.weather.WeatherActivity">
+<<<<<<< HEAD
+        <activity android:name=".datalist.DataListActivity">
+        </activity>
+        <activity android:name=".weather.WeatherActivity"></activity>
+
+        <activity android:name=".main.schedule.ScheduleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.schedule.ScheduleActivity" />
+
+=======
+        <activity android:name=".when.YearActivity">
+        </activity>
+        <activity android:name=".datalist.DataListActivity"></activity>
+        <activity android:name=".weather.WeatherActivity" />
+        <activity android:name=".main.schedule.ScheduleActivity"></activity>
+>>>>>>> 585d8a44667a74fdedc897def9fa437ef773b232
         <activity android:name=".who.kakao.kotlin.WhoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -55,10 +67,23 @@
         </activity>
         <activity android:name=".when.WhenActivity" />
         <activity android:name=".where.WhereActivity">
+<<<<<<< HEAD
+=======
         </activity>
+        <activity android:name=".main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+>>>>>>> 585d8a44667a74fdedc897def9fa437ef773b232
+
+        </activity>
+<<<<<<< HEAD
+
         <activity android:name=".main.MainActivity"></activity>
+=======
         <activity android:name=".when.CalendarActivity">
         </activity>
+>>>>>>> 585d8a44667a74fdedc897def9fa437ef773b232
     </application>
+
 
 </manifest>

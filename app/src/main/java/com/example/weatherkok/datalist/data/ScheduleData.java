@@ -5,10 +5,9 @@ import android.util.Log;
 import com.example.weatherkok.datalist.data.wxdata.Wx;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+// 스케줄 정보를 담는 스케줄데이터 클래스. 날짜, 위치, 날씨예보에 관한 데이터
 public class ScheduleData {
     private static final String TAG = ScheduleData.class.getSimpleName();
     private static String Day;
@@ -29,8 +28,8 @@ public class ScheduleData {
         this.place = address;
         Fcst = fcst;
     }
-
-    public static String getDay() {
+    //getter/setter 함수를 구현
+    public String getDay() {
         return Day;
     }
 
@@ -68,10 +67,9 @@ public class ScheduleData {
     /**
      * 특정 날짜에 대하여 요일을 구함(일 ~ 토)
      * @param date
-     * @return
      * @throws Exception
      */
-    public static void getDateDay(String date) throws Exception {
+    public void getDateDay(String date) throws Exception {
 
         String day = "";
 

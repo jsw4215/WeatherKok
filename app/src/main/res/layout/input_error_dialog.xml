@@ -11,7 +11,7 @@
         android:text="@string/input_error_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cafe24ssurroundair"/>
+        android:fontFamily="@font/cafe24ohsquareair"/>
 
     <TextView
         android:layout_margin="20dp"
@@ -19,7 +19,7 @@
         android:text="@string/input_error_contents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cafe24ssurroundair"/>
+        android:fontFamily="@font/cafe24ohsquareair"/>
 
     <ImageView
         android:layout_marginLeft="10dp"

@@ -14,33 +14,42 @@
 
         <TextView
             android:id="@+id/tv_when_top_bar_cal"
-            android:layout_margin="20dp"
-            android:textSize="30sp"
-            android:text="@string/when_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_toLeftOf="@id/rv_when_top_bar"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ohsquareair"
+            android:text="@string/when_calendar"
+            android:textSize="30sp"
             tools:ignore="NotSibling" />
 
         <TextView
-            android:layout_toLeftOf="@id/tv_when_top_bar_year_term"
-            android:layout_margin="20dp"
-            android:textSize="30sp"
-            android:text="월별"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/imcresoojin"/>
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_toLeftOf="@id/tv_when_top_bar_year_term"
+            android:fontFamily="@font/cafe24ohsquareair"
+            android:text="월별"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_when_top_bar_year_term"
-            android:layout_margin="20dp"
-            android:textSize="30sp"
-            android:text="연간"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:fontFamily="@font/imcresoojin"/>
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/cafe24ohsquareair"
+            android:text="연간"
+            android:textSize="30sp" />
 
     </RelativeLayout>
 
@@ -109,8 +118,8 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_gis_result_items_count"
-            android:text="오늘"
-            android:fontFamily="@font/cafe24ssurround"/>
+            android:fontFamily="@font/cafe24ohsquareair"
+            android:text="오늘" />
 
     </RelativeLayout>
 
@@ -124,7 +133,7 @@
         android:text="선택하기"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cafe24ssurround"/>
+        android:fontFamily="@font/cafe24ohsquare"/>
 
     <ImageView
         android:src="@drawable/logo"

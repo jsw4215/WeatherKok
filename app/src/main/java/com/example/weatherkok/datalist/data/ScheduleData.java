@@ -24,30 +24,20 @@ public class ScheduleData {
     public ScheduleData() {
     }
 
-<<<<<<< HEAD
-    public ScheduleData(Date date, String address, ArrayList<Wx> fcst) {
-        this.date = date;
-        this.address = address;
-        this.Fcst = fcst;
-=======
     public ScheduleData(String date, String address, Wx fcst) {
         this.scheduledDate = date;
         this.place = address;
         Fcst = fcst;
->>>>>>> c5424723ea2f66c2b7aaa449bbaaa562239b237c
+
     }
     //getter/setter 함수를 구현
     public String getDay() {
         return Day;
     }
 
-<<<<<<< HEAD
-    public Date getDate() { return date; }
-=======
     public String getScheduledDate() {
         return scheduledDate;
     }
->>>>>>> c5424723ea2f66c2b7aaa449bbaaa562239b237c
 
     public void setScheduledDate(String scheduledDate) {
         this.scheduledDate = scheduledDate;
@@ -82,11 +72,9 @@ public class ScheduleData {
      * @return
      * @throws Exception
      */
-<<<<<<< HEAD
-    public String getDateDay(String date) throws Exception {
-=======
-    public static void getDateDay(String date) throws Exception {
->>>>>>> c5424723ea2f66c2b7aaa449bbaaa562239b237c
+
+    public void getDateDay(String date) throws Exception {
+
 
         String day = "";
 

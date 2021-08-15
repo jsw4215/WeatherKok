@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_schedule_item"
+    android:background="@drawable/bg_bm_list"
     android:orientation="horizontal"
     android:padding="3dp"
     android:layout_marginTop="5dp"
@@ -66,14 +66,29 @@
             android:textSize="20dp"
             android:fontFamily="@font/cafe24ssurroundair" />
 
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
         <TextView
             android:id="@+id/tv_item_temper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="최저최고"
+            android:text="최저/최고"
             android:textSize="15dp"
             android:fontFamily="@font/cafe24ssurroundair" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_item_temper"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:text="최고"-->
+<!--                android:textSize="15dp"-->
+<!--                android:fontFamily="@font/cafe24ssurroundair" />-->
+<!--        </LinearLayout>-->
+
     </LinearLayout>
 
 

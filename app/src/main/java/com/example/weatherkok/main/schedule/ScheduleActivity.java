@@ -69,27 +69,8 @@ public class ScheduleActivity extends AppCompatActivity {
         }
 
         //Schedule Test 객체 만들기
-<<<<<<< HEAD
-        AM am = new AM();
-        am.setCloud("구름 많음");
-        am.setRain("강수 많음");
-        am.setSnow("눈 많음");
-        am.setTemperature(23);
-        am.setWindy("강풍");
 
-        PM pm = new PM();
-        pm.setCloud("구름 없음");
-        pm.setRain("강수 없음");
-        pm.setSnow("눈 없음");
-        pm.setTemperature(28);
-        pm.setWindy("바람 없음");
-
-        Wx wx = new Wx();
-        wx.setAm(am);
-        wx.setPm(pm);
-        wx.setDate(date);
-
-        ArrayList<Wx> WxList = new ArrayList<>();
+              ArrayList<Wx> WxList = new ArrayList<>();
         WxList.add(wx);
 
 
@@ -242,7 +223,7 @@ public class ScheduleActivity extends AppCompatActivity {
 //        Log.i("loaded : ", a);
 //        Log.i("loaded : ", loadedFromSP.getDate().toString());
 //        Log.i("loaded : ", loadedFromSP.getFcst().get(0).getAm().getCloud());
->>>>>>> c5424723ea2f66c2b7aaa449bbaaa562239b237c
+
     }
 
 }

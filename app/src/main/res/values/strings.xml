@@ -3,8 +3,8 @@
     <string name="who_go_with">누구랑 가세요?</string>
     <string name="where_to_go">어디로 가세요?</string>
     <string name="when_to_go">언제 가세요?</string>
-    <string name="start_the_app">시작하기</string>
-    <string name="what_is_this_app">날씨콕이 뭔가요?</string>
+    <string name="start_the_app">시작하기\u2192</string>
+    <string name="what_is_this_app">날씨콕</string>
     <string name="what_is_this_app_title">날씨콕</string>
     <string name="when_calendar">달력</string>
     <string name="where_hint_search">동/읍/면 주소 입력</string>
@@ -53,7 +53,7 @@
     <string name="weather_list1">날씨없음</string>
     <string name="now_weather">현재날씨 보러가기</string>
     <string name="now_place">( 현재위치 )</string>
-    <string name="bm_weather">날씨콕 보러가기</string>
+    <string name="bm_weather">날씨콕  보러가기</string>
     <string name="day_list1">일</string>
     <string name="day_list2">오늘</string>
     <string name="min_temper">22\u00B0</string>

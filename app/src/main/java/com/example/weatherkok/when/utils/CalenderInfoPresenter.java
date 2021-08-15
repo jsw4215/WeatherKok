@@ -363,7 +363,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         String dummy_date_2 = "20";
         String dummy_date_3 = "11";
         String dummy_date_4 = "12";
-        String dummy_where = "성동구 성수동 서울숲";
+        String dummy_where = "서울특별시 성동구 성수골";
         String dummy_where2 = "전라북도 익산시 월성동";
         String dummy_who = "홍고은";
         String dummy_who2 = "장석우";

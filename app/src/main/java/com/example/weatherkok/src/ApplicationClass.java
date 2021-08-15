@@ -76,7 +76,6 @@ public class ApplicationClass extends Application {
                 .setLenient()
                 .create();
 
-        if (retrofit == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -93,8 +92,6 @@ public class ApplicationClass extends Application {
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-
-        }
 
         return retrofit;
     }

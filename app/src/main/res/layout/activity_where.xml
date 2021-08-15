@@ -18,7 +18,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/rv_where_top_bar"
-            android:src="@drawable/back_arrow"
+            android:src="@drawable/ic_arrow_back_24"
             tools:ignore="NotSibling" />
 
         <EditText
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/iv_search"
             android:layout_toRightOf="@id/iv_back_arrow"
+            android:fontFamily="@font/cafe24ssurroundair"
             android:hint="@string/where_hint_search" />
 
         <ImageView
@@ -35,7 +36,7 @@
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/rv_where_top_bar"
-            android:src="@drawable/gps_position"
+            android:src="@drawable/ic_gps_fixed_24"
             tools:ignore="NotSibling" />
 
         <ImageView
@@ -43,7 +44,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@id/iv_gps_position"
-            android:src="@drawable/search" />
+            android:src="@drawable/ic_search_24" />
 
     </RelativeLayout>
 

@@ -39,7 +39,8 @@
         android:layout_weight="1"
         android:text="확인"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cafe24ssurround"/>
 
     <TextView
         android:id="@+id/tv_dialog_negative"
@@ -48,7 +49,8 @@
         android:layout_weight="1"
         android:text="취소"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cafe24ssurround"/>
 
     </LinearLayout>
 </LinearLayout>

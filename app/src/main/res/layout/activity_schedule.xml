@@ -14,30 +14,34 @@
 
         <ImageView
             android:id="@+id/iv_back_arrow"
-            android:src="@drawable/back_arrow"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/rv_where_top_bar"
+            android:src="@drawable/ic_arrow_back_24"
             tools:ignore="NotSibling" />
 
         <TextView
-            android:layout_margin="10dp"
-            android:textSize="20sp"
-            android:hint="@string/schedule_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_back_arrow"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_toLeftOf="@+id/iv_close_mark"
-            />
+            android:layout_toRightOf="@id/iv_back_arrow"
+            android:fontFamily="@font/cafe24ssurroundair"
+            android:hint="@string/schedule_hint"
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/iv_close_mark"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/close_mark"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            tools:ignore="NotSibling"
-            android:layout_toRightOf="@id/rv_where_top_bar" />
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/rv_where_top_bar"
+            android:src="@drawable/ic_close_black_24dp"
+            tools:ignore="NotSibling" />
 
     </RelativeLayout>
 
@@ -46,12 +50,12 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        android:paddingTop="6dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:clipToPadding="false"
         tools:listitem="@layout/item_schedule"/>
 
     <LinearLayout
@@ -60,21 +64,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_margin="20dp"
-        android:textSize="20sp"
-        android:background="@drawable/bg_gis_result_items_count"
-        android:text="삭제"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_margin="20dp"
+            android:textSize="20dp"
+            android:background="@drawable/bg_gis_result_items_count"
+            android:text="삭제"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24ssurround"/>
 
-    <TextView
-        android:layout_margin="20dp"
-        android:textSize="20sp"
-        android:background="@drawable/bg_gis_result_items_count"
-        android:text="지역 추가하기"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_margin="20dp"
+            android:textSize="20dp"
+            android:background="@drawable/bg_gis_result_items_count"
+            android:text="지역 추가하기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24ssurround"/>
 
     </LinearLayout>
 

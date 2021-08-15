@@ -32,7 +32,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Act
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
+        setContentView(R.layout.activity_bookmark_weather);
 
         Log.i(TAG, "weather");
         //주소 가져오기

@@ -2,60 +2,50 @@ package com.example.weatherkok.datalist.data.wxdata.pm;
 
 public class PM {
     private static final String TAG = PM.class.getSimpleName();
-    String rain;
-    String snow;
-    String cloud;
-    String windy;
-    int temperature;
+    int rainPercent;
+    String wxCondition;
+    int tempMax;
+    int tempMin;
 
     public PM() {
     }
 
-    public PM(String rain, String snow, String cloud, String windy, int temperature) {
-        this.rain = rain;
-        this.snow = snow;
-        this.cloud = cloud;
-        this.windy = windy;
-        this.temperature = temperature;
+    public PM(int rainPercent, String wxCondition, int tempMax, int tempMin) {
+        this.rainPercent = rainPercent;
+        this.wxCondition = wxCondition;
+        this.tempMax = tempMax;
+        this.tempMin = tempMin;
     }
 
-    public String getRain() {
-        return rain;
+    public int getRainPercent() {
+        return rainPercent;
     }
 
-    public void setRain(String rain) {
-        this.rain = rain;
+    public void setRainPercent(int rainPercent) {
+        this.rainPercent = rainPercent;
     }
 
-    public String getSnow() {
-        return snow;
+    public String getWxCondition() {
+        return wxCondition;
     }
 
-    public void setSnow(String snow) {
-        this.snow = snow;
+    public void setWxCondition(String wxCondition) {
+        this.wxCondition = wxCondition;
     }
 
-    public String getCloud() {
-        return cloud;
+    public int getTempMax() {
+        return tempMax;
     }
 
-    public void setCloud(String cloud) {
-        this.cloud = cloud;
+    public void setTempMax(int tempMax) {
+        this.tempMax = tempMax;
     }
 
-    public String getWindy() {
-        return windy;
+    public int getTempMin() {
+        return tempMin;
     }
 
-    public void setWindy(String windy) {
-        this.windy = windy;
-    }
-
-    public int getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(int temperature) {
-        this.temperature = temperature;
+    public void setTempMin(int tempMin) {
+        this.tempMin = tempMin;
     }
 }

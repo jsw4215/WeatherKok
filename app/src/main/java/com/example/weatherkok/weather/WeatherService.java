@@ -26,26 +26,26 @@ public class WeatherService {
     }
 
     public void getMidLandFcst(String key, int numOfRows, int pageNo,
-                        String dataType, String regId, String tmFc) {
+                        String dataType, String regId, String tmFc,int num) {
         WeatherRetrofitInterface weatherRetrofitInterface = getRetrofitForWeather().create(WeatherRetrofitInterface.class);
-        Log.i(TAG, "Creating Retrofit");
+        Log.i(TAG, "Creating Retrofit중기예보");
         weatherRetrofitInterface.getMidLandFcst(key, numOfRows, pageNo, dataType, regId, tmFc).enqueue(new Callback<ResponseParams>() {
             @Override
             public void onResponse(Call<ResponseParams> call, Response<ResponseParams> response) {
                 final ResponseParams responseparams = response.body();
                 if (responseparams == null||responseparams.getResponse().getBody()==null||responseparams.getResponse().getBody().getItems().getItem().get(0)==null) {
-                    mWeatherContractActivityView.validateFailure(null, regId);
+                    mWeatherContractActivityView.validateFailure(null, regId, num);
                     return;
                 }
                 Log.i(TAG, "Success");
                 Log.i(TAG, responseparams.getResponse().getBody().items.item.get(0).wf3Am);
-                mWeatherContractActivityView.validateSuccess(response.isSuccessful(), responseparams.getResponse());
+                mWeatherContractActivityView.validateSuccess(response.isSuccessful(), responseparams.getResponse(),num);
             }
 
             @Override
             public void onFailure(Call<ResponseParams> call, Throwable t) {
                 Log.i(TAG, "Failure");
-                mWeatherContractActivityView.validateFailure(null, regId);
+                mWeatherContractActivityView.validateFailure(null, regId,num);
             }
         });
     }
@@ -56,7 +56,8 @@ public class WeatherService {
                                   String dataType,
                                   String baseDate,
                                   String baseTime,
-                                  xy data) {
+                                  xy data,
+                                         int position) {
         WeatherRetrofitInterface weatherRetrofitInterface = getRetrofitForShortWx().create(WeatherRetrofitInterface.class);
 
         String[] splitx = new String[2];
@@ -73,24 +74,24 @@ public class WeatherService {
             public void onResponse(Call<ShortsResponse> call, Response<ShortsResponse> response) {
                 final ShortsResponse shortsResponse = response.body();
                 if (shortsResponse == null||shortsResponse.getResponse().getBody()==null) {
-                    mWeatherContractActivityView.validateShortFailure(null, data);
+                    mWeatherContractActivityView.validateShortFailure(null, data, position);
                     return;
                 }
                 Log.i(TAG, "Success");
                 Log.i(TAG, "단기예보 도착" + shortsResponse.getResponse().getBody().getItems().getItem().get(0).getFcstDate());
-                mWeatherContractActivityView.validateShortSuccess(response.isSuccessful(), shortsResponse, data.getLat(), data.getLon());
+                mWeatherContractActivityView.validateShortSuccess(response.isSuccessful(), shortsResponse, data.getLat(), data.getLon(), position);
             }
 
             @Override
             public void onFailure(Call<ShortsResponse> call, Throwable t) {
                 Log.i(TAG, "Failure");
-                mWeatherContractActivityView.validateShortFailure(null, data);
+                mWeatherContractActivityView.validateShortFailure(null, data, position);
             }
         });
     }
 
     public void getMidTemp(String key, int numOfRows, int pageNo,
-                    String dataType, String regId, String tmFc) {
+                    String dataType, String regId, String tmFc,int num) {
         WeatherRetrofitInterface weatherRetrofitInterface = getRetrofitForWeather().create(WeatherRetrofitInterface.class);
         Log.i(TAG, "Creating Retrofit");
         weatherRetrofitInterface.getMidTemp(key, numOfRows, pageNo, dataType, regId, tmFc).enqueue(new Callback<MidTempResponse>() {
@@ -98,18 +99,18 @@ public class WeatherService {
             public void onResponse(Call<MidTempResponse> call, Response<MidTempResponse> response) {
                 final MidTempResponse midTempResponse = response.body();
                 if (midTempResponse == null||midTempResponse.getResponse().getBody()==null||midTempResponse.getResponse().getBody().getItems().getItem().get(0)==null) {
-                    mWeatherContractActivityView.validateFailure(null, regId);
+                    mWeatherContractActivityView.validateMidTempFailure(null, regId, num);
                     return;
                 }
                 Log.i(TAG, "Success");
                 Log.i(TAG, "중기온도 도착" + midTempResponse.getResponse().getBody().getItems().item.get(0).getTaMax3Low());
-                mWeatherContractActivityView.validateMidTempSuccess(midTempResponse);
+                mWeatherContractActivityView.validateMidTempSuccess(midTempResponse, num);
             }
 
             @Override
             public void onFailure(Call<MidTempResponse> call, Throwable t) {
                 Log.i(TAG, "Failure");
-                mWeatherContractActivityView.validateFailure(null, regId);
+                mWeatherContractActivityView.validateMidTempFailure(null, regId, num);
             }
         });
     }

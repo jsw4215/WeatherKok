@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), WhereActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                finish();
                 startActivity(intent);
             }
         });
@@ -90,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), CalendarActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                finish();
                 startActivity(intent);
             }
         });
@@ -101,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 whoMain="더미";
                 Intent intent = new Intent(getBaseContext(), WhoActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                finish();
                 startActivity(intent);
             }
         });
@@ -133,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         schedule.setWhere(where);
 
         String[] splited = new String[3];
-        splited = where.split("/");
+        splited = when.split("/");
 
         schedule.setYear(splited[0]);
         schedule.setMonth(splited[1]);

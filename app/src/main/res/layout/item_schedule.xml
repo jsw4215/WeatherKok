@@ -1,43 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
-    //반복될 아이템뷰 만들기
+    android:background="@drawable/bg_schedule_item"
+    android:orientation="horizontal"
+    android:padding="3dp"
+    android:layout_marginTop="5dp"
+    tools:ignore="ExtraText">
 
-        <TextView
-        android:id="@+id/tv_item_day"
+
+    //반복될 아이템뷰
+
+    <TextView
+        android:id="@+id/tv_item_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="날짜"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
         android:padding="10dp"
-        android:layout_marginLeft="5dp"/>
+        android:text="날짜"
+        android:textSize="20dp"
+        android:fontFamily="@font/cafe24ssurroundair"/>
+
     <TextView
+
         android:id="@+id/tv_item_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="위치"
         android:layout_gravity="center_vertical"
-        android:padding="10dp"
+        android:layout_marginLeft="5dp"
         android:layout_weight="1"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="지역"
+        android:textSize="20dp"
+        android:fontFamily="@font/cafe24ssurroundair"/>
+
+
     <ImageView
         android:id="@+id/iv_item_weather"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_dialog_alert"
         android:layout_gravity="center_vertical"
-        android:padding="20dp"/>
-    <TextView
-        android:id="@+id/tv_item_temper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="날씨"
-        android:layout_gravity="center_vertical"
-        android:padding="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_item_nowtemper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:text="온도"
+            android:textSize="20dp"
+            android:fontFamily="@font/cafe24ssurroundair" />
+
+        <TextView
+            android:id="@+id/tv_item_temper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="최저최고"
+            android:textSize="15dp"
+            android:fontFamily="@font/cafe24ssurroundair" />
+    </LinearLayout>
 
 
 </LinearLayout>

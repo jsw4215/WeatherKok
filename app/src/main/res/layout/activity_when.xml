@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/rv_when_top_bar"
+            android:fontFamily="@font/imcresoojin"
             tools:ignore="NotSibling" />
 
         <TextView
@@ -28,7 +29,8 @@
             android:textSize="30sp"
             android:text="월별"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/imcresoojin"/>
 
         <TextView
             android:id="@+id/tv_when_top_bar_year_term"
@@ -37,7 +39,8 @@
             android:text="연간"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/imcresoojin"/>
 
     </RelativeLayout>
 
@@ -69,7 +72,8 @@
             android:id="@+id/tv_when_lunar"
             android:text="음력"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24ssurroundair"/>
 
         </LinearLayout>
 
@@ -89,19 +93,24 @@
                 android:id="@+id/tv_when_schedule"
                 android:text="일정"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cafe24ssurroundair"/>
 
         </LinearLayout>
 
-            <TextView
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_gis_result_items_count"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/tv_when_today"
-                android:text="오늘"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_when_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_gis_result_items_count"
+            android:text="오늘"
+            android:fontFamily="@font/cafe24ssurround"/>
 
     </RelativeLayout>
 
@@ -114,7 +123,8 @@
         android:background="@drawable/bg_gis_result_items_count"
         android:text="선택하기"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cafe24ssurround"/>
 
     <ImageView
         android:src="@drawable/logo"

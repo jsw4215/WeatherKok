@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.weatherkok.weather.models.LatLon;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public class LatLonCalculator {
         LatLon resultLatLon = new LatLon();
         double v1 = 0.0;
         double v2 = 0.0;
-        List<Address> list = null;
+        List<Address> list = new ArrayList<>();
 
         Geocoder geocoder = new Geocoder(context);
 
@@ -29,21 +30,29 @@ public class LatLonCalculator {
             list = geocoder.getFromLocationName(address, 10);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "주소->위도경도 변환시 오류");
+            Log.e(TAG, "주소 -> 위도경도 변환 오류");
         }
+
 
         if (list.size() == 0) {
 
             List<String> splitAddr = Arrays.asList(address.split(" "));
 
-            splitAddr.remove(splitAddr.size()-1);
-            address = "";
-            for(int i =0;i<splitAddr.size();i++) {
+            ArrayList<String> temp = new ArrayList<>();
 
-                if(!(i==(splitAddr.size()-1))){
-                    address = address + splitAddr.get(i) + " ";
+            for(int i=0;i<splitAddr.size();i++) {
+                temp.add(splitAddr.get(i));
+            }
+
+            temp.remove(temp.size()-1);
+
+            address = "";
+            for(int i =0;i<temp.size();i++) {
+
+                if(!(i==(temp.size()-1))){
+                    address = address + temp.get(i) + " ";
                 }else{
-                    address = address + splitAddr.get(i);
+                    address = address + temp.get(i);
                 }
 
             }

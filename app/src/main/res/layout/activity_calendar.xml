@@ -21,11 +21,11 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_toLeftOf="@id/rv_when_top_bar"
-            android:src="@drawable/car"
             android:id="@+id/iv_before"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_toLeftOf="@id/rv_when_top_bar"
+            android:src="@drawable/ic_arrow_left_black_24dp"
             tools:ignore="NotSibling" />
 
         <TextView
@@ -57,10 +57,10 @@
 
         <ImageView
             android:id="@+id/iv_after"
-            android:src="@drawable/car"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_arrow_right_black_24dp" />
 
     </RelativeLayout>
 

@@ -10,17 +10,17 @@ public interface WeatherContract {
 
     interface ActivityView {
 
-        void validateSuccess(boolean isSuccess, WxResponse wxResponse);
+        void validateSuccess(boolean isSuccess, WxResponse wxResponse, int num);
 
-        void validateShortSuccess(boolean isSuccess, ShortsResponse shortsResponse, String lat, String lon);
+        void validateShortSuccess(boolean isSuccess, ShortsResponse shortsResponse, String lat, String lon, int position);
 
-        void validateFailure(String message, String regId);
+        void validateFailure(String message, String regId, int num);
 
-        void validateShortFailure(String message, xy data);
+        void validateShortFailure(String message, xy data, int position);
 
-        void validateMidTempSuccess(MidTempResponse midTempResponse);
+        void validateMidTempSuccess(MidTempResponse midTempResponse, int num);
 
-        void validateMidTempFailure(String message, String regId);
+        void validateMidTempFailure(String message, String regId,int num);
 
     }
 

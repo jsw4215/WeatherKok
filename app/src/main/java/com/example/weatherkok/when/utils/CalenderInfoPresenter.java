@@ -33,6 +33,10 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
     public CalenderInfoPresenter() {
     }
 
+    public CalenderInfoPresenter(Context context) {
+        mContext = context;
+    }
+
     public void initCal(String year, String month, Context context) {
         this.mContext = context;
 
@@ -42,7 +46,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         //해당 월의 공휴일을 저장
         arrangerHoliday(year, month);
         //처음에만 더미생성
-        makeDummySchedule();
+        //makeDummySchedule();
 
     }
 
@@ -351,7 +355,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
     }
 
 
-    private void makeDummySchedule() {
+    public void makeDummySchedule() {
         //preference 동작 준비
         SharedPreferences sp = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -363,7 +367,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         String dummy_date_2 = "20";
         String dummy_date_3 = "11";
         String dummy_date_4 = "12";
-        String dummy_where = "서울특별시 성동구 성수골";
+        String dummy_where = "서울특별시 성동구 성수동1가";
         String dummy_where2 = "전라북도 익산시 월성동";
         String dummy_who = "홍고은";
         String dummy_who2 = "장석우";

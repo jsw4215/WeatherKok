@@ -23,11 +23,14 @@ public class ScheduleData {
     public ScheduleData() {
     }
 
-    public ScheduleData(String date, String address, Wx fcst) {
+    public ScheduleData(String date, String address, Wx fcst) throws Exception {
         this.scheduledDate = date;
         this.place = address;
         Fcst = fcst;
+
+        getDateDay(scheduledDate);
     }
+
     //getter/setter 함수를 구현
     public String getDay() {
         return Day;

@@ -31,4 +31,31 @@
     <string name="nav_header_desc">"nav_header_desc"</string>
     <string name="nav_header_title">"nav_header_title"</string>
     <string name="nav_header_subtitle">"nav_header_subtitle"</string>
+
+    <string name="name_kok">날씨콕</string>
+    <string name="weather_alarm">날씨알람</string>
+    <string name="sharing">공유하기</string>
+    <string name="ad_delete">광고제거</string>
+    <string name="ad">AD</string>
+    <string name="graph">인기어플</string>
+
+    <string name="dates">8월 20일 (금)</string>
+    <string name="location">서귀포시 서흥동</string>
+    <string name="weather">맑음</string>
+    <string name="temperature">34\u00B0</string>
+    <string name="max_min_temper">최고 36\u00B0 최저 22\u00B0</string>
+    <string name="forecast">기상청</string>
+    <string name="ad_kor">광고</string>
+    <string name="dates_list1">9/13(금)</string>
+    <string name="dates_list2">날짜없음</string>
+    <string name="location_list1">광주 신가동</string>
+    <string name="location_list2">지역없음</string>
+    <string name="weather_list1">날씨없음</string>
+    <string name="now_weather">현재날씨 보러가기</string>
+    <string name="now_place">( 현재위치 )</string>
+    <string name="bm_weather">날씨콕 보러가기</string>
+    <string name="day_list1">일</string>
+    <string name="day_list2">오늘</string>
+    <string name="min_temper">22\u00B0</string>
+    <string name="max_temper">36\u00B0</string>
 </resources>

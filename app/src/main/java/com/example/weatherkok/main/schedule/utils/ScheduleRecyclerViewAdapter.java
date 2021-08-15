@@ -44,7 +44,7 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
     public void onBindViewHolder(@NonNull ScheduleRecyclerViewAdapter.Holder holder, int position) {
 
         holder.mDay.setText(mScheduleList.get(position).getDay());
-        holder.mAddress.setText(mScheduleList.get(position).getAddress());
+        holder.mAddress.setText(mScheduleList.get(position).getPlace());
 
     }
 
@@ -61,14 +61,15 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
 
         public Holder(@NonNull View itemView) {
             super(itemView);
-            mDay = itemView.findViewById(R.id.tv_item_day);
+            mDay = itemView.findViewById(R.id.tv_item_date);
             mAddress = itemView.findViewById(R.id.tv_item_address);
         }
 
         public void onBind(ScheduleData scheduleData) {
             //여기에 값 입력
             mDay.setText(scheduleData.getDay());
-            mAddress.setText(scheduleData.getAddress());
+            mAddress.setText(scheduleData.getPlace());
+
 
         }
     }

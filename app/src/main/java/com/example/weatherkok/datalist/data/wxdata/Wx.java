@@ -4,6 +4,9 @@ import com.example.weatherkok.weather.models.midTemp.MidTempResponse;
 import com.example.weatherkok.weather.models.midTemp.TempItems;
 import com.example.weatherkok.weather.models.midWx.WxItems;
 import com.example.weatherkok.weather.models.midWx.WxResponse;
+import com.example.weatherkok.weather.models.shortsExpectation.todayTemp;
+
+import java.util.ArrayList;
 
 public class Wx {
     private static final String TAG = Wx.class.getSimpleName();
@@ -15,6 +18,15 @@ public class Wx {
     //오늘날짜 기준으로 +1+2+3... 하면됨
     WxItems wxList = new WxItems();
     TempItems tempList = new TempItems();
+    ArrayList<todayTemp> tempToday = new ArrayList<>();
+
+    public ArrayList<todayTemp> getTempToday() {
+        return tempToday;
+    }
+
+    public void setTempToday(ArrayList<todayTemp> tempToday) {
+        this.tempToday = tempToday;
+    }
 
     public Wx() {
     }

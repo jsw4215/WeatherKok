@@ -142,6 +142,7 @@ public class CalendarActivity extends BaseActivity{
                     Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
                     intent.putExtra("fromApp",true);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    finish();
                     startActivity(intent);
                 }
             });
@@ -162,6 +163,7 @@ public class CalendarActivity extends BaseActivity{
 
                     Intent intent = new Intent(CalendarActivity.this, YearActivity.class);
                     intent.putExtra("year",mSelectedDate.substring(0,4));
+                    finish();
                     startActivity(intent);
                 }
             });

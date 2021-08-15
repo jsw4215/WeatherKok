@@ -3,7 +3,7 @@
     android:id="@+id/ll_what_is_this_app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
+    android:background="@drawable/bg_main"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,14 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:text="@string/what_is_this_app_title"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:fontFamily="@font/imcresoojin"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="end|center_vertical"
-            android:text="X"
-            android:textSize="40sp" />
+            android:src="@drawable/ic_close_black_24dp" />
     </LinearLayout>
 
     <TextView
@@ -31,6 +31,7 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:text="@string/what_is_this_app_contents"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:fontFamily="@font/cafe24ssurroundair"/>
 
 </LinearLayout>

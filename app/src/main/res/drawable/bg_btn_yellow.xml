@@ -8,6 +8,6 @@
         android:right="45px"
         android:bottom="15px" />
     <corners
-        android:radius="24.4664px" />
+        android:radius="30px" />
 </shape>
 

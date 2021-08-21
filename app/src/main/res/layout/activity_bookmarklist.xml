@@ -7,28 +7,35 @@
     <RelativeLayout
         android:id="@+id/rl_bml_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp
+">
 
         <ImageView
-            android:layout_alignParentStart="true"
-            android:src="@drawable/back_arrow"
             android:id="@+id/iv_bml_back_arrow_top_bar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/iv_bml_wrong_mark_top_bar"
+            android:src="@drawable/back_arrow" />
 
         <TextView
-            android:gravity="center"
             android:id="@+id/tv_bml_title_top_bar"
-            android:textSize="40dp"
-            android:text="등록된 날씨콕"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_bml_wrong_mark_top_bar"
+            android:gravity="center"
+            android:text="등록된 날씨콕"
+            android:textSize="30dp"
+            android:fontFamily="@font/cafe24ohsquareair"/>
 
         <ImageView
             android:layout_margin="5dp"
             android:layout_alignParentEnd="true"
             android:id="@+id/iv_bml_wrong_mark_top_bar"
             android:src="@drawable/close_mark"
+            android:layout_marginRight="5dp"
             android:layout_width="40dp"
             android:layout_height="40dp"/>
 
@@ -62,10 +69,10 @@
             android:id="@+id/tv_bmlist_deletion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_gis_result_items_count"
+            android:background="@drawable/bg_btn_yellow"
             android:padding="20dp"
             android:layout_margin="20dp"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ohsquare"
             android:text="삭제"
             android:textSize="20dp" />
 
@@ -81,12 +88,12 @@
 
         <TextView
             android:layout_margin="20dp"
-            android:background="@drawable/bg_gis_result_items_count"
+            android:background="@drawable/bg_btn_yellow"
             android:padding="20dp"
             android:id="@+id/tv_bmlist_add_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ohsquare"
             android:textSize="20dp"
             android:text="지역 추가하기" />
 

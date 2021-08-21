@@ -103,5 +103,5 @@
         android:id="@+id/where_advertisement"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/pre_logo" />
+        android:src="@drawable/logo" />
 </LinearLayout>

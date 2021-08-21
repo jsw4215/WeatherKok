@@ -4,13 +4,14 @@ import android.util.Log;
 
 import com.example.weatherkok.datalist.data.wxdata.Wx;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 // 스케줄 정보를 담는 스케줄데이터 클래스. 날짜, 위치, 날씨예보에 관한 데이터
 public class ScheduleData {
     private static final String TAG = ScheduleData.class.getSimpleName();
-    private static String Day;
+    String Day;
     //약속날짜
     String scheduledDate;
     //약속위치
@@ -23,12 +24,11 @@ public class ScheduleData {
     public ScheduleData() {
     }
 
-    public ScheduleData(String date, String address, Wx fcst) throws Exception {
+    public ScheduleData(String date, String address, Wx fcst) {
         this.scheduledDate = date;
         this.place = address;
         Fcst = fcst;
-
-        getDateDay(scheduledDate);
+        getDateDay(date);
     }
 
     //getter/setter 함수를 구현
@@ -43,12 +43,6 @@ public class ScheduleData {
     public void setScheduledDate(String scheduledDate) {
         this.scheduledDate = scheduledDate;
 
-        try {
-            getDateDay(scheduledDate);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.i(TAG,"요일계산이 잘못 되었습니다");
-        }
     }
 
     public String getPlace() {
@@ -71,13 +65,19 @@ public class ScheduleData {
      * 특정 날짜에 대하여 요일을 구함(일 ~ 토)
      * @param date
      * @throws Exception
+     * @return
      */
-    public void getDateDay(String date) throws Exception {
+    public String getDateDay(String date) {
 
         String day = "";
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date nDate = dateFormat.parse(date);
+        Date nDate = null;
+        try {
+            nDate = dateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(nDate);
@@ -109,6 +109,7 @@ public class ScheduleData {
 
         }
         Day = day;
+        return day;
     }
 
 }

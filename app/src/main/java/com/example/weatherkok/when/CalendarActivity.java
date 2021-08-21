@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -31,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class CalendarActivity extends BaseActivity{
@@ -49,8 +51,8 @@ public class CalendarActivity extends BaseActivity{
         ArrayList<String> mScheduledDateList;
         String mToday;
         String mDialogDate;
-        TextView mTvSolar;
-        TextView mTvLuna;
+        CheckBox mTvSolar;
+        CheckBox mTvLuna;
         TextView mTvYearTerm;
         boolean mLunaChecker=false;
         int mMaxYear;
@@ -104,11 +106,15 @@ public class CalendarActivity extends BaseActivity{
             mTvLuna.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(!mTvLuna.isChecked()){
+                    mTvLuna.setChecked(true);
+                    mTvSolar.setChecked(false);
                     //뷰에 visible invisible
                     if(mLunaChecker==false) {
                         mLunaChecker = true;
 
                         parsingDate(mSelectedDate);
+                    }
                     }
                 }
             });
@@ -116,11 +122,15 @@ public class CalendarActivity extends BaseActivity{
             mTvSolar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //뷰에 visible invisible
-                    if(mLunaChecker==true) {
-                        mLunaChecker = false;
+                    if(!mTvSolar.isChecked()){
+                        mTvSolar.setChecked(true);
+                        mTvLuna.setChecked(false);
+                        //뷰에 visible invisible
+                        if(mLunaChecker==true) {
+                            mLunaChecker = false;
 
-                        parsingDate(mSelectedDate);
+                            parsingDate(mSelectedDate);
+                        }
                     }
                 }
             });
@@ -135,13 +145,12 @@ public class CalendarActivity extends BaseActivity{
                     Log.i(TAG, "result : " + mSelectedDate);
                     //Preference에 저장
                     //누구랑, 어디서와 함께 저장하기 위해 우선 temp로 가져갈것
-                    editor.putString("temp_when",mSelectedDate);
+                    editor.putString("temp_when", mSelectedDate);
                     editor.commit();
 
                     //인텐트로 Main으로 이동
                     Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
                     intent.putExtra("fromApp",true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     finish();
                     startActivity(intent);
                 }
@@ -246,9 +255,10 @@ public class CalendarActivity extends BaseActivity{
 
             mTvSelBtn = findViewById(R.id.tv_calendar_selection_btn);
 
-            mTvLuna = findViewById(R.id.tv_cal_luna);
-
-            mTvSolar = findViewById(R.id.tv_cal_solar);
+            mTvLuna = findViewById(R.id.cb_cal_luna);
+            mTvLuna.setChecked(false);
+            mTvSolar = findViewById(R.id.cb_cal_solar);
+            mTvSolar.setChecked(true);
 
             mTvYearTerm = findViewById(R.id.tv_when_top_bar_year_term);
 
@@ -571,4 +581,18 @@ public class CalendarActivity extends BaseActivity{
             e.printStackTrace();
         }
     }
+
+    public static boolean leapYear(int year) {
+
+        GregorianCalendar cal = new GregorianCalendar();
+
+        if (cal.isLeapYear(year))
+            //윤년입니다.
+            return true;
+        else
+            //평년입니다.
+            return false;
+
+    }
+
 }

@@ -6,7 +6,7 @@ import com.example.weatherkok.datalist.data.ScheduleData;
 
 import java.util.ArrayList;
 
-public class Schedule {
+public class Schedule implements Comparable<Schedule> {
     private static final String TAG = Schedule.class.getSimpleName();
 
     String year;
@@ -83,5 +83,10 @@ public class Schedule {
 
     public void setWho(ArrayList<String> who) {
         this.who = who;
+    }
+
+    @Override
+    public int compareTo(Schedule o) {
+        return Integer.parseInt(getScheduleData().getScheduledDate()) - Integer.parseInt(getScheduleData().getScheduledDate());
     }
 }

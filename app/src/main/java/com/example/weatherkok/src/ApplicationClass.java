@@ -53,7 +53,7 @@ public class ApplicationClass extends Application {
     }
 
     public static Retrofit getRetrofit() {
-        if (retrofit == null) {
+
             OkHttpClient client = new OkHttpClient.Builder()
                     .readTimeout(5000, TimeUnit.MILLISECONDS)
                     .connectTimeout(5000, TimeUnit.MILLISECONDS)
@@ -65,7 +65,7 @@ public class ApplicationClass extends Application {
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-        }
+
 
         return retrofit;
     }
@@ -103,7 +103,6 @@ public class ApplicationClass extends Application {
                 .setLenient()
                 .create();
 
-        if (retrofit == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -119,7 +118,7 @@ public class ApplicationClass extends Application {
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-        }
+
 
         return retrofit;
     }

@@ -12,7 +12,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weatherkok.R;
+import com.example.weatherkok.datalist.data.ScheduleData;
+import com.example.weatherkok.intro.IntroActivity;
 import com.example.weatherkok.weather.WeatherActivity;
+import com.example.weatherkok.weather.interfaces.WeatherContract;
+import com.example.weatherkok.weather.models.midTemp.MidTempResponse;
+import com.example.weatherkok.weather.models.midWx.WxResponse;
+import com.example.weatherkok.weather.models.shortsExpectation.ShortsResponse;
+import com.example.weatherkok.weather.models.xy;
+import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.CalendarActivity;
 import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     String whoMain;
     String whenMain;
     String whereMain;
+    WxKokDataPresenter mWxKokDataPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), WhereActivity.class);
+                finish();
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), CalendarActivity.class);
+                finish();
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
@@ -98,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 whoMain="더미";
                 Intent intent = new Intent(getBaseContext(), WhoActivity.class);
+                finish();
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
@@ -107,13 +119,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //데이터 저장하기 - 스케쥴 데이터에 저장(schedule + 날짜 데이터에 저장) - scheduleList화 시킨 jsonarray에 추가
-                setScheduleInPreference(whereMain, whenMain, whoMain);
+                if(whereMain!=""&&whenMain!=""&&whoMain!=null) {
 
-                if(whereMain!=null&&whenMain!=null&&whoMain!=null) {
-                    Intent intent = new Intent(getBaseContext(), WeatherActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    finish();
+                    setScheduleInPreference(whereMain, whenMain, whoMain);
+                    resetSP();
+                    Intent intent = new Intent(MainActivity.this, IntroActivity.class);
+                    intent.putExtra("from", "Main");
                     startActivity(intent);
+                    finish();
+
                 }else {
                     //3개가 다 입력되어있지 않으면, 시작 불가능 다이얼로그
 
@@ -123,19 +137,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void resetSP(){
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putString(where, "");
+        editor.putString(when, "");
+        editor.putString(who, "");
+
+        editor.apply();
+    }
+
     private void setScheduleInPreference(String where, String when, String who) {
         Schedule schedule = new Schedule();
         ScheduleList scheduleList = new ScheduleList();
+        ScheduleData scheduleData = new ScheduleData();
         schedule.getWho().add(who);
         schedule.setWhere(where);
 
         String[] splited = new String[3];
         splited = when.split("/");
-
+        scheduleData.setScheduledDate(splited[0]+splited[1]+splited[2]);
         schedule.setYear(splited[0]);
         schedule.setMonth(splited[1]);
         schedule.setDate(splited[2]);
-
+        schedule.setScheduleData(scheduleData);
         SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
@@ -145,7 +171,29 @@ public class MainActivity extends AppCompatActivity {
 
         ScheduleList loadedFromSP = gson.fromJson(loaded,ScheduleList.class);
         loadedFromSP.getScheduleArrayList().add(schedule);
+
+        setScheduleDataInToSp(loadedFromSP);
+    }
+
+    private void setScheduleDataInToSp(ScheduleList scheduleList) {
+
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        //Preference에 정보 객체 저장하기
+        //JSON으로 변환
+        String jsonString = gson.toJson(scheduleList, ScheduleList.class);
+        Log.i("jsonString : ", jsonString);
+
+        //초기화
+        //editor.remove(year + month);
+
+        editor.putString("schedule", jsonString);
         editor.commit();
+        //저장완료
+
     }
 
     private void checkPreference() {
@@ -153,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         //Intent 확인해서 없으면(앱을 켜서 처음 들어온 화면, 다른 화면에서 돌아온 화면이 아니라),
         Intent intent = getIntent();
         boolean check = intent.getBooleanExtra("fromApp",false);
-
+        //intent.putExtra("fromApp",true);
 
         if(check) {
             Log.i(TAG, "intent : " + intent);
@@ -173,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
             if (!result_who.equals("")) {
                 mTvMainWho.setText(result_who);
             }
-
         }
     }
 
@@ -221,4 +268,5 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(who,"");
 
     }
+
 }

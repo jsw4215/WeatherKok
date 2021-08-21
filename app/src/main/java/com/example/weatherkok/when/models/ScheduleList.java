@@ -2,7 +2,7 @@ package com.example.weatherkok.when.models;
 
 import java.util.ArrayList;
 
-public class ScheduleList {
+public class ScheduleList{
     private static final String TAG = ScheduleList.class.getSimpleName();
     ArrayList<Schedule> scheduleArrayList;
 
@@ -20,4 +20,5 @@ public class ScheduleList {
     public void setScheduleArrayList(ArrayList<Schedule> scheduleArrayList) {
         this.scheduleArrayList = scheduleArrayList;
     }
+
 }

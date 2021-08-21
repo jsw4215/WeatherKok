@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +21,12 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.weatherkok.R;
+import com.example.weatherkok.intro.IntroActivity;
 import com.example.weatherkok.main.MainActivity;
 import com.example.weatherkok.src.BaseActivity;
+import com.example.weatherkok.weather.NowWxActivity;
+import com.example.weatherkok.when.models.Schedule;
+import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.where.interfaces.WhereContract;
 import com.example.weatherkok.where.models.Record;
 import com.example.weatherkok.where.models.Result;
@@ -762,22 +767,93 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
     }
 
     public void lastFunction(){
-
         SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
 
         SharedPreferences.Editor editor = pref.edit();
-
         //저장된 데이터 처리 후 화면 이동
-        String result = pref.getString("where","");
-        Log.i(TAG,"result!!" + result);
-        editor.putString("temp_where", result);
-        editor.putString("where","");
+        String result = pref.getString("where", "");
+        //nowWx에서 온게 아니면 메인으로 가고, nowWx에서 왔으면 주소만 추가해서 nowWx로 다시 간다
+        if(TextUtils.isEmpty(getIntent().getStringExtra("from"))) {
+
+            Log.i(TAG, "result!!" + result);
+            editor.putString("temp_where", result);
+            editor.putString("where", "");
+            editor.commit();
+            Log.i(TAG, "click lisener on activity");
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.putExtra("fromApp", true);
+            finish();
+            startActivity(intent);
+        }else if(!(TextUtils.isEmpty(getIntent().getStringExtra("from")))&&getIntent().getStringExtra("from").equals("nowWx")){
+
+            ScheduleList scheduleList = new ScheduleList();
+
+            Schedule schedule = new Schedule();
+
+            schedule.getScheduleData().setPlace(result);
+            schedule.setWhere(result);
+
+            scheduleList = getBookMarkFromSp();
+
+            scheduleList.getScheduleArrayList().add(schedule);
+
+            setBookMarkInToSp(scheduleList);
+
+            Intent intent = new Intent(getBaseContext(), IntroActivity.class);
+            intent.putExtra("from","goToNow");
+            finish();
+            startActivity(intent);
+
+        }
+
+    }
+
+    private ScheduleList getBookMarkFromSp() {
+
+        //Preference에 날씨 정보 객체 불러오기
+
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        ScheduleList scheduleList = new ScheduleList();
+
+        //null일 경우 처리할것.
+        String loaded = pref.getString("bookMark", "");
+
+        ArrayList<Schedule> temp = new ArrayList<>();
+        if(loaded==null||loaded==""){
+
+            scheduleList.setScheduleArrayList(temp);
+
+        }else {
+
+            scheduleList = gson.fromJson(loaded, ScheduleList.class);
+            //Preference에 저장된 데이터 class 형태로 불러오기 완료
+        }
+        return scheduleList;
+
+    }
+
+    private void setBookMarkInToSp(ScheduleList scheduleList) {
+
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        //Preference에 정보 객체 저장하기
+        //JSON으로 변환
+        String jsonString = gson.toJson(scheduleList, ScheduleList.class);
+        Log.i("jsonString : ", jsonString);
+
+        //초기화
+        //editor.remove(year + month);
+
+        editor.putString("bookMark", jsonString);
         editor.commit();
-        Log.i(TAG,"click lisener on activity");
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-        intent.putExtra("fromApp",true);
-        finish();
-        startActivity(intent);
+        //저장완료
 
     }
 

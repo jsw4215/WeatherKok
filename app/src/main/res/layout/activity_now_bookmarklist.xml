@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_bml_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_alignParentStart="true"
+            android:src="@drawable/back_arrow"
+            android:id="@+id/iv_bml_back_arrow_top_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_bml_title_top_bar"
+            android:textSize="40dp"
+            android:text="등록된 날씨콕"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/iv_bml_wrong_mark_top_bar"
+            android:src="@drawable/close_mark"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_bm_weather_list"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/tv_bm_weather_dates_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_margin="15dp"
+                android:layout_gravity="center"
+                android:text="@string/dates_list1"
+                android:fontFamily="@font/imcresoojin">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_bm_weather_location_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/imcresoojin"
+                android:gravity="center"
+                android:text="@string/location_list1"
+                android:textAlignment="center"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:ellipsize="end"></TextView>
+
+            <ImageView
+                android:id="@+id/iv_bm_weather_am_now"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_sun"
+                ></ImageView>
+            <ImageView
+                android:id="@+id/iv_bm_weather_pm_now"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_cloudy"
+                ></ImageView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_bmlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_bmlist_deletion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_gis_result_items_count"
+            android:padding="20dp"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/imcresoojin"
+            android:text="삭제"
+            android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/iv_bml_trashcan"
+                android:layout_gravity="center"
+                android:padding="30dp"
+                android:src="@drawable/close_mark"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_gis_result_items_count"
+            android:padding="20dp"
+            android:id="@+id/tv_bmlist_add_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/imcresoojin"
+            android:textSize="20dp"
+            android:text="지역 추가하기" />
+
+    </LinearLayout>
+</LinearLayout>

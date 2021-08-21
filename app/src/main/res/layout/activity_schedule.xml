@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.schedule.ScheduleActivity">
+    tools:context=".main.schedule.ScheduleActivity"
+    android:background="#DFE9F6">
 
     <RelativeLayout
         android:id="@+id/rv_where_top_bar"
@@ -52,8 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
         tools:listitem="@layout/item_schedule"/>
@@ -67,19 +68,23 @@
         <TextView
             android:layout_margin="20dp"
             android:textSize="20dp"
-            android:background="@drawable/bg_gis_result_items_count"
+            android:background="@drawable/bg_btn_delete"
             android:text="삭제"
+            android:textColor="#22215B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ssurround"/>
 
         <TextView
             android:layout_margin="20dp"
             android:textSize="20dp"
-            android:background="@drawable/bg_gis_result_items_count"
-            android:text="지역 추가하기"
+            android:background="@drawable/bg_btn_add"
+            android:text="추가"
+            android:textColor="#E5E5E5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ssurround"/>
 
     </LinearLayout>

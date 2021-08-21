@@ -5,6 +5,7 @@ import com.example.weatherkok.weather.models.midTemp.TempItems;
 import com.example.weatherkok.weather.models.midWx.WxItems;
 import com.example.weatherkok.weather.models.midWx.WxResponse;
 import com.example.weatherkok.weather.models.shortsExpectation.todayTemp;
+import com.example.weatherkok.weather.models.shortsExpectation.todayWx;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,15 @@ public class Wx {
     WxItems wxList = new WxItems();
     TempItems tempList = new TempItems();
     ArrayList<todayTemp> tempToday = new ArrayList<>();
+    ArrayList<todayWx> wxToday = new ArrayList<>();
+
+    public ArrayList<todayWx> getWxToday() {
+        return wxToday;
+    }
+
+    public void setWxToday(ArrayList<todayWx> wxToday) {
+        this.wxToday = wxToday;
+    }
 
     public ArrayList<todayTemp> getTempToday() {
         return tempToday;

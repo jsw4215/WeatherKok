@@ -55,6 +55,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".when.WhenActivity" />
+        <activity android:name=".weather.NowWxActivity"/>
+        <activity android:name=".weather.WxNowListActivity"/>
+        <activity android:name=".weather.WxListActivity">
+        </activity>
         <activity android:name=".intro.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +68,8 @@
         </activity>
         <activity android:name=".where.WhereActivity">
         </activity>
-        <activity android:name=".main.MainActivity"></activity>
+        <activity android:name=".main.MainActivity">
+        </activity>
         <activity android:name=".when.CalendarActivity">
         </activity>
     </application>

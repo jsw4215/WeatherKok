@@ -3,13 +3,14 @@
     android:id="@+id/ll_what_is_this_app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_main"
+    android:background="#DFE9F6"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,10 +29,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="@string/what_is_this_app_contents"
         android:textSize="20dp"
-        android:fontFamily="@font/cafe24ssurroundair"/>
+        android:fontFamily="@font/cafe24ssurroundair"
+        android:background="@drawable/bg_calendar"/>
 
 </LinearLayout>

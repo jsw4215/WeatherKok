@@ -16,4 +16,19 @@
         android:fontWeight="400"
         android:font="@font/cafe24ssurround"/>
 
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/cafe24ohsquare"/>
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/cafe24ohsquareair"/>
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/cafe24simplehae"/>
+
 </font-family>

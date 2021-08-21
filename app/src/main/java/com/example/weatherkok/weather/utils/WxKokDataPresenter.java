@@ -1,13 +1,26 @@
 package com.example.weatherkok.weather.utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.weatherkok.R;
 import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.datalist.data.wxdata.am.AM;
 import com.example.weatherkok.datalist.data.wxdata.pm.PM;
+import com.example.weatherkok.intro.IntroActivity;
+import com.example.weatherkok.main.MainActivity;
+import com.example.weatherkok.src.BaseActivity;
+import com.example.weatherkok.weather.WeatherActivity;
 import com.example.weatherkok.weather.WeatherService;
 import com.example.weatherkok.weather.interfaces.WeatherContract;
 import com.example.weatherkok.weather.models.LatLon;
@@ -20,6 +33,8 @@ import com.example.weatherkok.weather.models.shortsExpectation.todayTemp;
 import com.example.weatherkok.weather.models.xy;
 import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
+import com.example.weatherkok.when.utils.CalenderInfoPresenter;
+import com.example.weatherkok.where.utils.GpsTracker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,9 +53,12 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class WxKokDataPresenter implements WeatherContract.ActivityView {
+public class WxKokDataPresenter extends Thread implements WeatherContract.ActivityView {
     private static final String TAG = WxKokDataPresenter.class.getSimpleName();
 
+    CalenderInfoPresenter mCal;
+    ProgressDialog progressDoalog;
+    GpsTracker mGpsTracker;
     Context mContext;
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     ArrayList<String> mTargetPlaces = new ArrayList<>();
@@ -50,9 +68,20 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
     String mReqToday;
     ArrayList<xy> xyList;
     int mNumOfSchedule;
+    //0이면 날씨콕, 1이면 즐겨찾기, 2이면 현재위치 날씨
+    int mTypeOfData;
 
-    public WxKokDataPresenter(Context mContext) {
-        this.mContext = mContext;
+
+    public WxKokDataPresenter(Context context) {
+
+        this.mContext = context;
+
+    }
+
+    private void initDummy() {
+        mCal = new CalenderInfoPresenter(mContext);
+        mCal.makeDummySchedule();
+
     }
 
     //스케쥴장소별!! 날씨 데이터 단기예보 preference에 저장
@@ -80,7 +109,8 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
 
         mReqToday = mToday + "0600";
 
-        midWxService(mCodeList.get(0), mReqToday, 0);
+        mTypeOfData =0;
+        midWxService(mCodeList.get(0), mReqToday, 0, mTypeOfData);
 
         //중기예보 데이터 도착 확인
         //중기예보의 retrofit null 아니면 그대로 보내는거 단기예보가 먼저 출발해버리면 흐트러질 수 있으니 나중에 생각해볼것
@@ -88,6 +118,88 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
 
         Log.i(TAG, "fin.");
 
+    }
+
+    public void getCurrentPlaceWxApi(){
+
+        String address = getGpsPosition();
+
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add(address);
+
+        mCodeList = manageDataForMidWxExpectation(temp);
+
+        mTempCodeList.add(getTempPlaceCode(temp.get(0)));
+
+        mToday = calculateToday();
+
+        mReqToday = mToday + "0600";
+        mTypeOfData = 2;
+        midWxService(mCodeList.get(0), mReqToday, 0, mTypeOfData);
+    }
+
+    public void getNowWxApi() {
+
+        //주소 가져오기
+        mTargetPlaces = getBookMarkPlace();
+        //주소로 중기예보 지역 코드 가져오기
+        mCodeList = manageDataForMidWxExpectation(mTargetPlaces);
+        for(int i=0;i<mTargetPlaces.size();i++) {
+            mTempCodeList.add(getTempPlaceCode(mTargetPlaces.get(i)));
+        }
+
+
+        mNumOfSchedule = mCodeList.size();
+
+        //코드로 api를 이용해 데이터 가져오기
+
+        mToday = calculateToday();
+
+        mReqToday = mToday + "0600";
+        mTypeOfData = 1;
+        midWxService(mCodeList.get(0), mReqToday, 0, mTypeOfData);
+
+        //중기예보 데이터 도착 확인
+        //중기예보의 retrofit null 아니면 그대로 보내는거 단기예보가 먼저 출발해버리면 흐트러질 수 있으니 나중에 생각해볼것
+
+        Log.i(TAG, "fin.");
+
+    }
+
+    private ArrayList<String> getBookMarkPlace() {
+
+        ScheduleList scheduleList = getBmPlaceFromSp();
+
+        ArrayList<Schedule> list = scheduleList.getScheduleArrayList();
+
+        ArrayList<String> place = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            place.add(list.get(i).getWhere());
+        }
+
+        return place;
+
+    }
+
+    private ScheduleList getBmPlaceFromSp() {
+
+        //Preference에 날씨 정보 객체 불러오기
+
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        ScheduleList scheduleList = new ScheduleList();
+
+        //null일 경우 처리할것.
+        String loaded = pref.getString("bookMark", "");
+
+        scheduleList = gson.fromJson(loaded, ScheduleList.class);
+        //Preference에 저장된 데이터 class 형태로 불러오기 완료
+
+        return scheduleList;
     }
 
     //단기예보는 그때 그때 쏴야함
@@ -117,7 +229,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
 
     }
 
-    private void sendDateForShortsWx() {
+    private void sendDateForShortsWx(int type) {
 
         xyList = new ArrayList<xy>();
 
@@ -126,7 +238,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         //주소로 nx, ny 구하기
         //단기예보
         for (int i = 0; i < xyList.size(); i++) {
-            shortWxService(calculateToday(), "0500", xyList.get(i), i);
+            shortWxService(calculateToday(), "0500", xyList.get(i), i, type);
         }
     }
 
@@ -167,6 +279,71 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
 
         return scheduleList;
 
+    }
+
+    private String getGpsPosition(){
+        String result="";
+        //현재위치 좌표 받아오기기
+        double latitude  = 0;
+        double longitude = 0;
+        mGpsTracker = new GpsTracker(mContext);
+        Location currentLocation = mGpsTracker.getLocation();
+        latitude = currentLocation.getLatitude();
+        longitude = currentLocation.getLongitude();
+
+        Geocoder geocoder = new Geocoder(mContext);
+        List<Address> gList = null;
+        try {
+            gList = geocoder.getFromLocation(latitude,longitude,8);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("TAG", "setMaskLocation() - 서버에서 주소변환시 에러발생");
+            // Fragment1 으로 강제이동 시키기
+        }
+        if (gList != null) {
+            if (gList.size() == 0) {
+                Toast.makeText(mContext, " 현재위치에서 검색된 주소정보가 없습니다. ", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                Address address = gList.get(0);
+                String sido = address.getAdminArea();       // 경기도
+                String gugun = address.getSubLocality();    // 성남시
+                String emd = address.getThoroughfare();     //금곡동
+                Log.i(TAG, address.toString());
+                Log.i(TAG,sido + gugun);
+
+                result = arrangeGpsResults(address);
+
+            }
+        }
+
+        return result;
+    }
+
+    private String arrangeGpsResults(Address address){
+
+        String gps="";
+        ArrayList<String> temp = new ArrayList<>();
+
+        temp.add(address.getAdminArea());
+        temp.add(address.getSubAdminArea());
+        temp.add(address.getLocality());
+        temp.add(address.getSubLocality());
+        temp.add(address.getThoroughfare().substring(0,2));
+
+        temp.removeAll(Arrays.asList("", null));
+
+        for(int i=0;i<temp.size();i++){
+            if(!(i==temp.size()-1)){
+                gps = gps + temp.get(i) + " ";
+            }else {
+                gps = gps + temp.get(i);
+            }
+        }
+
+        return gps;
     }
 
     private void setScheduleDataInToSp(ScheduleList scheduleList) {
@@ -276,7 +453,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         return dtf.format(cal.getTime());
     }
 
-    private void midWxService(String placeCode, String Date, int num) {
+    private void midWxService(String placeCode, String Date, int num, int type) {
         //중기예보
         //지역 정보 도단위, 시단위
         String key = "Lhp0GWghhWvVn4aUZSfe1rqUFsdQkNLvT+ZLt5RNHiFocjZjrbruHxVFaiKBOmTnOypgiM7WqtCcWTSLbAmIeA==";
@@ -287,11 +464,11 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         String tmFc;
         tmFc = Date;
         regId = mCodeList.get(num);
-        WeatherService weatherService = new WeatherService(this);
-        weatherService.getMidLandFcst(key, numOfRows, pageNo, dataType, regId, tmFc, num);
+        WeatherService weatherService = new WeatherService(this,mContext);
+        weatherService.getMidLandFcst(key, numOfRows, pageNo, dataType, regId, tmFc, num, type);
     }
 
-    private void shortWxService(String Date, String time, xy data, int position) {
+    private void shortWxService(String Date, String time, xy data, int position, int type) {
         //단기예보
         //지역 정보 도단위, 시단위
         //Base_time : 0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회) 10분뒤 api사용 가능
@@ -302,11 +479,11 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         String baseDate = Date;
         String baseTime = "0500";
 
-        WeatherService weatherService = new WeatherService(this);
-        weatherService.getShortFcst(key, numOfRows, pageNo, dataType, baseDate, time, data, position);
+        WeatherService weatherService = new WeatherService(this, mContext);
+        weatherService.getShortFcst(key, numOfRows, pageNo, dataType, baseDate, time, data, position, type);
     }
 
-    private void midTempService(String placeCode, String Date, int num) {
+    private void midTempService(String placeCode, String Date, int num, int type) {
         //단기예보
         //지역 정보 도단위, 시단위
         //Base_time : 0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회) 10분뒤 api사용 가능
@@ -318,8 +495,8 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         String tmFc;
         tmFc = Date;
         regId = mTempCodeList.get(num);
-        WeatherService weatherService = new WeatherService(this);
-        weatherService.getMidTemp(key, numOfRows, pageNo, dataType, regId, tmFc, num);
+        WeatherService weatherService = new WeatherService(this, mContext);
+        weatherService.getMidTemp(key, numOfRows, pageNo, dataType, regId, tmFc, num, type);
     }
 
     private ArrayList<String> manageDataForMidWxExpectation(ArrayList<String> arrayList) {
@@ -557,7 +734,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
     }
 
     //중기예보 날씨와 스케쥴 데이터를 병합하여 preference에 다시 저장
-    private void midWxIntoPref(WxResponse wxResponse, int num) {
+    private void midWxIntoPref(WxResponse wxResponse, int num, int type) {
 
         ScheduleList tempSchedule = new ScheduleList();
 
@@ -569,13 +746,13 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         setScheduleDataInToSp(tempSchedule);
 
         if ((num + 1) < mCodeList.size()) {
-            midWxService(mCodeList.get(num + 1), mReqToday, num + 1);
+            midWxService(mCodeList.get(num + 1), mReqToday, num + 1, type);
         } else {
-            midTempService(mTempCodeList.get(0), mReqToday, 0);
+            midTempService(mTempCodeList.get(0), mReqToday, 0, type);
         }
     }
 
-    private void midTempIntoPref(MidTempResponse midTempResponse, int num) {
+    private void midTempIntoPref(MidTempResponse midTempResponse, int num, int type) {
 
         ScheduleList tempSchedule = new ScheduleList();
 
@@ -587,10 +764,10 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         setScheduleDataInToSp(tempSchedule);
 
         if ((num + 1) < mTempCodeList.size()) {
-            midTempService(mTempCodeList.get(num + 1), mReqToday, num + 1);
+            midTempService(mTempCodeList.get(num + 1), mReqToday, num + 1, type);
         } else {
             //단기예보 데이터보내기
-            sendDateForShortsWx();
+            sendDateForShortsWx(type);
         }
 
     }
@@ -604,8 +781,9 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         temp.add(address.getSubAdminArea());
         temp.add(address.getLocality());
         temp.add(address.getSubLocality());
-        temp.add(address.getThoroughfare().substring(0, 2));
-
+        if(!TextUtils.isEmpty(address.getThoroughfare())) {
+            temp.add(address.getThoroughfare().substring(0, 2));
+        }
         temp.removeAll(Arrays.asList("", null));
 
         for (int i = 0; i < temp.size(); i++) {
@@ -621,16 +799,16 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
 
     //중기예보 도착 3-10일 이후 예보
     @Override
-    public void validateSuccess(boolean isSuccess, WxResponse wxResponse, int num) {
+    public void validateSuccess(boolean isSuccess, WxResponse wxResponse, int num, int type) {
 
         Log.i(TAG, "data도착 : " + wxResponse.getBody().getItems().getItem().get(0).getRegId());
         Log.i(TAG, "data도착 : " + wxResponse.getBody().getItems().getItem().get(0).getWf4Am());
-        midWxIntoPref(wxResponse, num);
+        midWxIntoPref(wxResponse, num, type);
 
     }
 
     @Override
-    public void validateShortSuccess(boolean isSuccess, ShortsResponse shortsResponse, String lat, String lon, int position) {
+    public void validateShortSuccess(boolean isSuccess, ShortsResponse shortsResponse, String lat, String lon, int position, int type) {
 
 
         Log.i(TAG, "단기예보 도착!!" + shortsResponse.getResponse().getBody().getItems().getItem().get(0).getFcstTime());
@@ -641,7 +819,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         Address address = calculator.getAddressWithLatLon(lat, lon, mContext);
         String addrResult = arrangeAddressResults(address);
 
-        setShortsDataIntoPref(shortsResponse, addrResult, position);
+        setShortsDataIntoPref(shortsResponse, addrResult, position, type);
 
         //단기예보 로직 구현
         //데이터 집어넣기
@@ -754,7 +932,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
 
     }
 
-    private void setShortsDataIntoPref(ShortsResponse shortsResponse, String addrResult, int position) {
+    private void setShortsDataIntoPref(ShortsResponse shortsResponse, String addrResult, int position, int type) {
 
 
         //단기예보 기온 최대, 최소 구하기 + 오늘의 기온 저장
@@ -771,6 +949,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         scheduleList = matchingAdderess(scheduleList, addrResult, scheduleData, position);
 
         setScheduleDataInToSp(scheduleList);
+
     }
 
     //스케쥴과 날씨 데이터를 주소 장소로 매칭하여 정보를 집어 넣는다.
@@ -784,7 +963,7 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         //기상청이 하루에 두번 정보를 제공하므로 그시간에 돌아가게 만들면 되니, 여기서 중복체크 알고리즘을 할 필요는 없다. 아침 6시 저녁 18시
         //리스트에 데이터 추가, 기존의 데이터가 있으니 하나하나 집어넣어 줘야함.
         scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList().getItem().get(0).setTaMin0(
-                        scheduleData.getFcst().getTempList().getItem().get(0).getTaMin0()
+                scheduleData.getFcst().getTempList().getItem().get(0).getTaMin0()
         );
 
         scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList().getItem().get(0).setTaMax0(
@@ -1099,47 +1278,47 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
 
 
     @Override
-    public void validateFailure(String message, String regId, int num) {
+    public void validateFailure(String message, String regId, int num, int type) {
 
         Log.e(TAG, "중기예보 실패");
         //코드로 api를 이용해 데이터 가져오기
         boolean checker = checkAMPM();
         //오후면 오늘꺼로 다시 시도 오전이면 밤 12시 넘어가서 그런 것이니 어제 저녁으로 시도
         if (checker) {
-            midWxService(regId, getFutureDay("yyyyMMdd", 0) + "1800", num);
+            midWxService(regId, getFutureDay("yyyyMMdd", 0) + "1800", num, type);
         } else {
-            midWxService(regId, getFutureDay("yyyyMMdd", -1) + "1800", num);
+            midWxService(regId, getFutureDay("yyyyMMdd", -1) + "1800", num, type);
         }
     }
 
     @Override
-    public void validateShortFailure(String message, xy data, int position) {
+    public void validateShortFailure(String message, xy data, int position, int type) {
         Log.e(TAG, "단기예보 실패 키 : " + position);
         boolean checker = checkAMPM();
         //오후면 오늘꺼로 다시 시도 오전이면 밤 12시 넘어가서 그런 것이니 어제 저녁으로 시도
         if (checker) {
-            shortWxService(getFutureDay("yyyyMMdd", 0), "1700", data, position);
+            shortWxService(getFutureDay("yyyyMMdd", 0), "1700", data, position, type);
         } else {
-            shortWxService(getFutureDay("yyyyMMdd", -1), "1700", data, position);
+            shortWxService(getFutureDay("yyyyMMdd", -1), "1700", data, position, type);
         }
     }
 
     @Override
-    public void validateMidTempSuccess(MidTempResponse midTempResponse, int num) {
+    public void validateMidTempSuccess(MidTempResponse midTempResponse, int num, int type) {
 
         Log.e(TAG, "중기기온 성공");
-        midTempIntoPref(midTempResponse, num);
+        midTempIntoPref(midTempResponse, num, type);
     }
 
     @Override
-    public void validateMidTempFailure(String message, String regId, int num) {
+    public void validateMidTempFailure(String message, String regId, int num, int type) {
         Log.e(TAG, "중기기온 실패");
         boolean checker = checkAMPM();
         //오후면 오늘꺼로 다시 시도 오전이면 밤 12시 넘어가서 그런 것이니 어제 저녁으로 시도
         if (checker) {
-            midTempService(regId, getFutureDay("yyyyMMdd", 0) + "1800", num);
+            midTempService(regId, getFutureDay("yyyyMMdd", 0) + "1800", num, type);
         } else {
-            midTempService(regId, getFutureDay("yyyyMMdd", -1) + "1800", num);
+            midTempService(regId, getFutureDay("yyyyMMdd", -1) + "1800", num, type);
         }
     }
 
@@ -1164,5 +1343,4 @@ public class WxKokDataPresenter implements WeatherContract.ActivityView {
         }
 
     }
-
 }

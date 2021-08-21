@@ -6,29 +6,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".main.MainActivity">
+    tools:context=".main.MainActivity"
+    android:background="@drawable/bg_main">
 
     <LinearLayout
+        android:gravity="center"
         android:id="@+id/ll_main_what_is_the_app"
-        android:layout_margin="10dp"
+        android:layout_marginTop="90dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:textSize="30dp"
+            android:textSize="48dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/what_is_this_app"
             android:layout_gravity="center_vertical"
-            android:fontFamily="@font/imcresoojin" />
+            android:textColor="#292C3B"
+            android:fontFamily="@font/cafe24ssurround" />
+
+        <TextView
+            android:textSize="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이 뭔가요"
+            android:layout_gravity="bottom"
+            android:textColor="#292C3B"
+            android:fontFamily="@font/cafe24ssurround" />
 
         <ImageView
             android:src="@drawable/ic_question_mark_24dp"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
     <LinearLayout
         android:id="@+id/ll_main_where"
@@ -39,9 +61,9 @@
 
         <ImageView
             android:layout_marginRight="20dp"
-            android:src="@drawable/place_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:src="@drawable/place_icon2"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
         <TextView
             android:id="@+id/tv_main_where"
@@ -50,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/where_to_go"
-            android:fontFamily="@font/imcresoojin"/>
+            android:fontFamily="@font/cafe24ssurroundair"/>
 
     </LinearLayout>
 
@@ -64,8 +86,8 @@
         <ImageView
             android:layout_marginRight="20dp"
             android:src="@drawable/calendar_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
         <TextView
             android:id="@+id/tv_main_when"
@@ -74,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/when_to_go"
-            android:fontFamily="@font/imcresoojin"/>
+            android:fontFamily="@font/cafe24ssurroundair"/>
 
     </LinearLayout>
 
@@ -88,8 +110,8 @@
         <ImageView
             android:layout_marginRight="20dp"
             android:src="@drawable/ic_person_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
         <TextView
             android:id="@+id/tv_main_who"
@@ -98,19 +120,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/who_go_with"
-            android:fontFamily="@font/imcresoojin"/>
+            android:fontFamily="@font/cafe24ssurroundair"/>
+
+    </LinearLayout>
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_main_start"
-        android:gravity="bottom"
-        android:background="@drawable/bg_gis_result_items_count"
+        android:gravity="center"
+        android:background="@drawable/bg_btn_start"
         android:textSize="30dp"
+        android:textColor="#FFFFFF"
         android:layout_gravity="end"
         android:text="@string/start_the_app"
-        android:fontFamily="@font/imcresoojin"
+        android:fontFamily="@font/cafe24ohsquareair"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="10dp"
+        />
 
 </LinearLayout>

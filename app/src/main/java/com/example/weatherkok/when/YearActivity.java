@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,10 @@ public class YearActivity extends BaseActivity{
     Context mContext;
     String mSelectedDate;
     String mToday="";
+    String mYear;
+    String mMonth;
+    ImageView mIvYearBefore;
+    ImageView mIvYearAfter;
     boolean mLunaChecker=false;
     RecyclerView Jan;
     RecyclerView Feb;
@@ -49,9 +54,10 @@ public class YearActivity extends BaseActivity{
     RecyclerView Nov;
     RecyclerView Dec;
     RecyclerView Choose;
-    TextView mTvDialog;
+    ImageView mTvDialog;
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     String mYearForCalendar;
+    int mMaxYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +87,6 @@ public class YearActivity extends BaseActivity{
         }
 
 
-
         mTvDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +96,57 @@ public class YearActivity extends BaseActivity{
 
             }
         });
+
+        // 이전 연도 넘어가게 하는건데 안되네..
+        mIvYearBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String yearForAfter = mYear.substring(0,4);
+                int a = Integer.parseInt(yearForAfter)-1;
+
+                if(!(a<2010)){
+                    Intent intent = new Intent(YearActivity.this, YearActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("year",yearForAfter);
+                    finish();
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                    startActivity(intent);
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                }
+            }
+        });
+
+        // 이후 연도 넘어가게 하는건데 안되네..
+        mIvYearAfter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String yearForBefore = mYear.substring(0,4);
+                int a = Integer.parseInt(yearForBefore)+1;
+
+                if(!(a>mMaxYear)){
+                    Intent intent = new Intent(YearActivity.this, YearActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("year",yearForBefore);
+                    finish();
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                    startActivity(intent);
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                }
+            }
+        });
+
+    }
+
+    // 연간 +10년
+    private void setMaxYear() {
+
+        mMaxYear = Integer.parseInt(mToday.substring(0,4))+10;
+
+        SharedPreferences sp = getSharedPreferences(PREFERENCE_KEY,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString("maxYear", String.valueOf(mMaxYear));
+        editor.commit();
     }
 
     //월 달력 터치시 해당월로 이동
@@ -108,7 +164,9 @@ public class YearActivity extends BaseActivity{
     private void initView(){
         setContentView(R.layout.activity_year);
 
-        mTvDialog = findViewById(R.id.tv_year_dialog);
+        mTvDialog = findViewById(R.id.iv_year_cal_dialog);
+        mIvYearBefore = findViewById(R.id.iv_year_before);
+        mIvYearAfter = findViewById(R.id.iv_year_after);
 
         Jan = findViewById(R.id.rv_year_jan);
         Feb = findViewById(R.id.rv_year_feb);

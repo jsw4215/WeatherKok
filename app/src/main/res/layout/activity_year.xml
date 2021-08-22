@@ -53,16 +53,7 @@
 
 <!--    </RelativeLayout>-->
 
-    <TextView
-        android:layout_weight="1"
-        android:id="@+id/tv_year_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="14dp"
-        android:text="^" />
-
-    <TextView
+       <TextView
         android:padding="10dp"
         android:layout_weight="1"
         android:text="연간달력"
@@ -70,6 +61,60 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/cafe24ohsquareair"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_year_before"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_arrow_left_black_24dp"
+            tools:ignore="NotSibling" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_year_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_gravity="center"
+            android:text="2021"
+            android:textSize="20dp"
+            android:fontFamily="@font/cafe24ohsquare"/>
+
+        <ImageView
+            android:id="@+id/iv_year_cal_dialog"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/arrow_up"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/iv_year_after"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_arrow_right_black_24dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_weight="3"

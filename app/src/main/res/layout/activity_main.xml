@@ -1,145 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!--drawerlayout 설정-->
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_register_total"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".main.MainActivity"
-    android:background="@drawable/bg_main">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/ll_main_what_is_the_app"
-        android:layout_marginTop="60dp"
-        android:padding="30dp"
+
+    // main 레이아웃
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ll_register_total"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:textSize="48dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/what_is_this_app"
-            android:layout_gravity="center_vertical"
-            android:textColor="#292C3B"
-            android:fontFamily="@font/cafe24ssurround" />
-
-        <TextView
-            android:textSize="32dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이 뭔가요"
-            android:layout_gravity="bottom"
-            android:textColor="#292C3B"
-            android:fontFamily="@font/cafe24ssurround" />
-
-        <ImageView
-            android:src="@drawable/ic_question_mark_24dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="5dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_main"
         android:orientation="vertical"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        tools:context=".main.MainActivity">
 
         <LinearLayout
-            android:id="@+id/ll_main_where"
-            android:layout_margin="20dp"
+            android:id="@+id/ll_main_what_is_the_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_marginRight="20dp"
-                android:src="@drawable/map_marker"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="30dp">
 
             <TextView
-                android:id="@+id/tv_main_where"
-                android:layout_gravity="center_vertical"
-                android:textSize="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/where_to_go"
-                android:fontFamily="@font/cafe24ssurround"/>
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/cafe24ssurround"
+                android:text="@string/what_is_this_app"
+                android:textColor="#292C3B"
+                android:textSize="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/cafe24ssurround"
+                android:text="이 뭔가요"
+                android:textColor="#292C3B"
+                android:textSize="32dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_question_mark_24dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_main_when"
-            android:layout_margin="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_marginRight="20dp"
-                android:src="@drawable/calendar"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <TextView
-                android:id="@+id/tv_main_when"
-                android:layout_gravity="center_vertical"
-                android:textSize="30dp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_main_where"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/when_to_go"
-                android:fontFamily="@font/cafe24ssurround"/>
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/map_marker" />
+
+                <TextView
+                    android:id="@+id/tv_main_where"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/cafe24ssurround"
+                    android:text="@string/where_to_go"
+                    android:textSize="30dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_main_when"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/tv_main_when"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/cafe24ssurround"
+                    android:text="@string/when_to_go"
+                    android:textSize="30dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_main_who"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/users" />
+
+                <TextView
+                    android:id="@+id/tv_main_who"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/cafe24ssurround"
+                    android:text="@string/who_go_with"
+                    android:textSize="30dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_main_who"
-            android:layout_margin="20dp"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_main_start"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_marginRight="20dp"
-                android:src="@drawable/users"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <TextView
-                android:id="@+id/tv_main_who"
-                android:layout_gravity="center_vertical"
-                android:textSize="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/who_go_with"
-                android:fontFamily="@font/cafe24ssurround"/>
-
-        </LinearLayout>
+            android:layout_gravity="end"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_btn_fill"
+            android:fontFamily="@font/cafe24ohsquareair"
+            android:gravity="center"
+            android:text="@string/start_the_app"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_main_start"
-        android:gravity="center"
-        android:background="@drawable/bg_btn_fill"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:layout_gravity="end"
-        android:text="@string/start_the_app"
-        android:fontFamily="@font/cafe24ohsquareair"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="10dp"
-        />
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/navi_header"
+        app:menu="@menu/navi_menu" />
 
-</LinearLayout>
+<!--    <Switch-->
+<!--        android:id="@+id/sw_menu_alarm"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginRight="15dp"-->
+<!--        android:background="#00000000"-->
+<!--        android:textSize="40dp"/>-->
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

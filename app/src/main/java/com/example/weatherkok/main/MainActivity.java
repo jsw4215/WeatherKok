@@ -5,11 +5,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.weatherkok.R;
 import com.example.weatherkok.datalist.data.ScheduleData;
@@ -26,6 +33,7 @@ import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.where.WhereActivity;
 import com.example.weatherkok.who.kakao.kotlin.WhoActivity;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -33,6 +41,10 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout mDrawerLayout;
+    private Context context = this;
+
     //Preference를 불러오기 위한 키
     public static String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     Context mContext;
@@ -52,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     String whereMain;
     WxKokDataPresenter mWxKokDataPresenter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         initView();
         //preference를 체크하여 선택한 데이터가 있으면 해당 데이터로 띄운다.
         checkPreference();
-
 
 
         //preference 연동
@@ -135,6 +147,42 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //툴바 변수 생성
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowTitleEnabled(false); // 기존 타이틀 지우기
+//        actionBar.setDisplayHomeAsUpEnabled(true); // true값 전달하면 자동으로 툴바 왼쪽에 버튼 생성
+//        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_24); // 버튼의 이미지 설정
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
+
+                return true;
+            }
+        });
+
+    }
+
+    private void setSupportActionBar(Toolbar toolbar) {
+    }
+
+    //툴바 버튼의 이벤트 설정
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //메뉴버튼 눌렀을때
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void resetSP(){

@@ -43,7 +43,7 @@ public class CalendarActivity extends BaseActivity{
         private TextView tvYearMonthTop;
         String year_month;
         TextView mTvSelBtn;
-        TextView mTvDialog;
+        ImageView mTvDialog;
         ImageView mIvBefore;
         ImageView mIvAfter;
         private ArrayList<String> dayList;
@@ -249,7 +249,7 @@ public class CalendarActivity extends BaseActivity{
 
             mRecyclerViewNow = findViewById(R.id.rv_calendar);
 
-            mTvDialog = findViewById(R.id.tv_cal_dialog);
+            mTvDialog = findViewById(R.id.iv_cal_dialog);
 
             tvYearMonthTop = (TextView) findViewById(R.id.tv_year_month_top);
 

@@ -2,22 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/account"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:id="@+id/menu_alarm"
+            android:icon="@drawable/ic_alarm_24"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="계정"
+            android:title="@string/weather_alarm"
+            />
+
+        <item
+            android:id="@+id/menu_share"
+            android:icon="@drawable/ic_share_24"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/sharing"
             />
         <item
-            android:id="@+id/setting"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:id="@+id/menu_ad_delete"
+            android:icon="@drawable/ic_ad_delete_24"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="설정"
+            android:title="@string/ad_delete"
             />
         <item
-            android:id="@+id/logout"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:id="@+id/menu_graph"
+            android:icon="@drawable/ic_graph_24"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="로그아웃"
+            android:title="@string/graph"
             />
     </group>
 </menu>

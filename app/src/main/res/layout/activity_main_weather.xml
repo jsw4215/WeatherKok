@@ -20,10 +20,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
             android:src="@drawable/ic_menu_24"></ImageView>
 
         <ImageView
@@ -31,10 +30,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_add_24"></ImageView>
 
     </RelativeLayout>
@@ -92,6 +90,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/imcresoojin"
+            android:gravity="center"
             android:text="@string/location"
             android:textSize="30dp"></TextView>
 
@@ -151,7 +150,7 @@
             android:padding="5dp"
             android:text="@string/forecast"
             android:textColor="#FFFFFF"
-            android:textSize="20dp"></TextView>
+            android:textSize="15dp"></TextView>
 
     </RelativeLayout>
 

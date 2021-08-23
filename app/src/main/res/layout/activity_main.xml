@@ -148,7 +148,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/bg_btn_fill"
-            android:fontFamily="@font/cafe24ohsquareair"
+            android:fontFamily="@font/cafe24ssurround"
             android:gravity="center"
             android:text="@string/start_the_app"
             android:textColor="#FFFFFF"

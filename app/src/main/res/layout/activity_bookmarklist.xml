@@ -8,8 +8,7 @@
         android:id="@+id/rl_bml_top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp
-">
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/iv_bml_back_arrow_top_bar"
@@ -25,10 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/iv_bml_wrong_mark_top_bar"
+            android:fontFamily="@font/cafe24ohsquare"
             android:gravity="center"
             android:text="등록된 날씨콕"
-            android:textSize="30dp"
-            android:fontFamily="@font/cafe24ohsquareair"/>
+            android:textSize="25dp" />
 
         <ImageView
             android:layout_margin="5dp"

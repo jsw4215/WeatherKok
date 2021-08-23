@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="공유하기"
-        android:textSize="30dp"/>
+        android:textSize="30dp"
+        android:fontFamily="@font/cafe24ohsquare"/>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -38,13 +39,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/kakao_logo" />
+                android:src="@drawable/kakaotalk" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="카카오톡" />
+                android:text="카카오톡"
+                android:fontFamily="@font/cafe24ohsquareair"/>
         </LinearLayout>
 
         <LinearLayout
@@ -57,13 +59,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/kakao_story" />
+                android:src="@drawable/kakaostory" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="카카오스토리" />
+                android:text="카카오스토리"
+                android:fontFamily="@font/cafe24ohsquareair"/>
         </LinearLayout>
 
         <LinearLayout
@@ -76,13 +79,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/face_book_logo" />
+                android:src="@drawable/facebook" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="페이스북" />
+                android:text="페이스북"
+                android:fontFamily="@font/cafe24ohsquareair"/>
         </LinearLayout>
 
 
@@ -104,13 +108,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/line_logo" />
+                android:src="@drawable/line" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="라인" />
+                android:text="라인"
+                android:fontFamily="@font/cafe24ohsquareair"/>
         </LinearLayout>
 
         <LinearLayout
@@ -123,13 +128,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/sms_image" />
+                android:src="@drawable/sms" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="문자메세지" />
+                android:text="문자메세지"
+                android:fontFamily="@font/cafe24ohsquareair"/>
         </LinearLayout>
 
         <LinearLayout
@@ -148,7 +154,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="링크복사" />
+                android:text="링크복사"
+                android:fontFamily="@font/cafe24ohsquareair"/>
         </LinearLayout>
 
     </LinearLayout>

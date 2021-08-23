@@ -5,6 +5,15 @@ import java.util.ArrayList;
 public class BaseDateInfoList {
     private static final String TAG = BaseDateInfoList.class.getSimpleName();
     public ArrayList<BaseDateInfo> baseDateInfoList = new ArrayList<>();
+    String yearMonth;
+
+    public String getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
 
     public BaseDateInfoList() {
     }

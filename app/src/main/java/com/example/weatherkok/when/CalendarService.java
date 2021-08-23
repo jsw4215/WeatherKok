@@ -35,20 +35,20 @@ public class CalendarService {
                 Log.i(TAG, "success : ");
                 final ResponseParams responseRest = response.body();
                 if (responseRest == null) {
-                    mRestContractActivityView.validateFailure(null);
+                    mRestContractActivityView.validateFailure(null, year, month);
                     return;
                 }
                 Log.d("isSuccess : ", String.valueOf(response.isSuccessful()));
 
                 Log.d("get Locdate", String.valueOf(responseRest.getResponse().getBody().getItems().getItem().get(0).getLocdate()));
                 Log.d("getDateName : ", responseRest.getResponse().getBody().getItems().getItem().get(0).getDateName());
-                mRestContractActivityView.validateSuccess(response.isSuccessful(), responseRest);
+                mRestContractActivityView.validateSuccess(response.isSuccessful(), responseRest, year, month);
             }
 
             @Override
             public void onFailure(Call<ResponseParams> call, Throwable t) {
                 Log.i(TAG,"failure");
-                mRestContractActivityView.validateFailure(null);
+                mRestContractActivityView.validateFailure(null, year, month);
             }
         });
     }
@@ -66,19 +66,19 @@ public class CalendarService {
                 Log.i(TAG, "success : ");
                 final ResponseSingle responseRest = response.body();
                 if (responseRest == null) {
-                    mRestContractActivityView.validateFailure(null);
+                    mRestContractActivityView.validateFailure(null, year, month);
                     return;
                 }
                 Log.d("isSuccess : ", String.valueOf(response.isSuccessful()));
                 Log.d("get Locdate", String.valueOf(responseRest.getResponse().getBody().getItems().getItem().getLocdate()));
                 Log.d("getDateName : ", responseRest.getResponse().getBody().getItems().getItem().getDateName());
-                mRestContractActivityView.validateSuccessSingle(response.isSuccessful(), responseRest);
+                mRestContractActivityView.validateSuccessSingle(response.isSuccessful(), responseRest, year, month);
             }
 
             @Override
             public void onFailure(Call<ResponseSingle> call, Throwable t) {
                 Log.i(TAG,"failure");
-                mRestContractActivityView.validateFaliureSingle(null);
+                mRestContractActivityView.validateFaliureSingle(null, year, month);
             }
         });
     }

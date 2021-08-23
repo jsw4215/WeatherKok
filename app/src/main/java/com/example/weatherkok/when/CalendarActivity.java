@@ -92,6 +92,8 @@ public class CalendarActivity extends BaseActivity{
                     &&!TextUtils.isEmpty(intent.getStringExtra("month"))){
                 String year = intent.getStringExtra("year");
                 String month = intent.getStringExtra("month");
+                if(year.equals("01")){mIvBefore.setVisibility(View.INVISIBLE);}
+                else if(year.equals("12")){mIvAfter.setVisibility(View.INVISIBLE);}
                 initForNotCurr(year, month);
 
             } else {
@@ -184,23 +186,27 @@ public class CalendarActivity extends BaseActivity{
                     String monthForAfter = year_month.substring(5);
                     int a = Integer.parseInt(yearForAfter);
                     int b = Integer.parseInt(monthForAfter)-1;
-                    if(b==0){b=12; a=a-1;}
-                    yearForAfter = String.valueOf(a);
-                    monthForAfter = String.valueOf(b);
-                    if(monthForAfter.length()<2){
-                        monthForAfter="0"+monthForAfter;
+                    //if(b==0){b=12; a=a-1;}
+                    if(b==1){
+                        mIvBefore.setVisibility(View.INVISIBLE);
                     }
-                    if(!(a<2010)){
-                        Intent intent = new Intent(CalendarActivity.this, CalendarActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent.putExtra("year",yearForAfter);
-                        intent.putExtra("month",monthForAfter);
-                        finish();
-                        overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
-                        startActivity(intent);
-                        overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                        yearForAfter = String.valueOf(a);
+                        monthForAfter = String.valueOf(b);
+                        if (monthForAfter.length() < 2) {
+                            monthForAfter = "0" + monthForAfter;
+                        }
+                        if (!(a < 2010)) {
+                            Intent intent = new Intent(CalendarActivity.this, CalendarActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            intent.putExtra("year", yearForAfter);
+                            intent.putExtra("month", monthForAfter);
+                            finish();
+                            overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                            startActivity(intent);
+                            overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                        }
                     }
-                }
+
             });
 
             mIvAfter.setOnClickListener(new View.OnClickListener() {
@@ -210,24 +216,28 @@ public class CalendarActivity extends BaseActivity{
                     String monthForBefore = year_month.substring(5);
                     int a = Integer.parseInt(yearForBefore);
                     int b = Integer.parseInt(monthForBefore)+1;
-                    if(b==13){b=1; a=a+1;}
-                    yearForBefore = String.valueOf(a);
-                    monthForBefore = String.valueOf(b);
-                    if(monthForBefore.length()<2){
-                        monthForBefore="0"+monthForBefore;
+                    //if(b==13){b=1; a=a+1;}
+                    if(b==12){
+                        mIvAfter.setVisibility(View.INVISIBLE);
+                    }
+                        yearForBefore = String.valueOf(a);
+                        monthForBefore = String.valueOf(b);
+                        if (monthForBefore.length() < 2) {
+                            monthForBefore = "0" + monthForBefore;
+                        }
+
+                        if (!(a > mMaxYear)) {
+                            Intent intent = new Intent(CalendarActivity.this, CalendarActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            intent.putExtra("year", yearForBefore);
+                            intent.putExtra("month", monthForBefore);
+                            finish();
+                            overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                            startActivity(intent);
+                            overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                        }
                     }
 
-                    if(!(a>mMaxYear)){
-                        Intent intent = new Intent(CalendarActivity.this, CalendarActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent.putExtra("year",yearForBefore);
-                        intent.putExtra("month",monthForBefore);
-                        finish();
-                        overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
-                        startActivity(intent);
-                        overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
-                    }
-                }
             });
 
         }
@@ -558,10 +568,13 @@ public class CalendarActivity extends BaseActivity{
     private void loadScheduleData(String year, String month){
 
         CalenderInfoPresenter baseCalenderInfo = new CalenderInfoPresenter();
+        baseCalenderInfo.run(year, month, mContext);
+        baseCalenderInfo.setDaemon(true);
+        baseCalenderInfo.start();
         //preference에 더미 데이터 및 해당 년,월의 음력, 공휴일 데이터를 생성해준다.
-        baseCalenderInfo.initCal(year, month, mContext);
 
     }
+
 
 
     public boolean getmLunaChecker(){

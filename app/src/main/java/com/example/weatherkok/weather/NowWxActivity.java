@@ -22,7 +22,6 @@ import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.intro.IntroActivity;
 import com.example.weatherkok.src.BaseActivity;
 import com.example.weatherkok.weather.utils.NowWxActivityAdapter;
-import com.example.weatherkok.weather.utils.WeatherActivityAdapter;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.where.utils.GpsTracker;
@@ -60,7 +59,7 @@ public class NowWxActivity extends BaseActivity {
     NowWxActivityAdapter mBmAdapter;
     String mScheduledDate;
     GpsTracker mGpsTracker;
-    Context mContext;
+    public static Context mNowWxContext;
     ImageView mIvBmWxAdd;
     TextView tvBmNoList;
 
@@ -69,7 +68,7 @@ public class NowWxActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_weather);
-        mContext = getBaseContext();
+        mNowWxContext = getBaseContext();
 
         Log.i(TAG, "weather");
         //스케쥴에 따른 날씨 정보 불러오기 및 preference에 데이터 저장
@@ -99,7 +98,7 @@ public class NowWxActivity extends BaseActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(NowWxActivity.this, IntroActivity.class);
-                intent.putExtra("from","toWeather");
+                intent.putExtra("from","goToWeather");
                 startActivity(intent);
 
             }
@@ -325,7 +324,7 @@ public class NowWxActivity extends BaseActivity {
         //현재위치 좌표 받아오기기
         double latitude  = 0;
         double longitude = 0;
-        mGpsTracker = new GpsTracker(mContext);
+        mGpsTracker = new GpsTracker(mNowWxContext);
         Location currentLocation = mGpsTracker.getLocation();
         latitude = currentLocation.getLatitude();
         longitude = currentLocation.getLongitude();
@@ -530,5 +529,21 @@ public class NowWxActivity extends BaseActivity {
         return day;
     }
 
+    public void refreshList(){
+        mBmAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "onResume");
+        super.onResume();
+        decorBottom();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        decorBottom();
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.example.weatherkok.when.interfaces;
 
+import android.content.Context;
+
 import com.example.weatherkok.when.models.ResponseParams;
 import com.example.weatherkok.when.models.RestResponse;
 import com.example.weatherkok.when.models.single.ResponseSingle;
@@ -10,13 +12,15 @@ public interface RestContract {
 
     interface ActivityView {
 
-        void validateSuccess(boolean isSuccess, ResponseParams responseInBody);
+        void run(String year, String month, Context context);
 
-        void validateSuccessSingle(boolean isSuccess, ResponseSingle responseSingle);
+        void validateSuccess(boolean isSuccess, ResponseParams responseInBody,String year, String month);
 
-        void validateFailure(String message);
+        void validateSuccessSingle(boolean isSuccess, ResponseSingle responseSingle,String year, String month);
 
-        void validateFaliureSingle(String message);
+        void validateFailure(String message,String year, String month);
+
+        void validateFaliureSingle(String message, String year, String month);
     }
 
     interface Presenter {

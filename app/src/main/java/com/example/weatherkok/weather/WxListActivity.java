@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class WxListActivity extends BaseActivity {
     private static final String TAG = WxListActivity.class.getSimpleName();
@@ -105,6 +106,11 @@ public class WxListActivity extends BaseActivity {
 
                 setScheduleDataInToSp(mScheduleList);
 
+                if(mScheduleList.getScheduleArrayList().size()==0){
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -120,10 +126,15 @@ public class WxListActivity extends BaseActivity {
             }
         }
 
-        for(int i=0;i<mScheduleList.getScheduleArrayList().size();i++) {
-            if(mScheduleList.getScheduleArrayList().get(i).getYear().equals("delete")){
-            mScheduleList.getScheduleArrayList().remove(i);}
-        }
+            Iterator it = mScheduleList.getScheduleArrayList().iterator();
+
+            while(it.hasNext()) {
+                Schedule schedule = (Schedule) it.next();
+
+                if(schedule.getYear()!=null&&schedule.getYear().equals("delete")){
+                    it.remove();
+                }
+            }
 
     }
 

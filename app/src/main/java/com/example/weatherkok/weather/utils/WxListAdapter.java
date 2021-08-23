@@ -95,14 +95,20 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             setDelWxImg(holder, position);
 
-            ((DelViewHolder)holder).rbBmList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            ((DelViewHolder)holder).rbBmList.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    deleteList.set(position,true);
+                public void onClick(View v) {
+                    if(((DelViewHolder)holder).rbBmList.isSelected()){
+                        ((DelViewHolder)holder).rbBmList.setChecked(false);
+                        ((DelViewHolder)holder).rbBmList.setSelected(false);
+                        deleteList.set(position,false);
+                    }else{
+                        ((DelViewHolder)holder).rbBmList.setChecked(true);
+                        ((DelViewHolder)holder).rbBmList.setSelected(true);
+                        deleteList.set(position,true);
+                    }
                 }
             });
-
 
         }
     }

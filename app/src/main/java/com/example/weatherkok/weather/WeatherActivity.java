@@ -3,6 +3,7 @@ package com.example.weatherkok.weather;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -66,6 +67,13 @@ public class WeatherActivity extends BaseActivity{
 
 //        mWxKokDataPresenter.getScheduleDateWxApi();
 
+        mScheduleList = getScheduleFromSp();
+        if(mScheduleList.getScheduleArrayList().size()==0){
+            Intent intent = new Intent(WeatherActivity.this, IntroActivity.class);
+            intent.putExtra("from","goToWeather");
+            startActivity(intent);
+        }
+
         initCenterView();
 
         initView();
@@ -99,8 +107,6 @@ public class WeatherActivity extends BaseActivity{
     }
 
     private void decorBottom() {
-
-        mScheduleList.getScheduleArrayList().remove(0);
 
         tvBmNoList = findViewById(R.id.tv_bm_weather_no_list);
         mRvBmWxList = (RecyclerView) findViewById(R.id.rv_bookmark_wx_list);
@@ -148,7 +154,6 @@ public class WeatherActivity extends BaseActivity{
 
     private void decorCenter(){
 
-        mScheduleList = getScheduleFromSp();
         //가장 빠른일자의 스케쥴
         Schedule schedule = getFirstDateSchedule(mScheduleList);
 
@@ -177,6 +182,8 @@ public class WeatherActivity extends BaseActivity{
         //현재온도 적용
         //단기예보 response에서 현재 시간 비교해서 TMP 변수 클래스에 만들어서 넣어두기
         //matchingCurTimeGetTemp(currentHour, schedule);
+        //첫날 적용 후 삭제
+        mScheduleList.getScheduleArrayList().remove(0);
     }
 
     private long howFarFromToday(String dateCompared) {
@@ -747,13 +754,18 @@ public class WeatherActivity extends BaseActivity{
 
 
         for(int i =0;i<scheduleList.getScheduleArrayList().size();i++) {
-            temp.add(Integer.valueOf(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate()));
+            if(!TextUtils.isEmpty(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate())){
+            temp.add(Integer.valueOf(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate()));}
         }
+
+        int minDate = 0;
+        int maxIndex = 0;
         //가장 최근 날짜
-        int minDate = Collections.min(temp);
+        if(temp!=null&&temp.size()!=0) {
+            minDate = Collections.min(temp);
 
-        int maxIndex = Collections.max(temp);
-
+            maxIndex = Collections.max(temp);
+        }
         minDate = getIndexFirestdateSchedule(minDate, temp);
 
         return scheduleList.getScheduleArrayList().get(minDate);
@@ -776,7 +788,8 @@ public class WeatherActivity extends BaseActivity{
         //테스트용 더미
 
         for(int i =0;i<scheduleList.getScheduleArrayList().size();i++) {
-            if(intToday > Integer.valueOf(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate())){
+            if(!TextUtils.isEmpty(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate())
+                    &&intToday > Integer.valueOf(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate())){
                 scheduleList.getScheduleArrayList().remove(i);
             }
         }
@@ -832,4 +845,9 @@ public class WeatherActivity extends BaseActivity{
         this.mScheduledDate = mScheduledDate;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        decorBottom();
+    }
 }

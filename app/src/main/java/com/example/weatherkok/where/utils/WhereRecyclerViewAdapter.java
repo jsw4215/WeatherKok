@@ -58,7 +58,7 @@ public class WhereRecyclerViewAdapter extends RecyclerView.Adapter<WhereRecycler
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View v, int position);
+        void onItemClick(View v, int position,boolean seJong);
     }
 
     private OnItemClickListener mListener = null;
@@ -74,13 +74,17 @@ public class WhereRecyclerViewAdapter extends RecyclerView.Adapter<WhereRecycler
         public Holder(@NonNull View itemView) {
             super(itemView);
             tv = itemView.findViewById(R.id.tv_where_contents);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
 
                     where_from_holder = tv.getText().toString();
+                    boolean seJong = false;
+
+                    if(where_from_holder.startsWith("세종")){
+                        seJong = true;
+                    }
 
                     SharedPreferences pref = context.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
 
@@ -105,7 +109,7 @@ public class WhereRecyclerViewAdapter extends RecyclerView.Adapter<WhereRecycler
 
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
-                        mListener.onItemClick(v,pos);
+                        mListener.onItemClick(v,pos,seJong);
                     }
 
                 }

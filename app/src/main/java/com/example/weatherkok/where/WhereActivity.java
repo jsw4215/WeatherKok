@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.weatherkok.R;
@@ -78,6 +79,8 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
     ScrollView mSvSearched;
     ScrollView mSvContents;
     ArrayList<String> temp;
+    boolean firstTimeCheck=false;
+    int receiveCnt=0;
 
     /**
      * WhereActivity는 매 화면에서 API 사용시 기기에 부담이 크고, 데이터가 잘 변치 않기에, Preference에 시,도/시군구/읍면동으로 나눠 리스트를 저장하여 쓰게 만들것이기에
@@ -141,6 +144,13 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
     }
 
+    public WhereActivity() {
+    }
+
+    public WhereActivity(Context mContext) {
+        this.mContext = mContext;
+    }
+
     @Override
     public void onBackPressed() {
         lastFunction();
@@ -173,11 +183,16 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
         mWhereRecyclerViewAdapter.setOnItemClickListener(new WhereRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position, boolean s) {
                 Log.i(TAG,"click lisener on activity");
+                //세종시의 경우
+                if(s){
+                        mSidoList = getListFromPref("emd");
+                        noApiSetEmdAdapter("emd");
+                    }else {
 
                     noApiSetSiggAdapter("emd");
-
+                }
             }
         });
     }
@@ -194,7 +209,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
         mWhereRecyclerViewAdapter.setOnItemClickListener(new WhereRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position, boolean s) {
                 Log.i(TAG,"click lisener on activity");
 
                 noApiSetEmdAdapter("emd");
@@ -210,10 +225,11 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
         mWhereRecyclerViewAdapter = new WhereRecyclerViewAdapter(mSidoList);
         mWhereRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mWhereRecyclerView.setAdapter(mWhereRecyclerViewAdapter);
+        mWhereSearchedRvAdapter.notifyDataSetChanged();
 
         mWhereRecyclerViewAdapter.setOnItemClickListener(new WhereRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position, boolean s) {
                 Log.i(TAG,"click lisener on activity");
 
                 lastFunction();
@@ -261,6 +277,8 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
                     temp2.add(splited[2] + " " + splited[3]);
                 } else if(splited.length==5){
                     temp2.add(splited[2] + " " + splited[3] + " " + splited[4]);
+                } else if(splited.length==2) {
+                    temp2.add(splited[1]);
                 } else {
                     Log.i("length=2",splited[0] + splited[1]);
                 }
@@ -284,12 +302,22 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
     }
 
+    public void setFirstTimeCheck(boolean check){
+        this.firstTimeCheck=check;
+    }
+
     private void startingApiService() {
 
         //API service
         WhereService whereService = new WhereService(this);
         whereService.getSidoList(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data);
 
+    }
+
+    public void firstConnectionWhereApi(){
+
+        WhereService whereService = new WhereService(this);
+        whereService.getSidoList(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data);
     }
 
     private ArrayList<SearchedIndexOf> tryGetSearch(String searchWord) {
@@ -469,20 +497,125 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
         //mResult = result;
 
+        if(firstTimeCheck){
+            firstSavingSido(result);
+        }else{
             fromSidoToList(result);
+        }
+    }
+
+    private void firstSavingSido(Result result) {
+
+        //리스트 데이터 초기화
+        mSidoList.clear();
+
+        for(int i=0;i<result.getFeatureCollection().getFeatures().size();i++) {
+            mSidoList.add(result.getFeatureCollection().getFeatures().get(i).getProperties().getCtp_kor_nm());
+        }
+        //리셋하고 시작. 여러번에 걸쳐 주소가 중첩되기 때문.
+        resetFullAddress();
+        //30일에 한번 함수가 돌아가도록 설정할 것
+        setSidoInPreference(mSidoList);
+
+        WhereService whereService = new WhereService(this);
+        whereService.getSigunguList(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data2);
+
 
     }
 
     @Override
     public void validateSggSuccess(boolean isSuccess, Record record, Result result) {
-        fromSiggToList(result);
+
+
+        if(firstTimeCheck){
+            firstSavingSgg(result);
+        }else {
+            fromSiggToList(result);
+        }
+    }
+
+    private void firstSavingSgg(Result result) {
+
+        //리스트 데이터 초기화
+        mSidoList.clear();
+
+        for(int i =0;i<result.getFeatureCollection().getFeatures().size();i++){
+            mSidoList.add(result.getFeatureCollection().getFeatures().get(i).getProperties().getFull_nm());
+        }
+        //리스트에 시,군,구 데이터 혹은 읍,면,동 데이터가 들어와있음
+        for(int i=0;i<mSidoList.size();i++){
+            Log.i(TAG, mSidoList.get(i));
+        }
+
+        //30일에 한번 함수가 돌아가도록 설정할것
+        //시,도 리스트랑 시군구리스트 병합 후 저장.
+        ArrayList<String> totList = getFullAddressFromPreference();
+        totList.addAll(mSidoList);
+        setSggInPreference(totList);
+
+        mSidoList.clear();
+
+        WhereService whereService = new WhereService(this);
+        whereService.getEmdList(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data3);
+        whereService.getEmdList(key, domain, request, format, size, 2, geometry, attribute, crs, geomfilter, data3);
+        whereService.getEmdList(key, domain, request, format, size, 3, geometry, attribute, crs, geomfilter, data3);
+        whereService.getEmdList(key, domain, request, format, size, 4, geometry, attribute, crs, geomfilter, data3);
+        whereService.getEmdList(key, domain, request, format, size, 5, geometry, attribute, crs, geomfilter, data3);
+        whereService.getEmdList(key, domain, request, format, size, 6, geometry, attribute, crs, geomfilter, data3);
 
     }
 
     @Override
     public void validateEmdSuccess(boolean isSuccess, Record record, Result result) {
-        fromEmdToList(result);
+        receiveCnt++;
+        if(firstTimeCheck){
+            firstSavingEmd(result);
+        }else{
+            fromEmdToList(result);
+        }
     }
+
+    private void firstSavingEmd(Result result) {
+
+        for(int i =0;i<result.getFeatureCollection().getFeatures().size();i++){
+            mSidoList.add(result.getFeatureCollection().getFeatures().get(i).getProperties().getFull_nm());
+        }
+
+
+        //읍면동만 따로 정리하여 저장
+        String[] splited = new String[3];
+        ArrayList<String> temp2 = new ArrayList<>();
+        for(int i=0;i<mSidoList.size();i++){
+                splited = mSidoList.get(i).split(" ");
+
+                if(splited.length==3) {
+                    temp2.add(splited[2]);
+                } else if(splited.length==2) {
+                    temp2.add(splited[0]+splited[1]);
+                } else{
+                    temp2.add(splited[0]);
+                }
+
+        }
+
+        if(receiveCnt>5) {
+            finishEmdIntoSp();
+            finishFirstSettingWhere();
+            SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+            firstTimeCheck = pref.getBoolean("firstStart", false);
+        }
+    }
+
+    private void finishFirstSettingWhere(){
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putBoolean("firstStart",false);
+
+        editor.commit();
+    }
+
 
     @Override
     public void validateFailure(String message) {
@@ -513,7 +646,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
         WhereService whereService = new WhereService(this);
         mWhereRecyclerViewAdapter.setOnItemClickListener(new WhereRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position, boolean s) {
 
                 Log.i(TAG,"click lisener on activity");
                 whereService.getSigunguList(key, domain, request, format, size, page, geometry, attribute, crs, geomfilter, data2);
@@ -525,7 +658,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
     private ArrayList<String> getFullAddressFromPreference(){
 
-        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
 
         //Preference에서 날씨 정보 객체 불러오기
         Gson gson = new GsonBuilder().create();
@@ -542,7 +675,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
      * Api를 처음 접속할 때 fulladdress는 reset해주고 시작해야한다. 데이터가 중첩되어 쌓이기 때문
      */
     private void resetFullAddress(){
-        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         //Preference에 날씨 정보 객체 저장하기
@@ -554,7 +687,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
     private void setSidoInPreference(ArrayList<String> sidoList) {
 
-        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         //Preference에 날씨 정보 객체 저장하기
@@ -571,7 +704,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
     private void setSggInPreference(ArrayList<String> sidoList) {
 
-        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         //Preference에 날씨 정보 객체 저장하기
@@ -588,7 +721,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
     private void setEmdInPreference(ArrayList<String> sidoList) {
 
-        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         //Preference에 날씨 정보 객체 저장하기
@@ -665,7 +798,7 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
         WhereService whereService = new WhereService(this);
         mWhereRecyclerViewAdapter.setOnItemClickListener(new WhereRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position, boolean s) {
 
                 Log.i(TAG,"click lisener on activity");
                 //읍면동은 데이터가 많아 6번을 나눠 받아야 한다.
@@ -695,8 +828,6 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
         for(int i=0;i<mSidoList.size();i++){
             Log.i("fromEmdToList", mSidoList.get(i));
         }
-
-
 
         SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
 
@@ -732,11 +863,23 @@ public class WhereActivity extends BaseActivity implements WhereContract.Activit
 
         mWhereRecyclerViewAdapter.setOnItemClickListener(new WhereRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position, boolean s) {
 
                 lastFunctionForInit();
             }
         });
+
+    }
+
+    private void finishEmdIntoSp(){
+
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+
+        //30일에 한번 함수가 돌아가도록 설정
+        //토탈리스트. 저장.
+        ArrayList<String> totList = getFullAddressFromPreference();
+        totList.addAll(mSidoList);
+        setEmdInPreference(totList);
 
     }
 

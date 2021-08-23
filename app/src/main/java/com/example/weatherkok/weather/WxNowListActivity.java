@@ -18,6 +18,7 @@ import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.main.MainActivity;
 import com.example.weatherkok.src.BaseActivity;
 import com.example.weatherkok.weather.utils.WxNowListAdapter;
+import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.where.WhereActivity;
 import com.google.gson.Gson;
@@ -28,7 +29,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
+
+import static com.example.weatherkok.weather.NowWxActivity.mNowWxContext;
 
 public class WxNowListActivity extends BaseActivity {
     private static final String TAG = WxNowListActivity.class.getSimpleName();
@@ -304,10 +308,16 @@ public class WxNowListActivity extends BaseActivity {
             }
         }
 
-        for(int i=0;i<mScheduleList.getScheduleArrayList().size();i++) {
-            if(mScheduleList.getScheduleArrayList().get(i).getYear().equals("delete")){
-            mScheduleList.getScheduleArrayList().remove(i);}
+        Iterator it = mScheduleList.getScheduleArrayList().iterator();
+
+        while(it.hasNext()) {
+            Schedule schedule = (Schedule) it.next();
+
+            if(schedule.getYear()!=null&&schedule.getYear().equals("delete")){
+                it.remove();
+            }
         }
+
 
     }
 
@@ -340,7 +350,7 @@ public class WxNowListActivity extends BaseActivity {
         //초기화
         //editor.remove(year + month);
 
-        editor.putString("schedule", jsonString);
+        editor.putString("bookMark", jsonString);
         editor.commit();
         //저장완료
 

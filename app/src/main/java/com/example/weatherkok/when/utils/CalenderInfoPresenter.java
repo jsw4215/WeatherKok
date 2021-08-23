@@ -21,7 +21,7 @@ import java.util.Calendar;
 import static android.content.Context.MODE_PRIVATE;
 
 //달력의 기본정보를 DB(preference)에 생성하고 저장해주는 작업
-public class CalenderInfoPresenter implements RestContract.ActivityView {
+public class CalenderInfoPresenter extends Thread implements RestContract.ActivityView {
     private static final String TAG = CalenderInfoPresenter.class.getSimpleName();
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     String mYear;
@@ -48,6 +48,16 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         //처음에만 더미생성
         //makeDummySchedule();
 
+    }
+
+    @Override
+    public void run(String year, String month, Context context) {
+        super.run();
+        for(int i=1;i<13;i++) {
+            String temp = String.valueOf(i);
+            if(i<10){temp="0"+temp;}
+            initCal(year, temp, context);
+        }
     }
 
     private BaseDateInfoList settingDay(BaseDateInfoList baseDateInfoList) {
@@ -123,6 +133,26 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         return baseDateInfoList;
     }
 
+    private BaseDateInfoList getDateInfoFromSPWithKey(String key) {
+
+        //Preference에 날씨 정보 객체 불러오기
+
+        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        BaseDateInfoList baseDateInfoList = new BaseDateInfoList();
+
+        //null일 경우 처리할것.
+        String loaded = pref.getString(key, "");
+
+        baseDateInfoList = gson.fromJson(loaded, BaseDateInfoList.class);
+        //Preference에 저장된 데이터 class 형태로 불러오기 완료
+
+        return baseDateInfoList;
+    }
+
     private void setDateInfoToSP(BaseDateInfoList baseDateInfoList, String year, String month) {
 
         SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
@@ -148,8 +178,8 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
     //년 월 정보 가져오기, 해당 달은 몇일인지 31,30,29,28일 구한 뒤 mDateInfoList에 저장한다.
     public void setLunaOnThePreference(String year, String month) {
         //연, 월 데이터 저장
-        mYear = year;
-        mMonth = month;
+        //mYear = year;
+        //mMonth = month;
 
         int intYear = Integer.parseInt(year);
         int intMonth = Integer.parseInt(month);
@@ -178,7 +208,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
 //
         baseDateInfoList = getDateInfoFromSP(year, month);
 
-        if (baseDateInfoList==null||!(baseDateInfoList.getBaseDateInfoList().size()>20)) {
+        if (baseDateInfoList==null||!(baseDateInfoList.getBaseDateInfoList().size()>60)) {
             baseDateInfoList = new BaseDateInfoList();
             //null일시(최초로 불러올 시), 해당 리스트 메모리를 할당한다.
 
@@ -234,10 +264,10 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
 
     //해당 년, 월 정보를 받아와서 그 달의 공휴일 정보를 공휴일 이름, 몇일인지 저장한다.
     //공휴일 Api로부터 데이터를 받아와서 공휴일 이름, 몇일인지 데이터를 구하고 해당 일자에 저장한다.
-    public void setHolidayOnPreference() {
+    public void setHolidayOnPreference(BaseDateInfoList assortedList) {
 
-        int intYear = Integer.parseInt(mYear);
-        int intMonth = Integer.parseInt(mMonth);
+        //int intYear = Integer.parseInt(mYear);
+        //int intMonth = Integer.parseInt(mMonth);
 
         //정보 불러와서 추가하기로 접근해야 한다.
         //BaseDateInfoList 클래스 형태로 저장 및 불러오기를 한다.
@@ -249,19 +279,20 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
 
         //preference에 저장되어있는 날짜 정보 가져오기
         //preference가 null일 경우 처리할것
-        BaseDateInfoList baseDateInfoList = getDateInfoFromSP(mYear, mMonth);
+        BaseDateInfoList baseDateInfoList = getDateInfoFromSPWithKey(assortedList.getYearMonth());
 
         //기존의 가져온 데이터에서 탐색을 해서,
         //해당 날짜가 같은 곳에 공휴일을 추가로 집어넣는다.
         //mBaseDateInfoList는 공휴일 정보 저장 리스트.
-        for (int i = 0; i < mBaseDateInfoList.getBaseDateInfoList().size(); i++) {
+        for (int i = 0; i < assortedList.getBaseDateInfoList().size(); i++) {
             //받아온 공휴일 리스트에서 날짜를 가져온다.
-            int temp = mBaseDateInfoList.getBaseDateInfoList().get(i).getDate();
+            int temp = assortedList.getBaseDateInfoList().get(i).getDate();
 
             for (int j = 0; j < baseDateInfoList.getBaseDateInfoList().size(); j++) {
                 //공휴일 날짜(temp) =
                 if (temp == baseDateInfoList.getBaseDateInfoList().get(j).getDate()) {
-                    baseDateInfoList.getBaseDateInfoList().get(j).setNameOfDay(mBaseDateInfoList.getBaseDateInfoList().get(i).getNameOfDay());
+                    baseDateInfoList.getBaseDateInfoList().get(j).setNameOfDay(assortedList.getBaseDateInfoList().get(i).getNameOfDay());
+                    baseDateInfoList.getBaseDateInfoList().get(j).setSchedule(assortedList.getBaseDateInfoList().get(i).getSchedule());
                 }
             }
 
@@ -269,7 +300,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
 
         //데이터 리스트 음력 추가 완료
 
-        setDateInfoToSP(baseDateInfoList, mYear, mMonth);
+        setDateInfoToSP(baseDateInfoList, assortedList.getYearMonth(), "");
 
     }
 
@@ -286,12 +317,13 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
 
 
     @Override
-    public void validateSuccess(boolean isSuccess, ResponseParams responseParams) {
+    public void validateSuccess(boolean isSuccess, ResponseParams responseParams,String year, String month) {
         //데이터를 가져와서 preference 해당 위치에 넣기 - 이름, 날짜
-
 
         //클래스 하나 만들어서 데이터 저장시키고
         BaseDateInfo baseDateInfo = new BaseDateInfo();
+        BaseDateInfoList baseDateInfoList = new BaseDateInfoList();
+        baseDateInfoList.setYearMonth(year+month);
 
         for (int i = 0; i < responseParams.getResponse().getBody().getItems().getItem().size(); i++) {
             //이름 넣고
@@ -301,23 +333,64 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
             temp %= 100;
             baseDateInfo.setDate(temp);
             //데이터 저장한 리스트 만들기
-            mBaseDateInfoList.getBaseDateInfoList().add(baseDateInfo);
+            baseDateInfoList.getBaseDateInfoList().add(baseDateInfo);
             baseDateInfo = new BaseDateInfo();
         }
 
-        if (mBaseDateInfoList.getBaseDateInfoList().size() > 0) {
-            setHolidayOnPreference();
+        baseDateInfoList=matchingScheduleOnDate(baseDateInfoList);
+
+
+        if (baseDateInfoList.getBaseDateInfoList().size() > 0) {
+            setHolidayOnPreference(baseDateInfoList);
         }
 
     }
 
+    private BaseDateInfoList matchingScheduleOnDate(BaseDateInfoList baseDateInfoList) {
+
+        ScheduleList scheduleList = getScheduleFromSp();
+        if(scheduleList!=null&&scheduleList.getScheduleArrayList()!=null&&scheduleList.getScheduleArrayList().size()>0) {
+
+            for (int i = 0; i < scheduleList.getScheduleArrayList().size(); i++) {
+                String ymd = scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate();
+
+                if (ymd.substring(0, 6).equals(baseDateInfoList.getYearMonth())) {
+
+
+                    int date = Integer.parseInt(ymd.substring(6));
+                    //스케쥴과 공휴일이 겹칠 경우
+                    boolean checker = false;
+                    for (int j = 0; j < baseDateInfoList.getBaseDateInfoList().size(); j++) {
+
+                        if (baseDateInfoList.getBaseDateInfoList().get(j).getDate() == date) {
+                            baseDateInfoList.getBaseDateInfoList().get(j).setSchedule(scheduleList.getScheduleArrayList().get(i));
+                            checker = true;
+                        }
+
+                    }
+                    //스케쥴과 공휴일이 겹치지 않을 경우
+                    if (!checker) {
+                        BaseDateInfo baseDateInfo = new BaseDateInfo();
+                        baseDateInfo.setSchedule(scheduleList.getScheduleArrayList().get(i));
+                        baseDateInfo.setDate(date);
+                        baseDateInfoList.getBaseDateInfoList().add(baseDateInfo);
+                        baseDateInfo = new BaseDateInfo();
+                    }
+                }
+            }
+        }
+        return baseDateInfoList;
+
+    }
+
     @Override
-    public void validateSuccessSingle(boolean isSuccess, ResponseSingle responseSingle) {
+    public void validateSuccessSingle(boolean isSuccess, ResponseSingle responseSingle,String year,String month) {
         //데이터를 가져와서 preference 해당 위치에 넣기 - 이름, 날짜
-
-
+        
         //클래스 하나 만들어서 데이터 저장시키고
         BaseDateInfo baseDateInfo = new BaseDateInfo();
+        BaseDateInfoList baseDateInfoList = new BaseDateInfoList();
+        baseDateInfoList.setYearMonth(year+month);
 
         //이름 넣고
         baseDateInfo.setNameOfDay(responseSingle.getResponse().getBody().getItems().getItem().getDateName());
@@ -326,16 +399,18 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         temp %= 100;
         baseDateInfo.setDate(temp);
         //데이터 저장한 리스트 만들기
-        mBaseDateInfoList.getBaseDateInfoList().add(baseDateInfo);
+        baseDateInfoList.getBaseDateInfoList().add(baseDateInfo);
 
-        if (mBaseDateInfoList.getBaseDateInfoList().size() > 0) {
-            setHolidayOnPreference();
+        baseDateInfoList=matchingScheduleOnDate(baseDateInfoList);
+
+        if (baseDateInfoList.getBaseDateInfoList().size() > 0) {
+            setHolidayOnPreference(baseDateInfoList);
         }
 
     }
 
     @Override
-    public void validateFailure(String message) {
+    public void validateFailure(String message,String year, String month) {
         //공휴일이 1달에 하루 뿐이라, 리스트가 아닌, 하나의 객체로 여기로 떨어지는 경우.
         Log.i(TAG, "starting : vlidateFailure");
 
@@ -343,17 +418,25 @@ public class CalenderInfoPresenter implements RestContract.ActivityView {
         String type = "json";
 
         CalendarService calendarService = new CalendarService(this);
-        calendarService.getRestInfoForOneDay(mYear, mMonth, serviceKey, type);
+        calendarService.getRestInfoForOneDay(year, month, serviceKey, type);
     }
 
     @Override
-    public void validateFaliureSingle(String message) {
+    public void validateFaliureSingle(String message, String year, String month) {
 
         Log.i(TAG, "starting : validateFailureSingle. fin.");
+        //클래스 하나 만들어서 데이터 저장시키고
+        BaseDateInfo baseDateInfo = new BaseDateInfo();
+        BaseDateInfoList baseDateInfoList = new BaseDateInfoList();
+        baseDateInfoList.setYearMonth(year+month);
+        //이름 넣고
+        //데이터 저장한 리스트 만들기
+        baseDateInfoList.getBaseDateInfoList().add(baseDateInfo);
+        baseDateInfoList=matchingScheduleOnDate(baseDateInfoList);
+            setHolidayOnPreference(baseDateInfoList);
 
 
     }
-
 
     public void makeDummySchedule() {
         //preference 동작 준비

@@ -4,6 +4,7 @@ import com.example.weatherkok.when.models.Schedule;
 
 public class BaseDateInfo {
     private static final String TAG = BaseDateInfo.class.getSimpleName();
+
     //solar 날짜 원래 몇일인지 저장
     int date;
     //공휴일 이라면, 이름

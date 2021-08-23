@@ -140,11 +140,11 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
 
     private void findScheduleDateWxData(ViewHolder viewHolder, ScheduleData scheduleData, boolean checker, int diffDays, String strCurHH) {
 
-        if (diffDays == 0) {
+
             //오늘이면 시간비교를 해서 해당 시간의 날씨예보를 담을것
 
             setNowWxCond(viewHolder, scheduleData, strCurHH);
-        }
+
 
     }
 

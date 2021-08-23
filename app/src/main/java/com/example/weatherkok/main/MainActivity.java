@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     setScheduleInPreference(whereMain, whenMain, whoMain);
                     resetSP();
                     Intent intent = new Intent(MainActivity.this, IntroActivity.class);
-                    intent.putExtra("from", "Main");
+                    intent.putExtra("from", "goToWeather");
                     startActivity(intent);
                     finish();
 
@@ -170,6 +170,10 @@ public class MainActivity extends AppCompatActivity {
         String loaded = pref.getString("schedule","");
 
         ScheduleList loadedFromSP = gson.fromJson(loaded,ScheduleList.class);
+        ArrayList<Schedule> temp = new ArrayList<>();
+        if(loadedFromSP.getScheduleArrayList()==null){
+            loadedFromSP.setScheduleArrayList(temp);
+        }
         loadedFromSP.getScheduleArrayList().add(schedule);
 
         setScheduleDataInToSp(loadedFromSP);

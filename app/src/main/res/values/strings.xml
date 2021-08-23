@@ -63,4 +63,23 @@
     <string name="rain_snow">비/눈</string>
     <string name="snow">눈</string>
     <string name="shower">소나기</string>
+    <string name="permission_title">날씨콕 이용안내</string>
+    <string name="permission_info">지메이트 헬스케어를 사용하려면,\n아래의 권한을 허용해 주세요.</string>
+
+    <string name="permission_audio">혈당 측정기와 통신하기 위해 필요합니다.</string>
+    <string name="permission_audio_title">오디오 녹음</string>
+    <string name="permission_storage">측정결과를 파일로 공유하기 위해 필요합니다.</string>
+    <string name="permission_storage_title">외부 저장소 쓰기</string>
+    <string name="permission_phone_state">사용자의 국가에 맞는 혈당 단위를 설정하기 위해 필요합니다.</string>
+    <string name="permission_phone_state_title">전화 상태 읽기</string>
+    <string name="permission_location">블루투스 기기(혈압계, 체중계, 스마트 밴드 등)와 통신하기 위해 필요합니다.</string>
+    <string name="permission_location_title">위치 접근</string>
+    <string name="permission_camera">처방전 촬영과 QR코드를 인식하기 위해 필요합니다.</string>
+    <string name="permission_camera_title">카메라</string>
+    <string name="withdraw_title">회원 탈퇴</string>
+    <string name="withdraw_msg">동의하시면 지금 로그인된 %1$s 으로 로그인할 수 없고, 같은 이메일로는 다시 재가입할 수 없습니다.</string>
+    <string name="withdraw_agree">동의</string>
+    <string name="permission_ok">허용하기</string>
+    <string name="noti_channel_id">지금 동기화 중입니다.</string>
+
 </resources>

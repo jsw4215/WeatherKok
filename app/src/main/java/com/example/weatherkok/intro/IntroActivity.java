@@ -1,21 +1,33 @@
 package com.example.weatherkok.intro;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 import com.example.weatherkok.R;
 import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.datalist.data.wxdata.Wx;
+import com.example.weatherkok.main.MainActivity;
 import com.example.weatherkok.src.BaseActivity;
 import com.example.weatherkok.weather.NowWxActivity;
 import com.example.weatherkok.weather.WeatherActivity;
@@ -37,9 +49,12 @@ import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.when.utils.CalenderInfoPresenter;
+import com.example.weatherkok.where.WhereActivity;
 import com.example.weatherkok.where.utils.GpsTracker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -52,6 +67,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static androidx.core.app.ActivityCompat.requestPermissions;
+import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
 public class IntroActivity extends BaseActivity implements WeatherContract.ActivityView {
     private static final String TAG = IntroActivity.class.getSimpleName();
@@ -76,12 +94,28 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
     boolean shortChecker=true;
     boolean finishChecker=false;
     int receiveCnt=0;
+    boolean checkFirstStartApp=false;
+    WhereActivity mWhereActivity;
+    public static String SHARED_INTRO_CHECK = "introCheck";
+    public static final String SHARED_IS_PERMISSION_FIRST = "isPermissionFirst";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         mContext = getBaseContext();
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        //권한 알림 팝업
+
+            boolean isPermissionPopupFirst = pref.getBoolean(SHARED_IS_PERMISSION_FIRST, false);
+            if(isPermissionPopupFirst) {
+                checkAppAuth("android.permission.RECORD_AUDIO", APP_PERMISSIONS_REQ_MIC);
+            } else {
+                showPermissionDialogView();
+            }
+
+
 
         progressDoalog = new ProgressDialog(this);
         progressDoalog.setMax(100);
@@ -92,21 +126,48 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         setContentView(R.layout.activity_splash);
         mToday = calculateToday();
 
-        //initDummy();
 
-        Intent intent = getIntent();
-        if(!TextUtils.isEmpty(intent.getStringExtra("from"))){
+    }
 
-            if(intent.getStringExtra("from").equals("goToNow")){
-
-                startNowWx();
-
-            }
-
-        }else{
-            startNowWx();
-            //startSync();
+    private void startWhereApi() {
+        mWhereActivity = new WhereActivity(mContext);
+        checkFirstStartApp=getFirstStartCheck();
+        mWhereActivity.setFirstTimeCheck(checkFirstStartApp);
+        if(checkFirstStartApp) {
+            mWhereActivity.firstConnectionWhereApi();
         }
+    }
+
+    private boolean getFirstStartCheck() {
+
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+
+        checkFirstStartApp = pref.getBoolean("firstStart",true);
+
+        return checkFirstStartApp;
+    }
+
+    private void clearMonth() {
+
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        ScheduleList scheduleList = new ScheduleList();
+
+        //Preference에 정보 객체 저장하기
+        //JSON으로 변환
+        String jsonString = gson.toJson(scheduleList, ScheduleList.class);
+        Log.i("jsonString : ", jsonString);
+
+        //초기화
+        //editor.remove(year + month);
+            editor.putString("202109", jsonString);
+
+
+        editor.commit();
+
 
     }
 
@@ -270,6 +331,17 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         scheduleList = gson.fromJson(loaded, ScheduleList.class);
         //Preference에 저장된 데이터 class 형태로 불러오기 완료
 
+        scheduleList=deleteCheck(scheduleList);
+
+        return scheduleList;
+    }
+
+    private ScheduleList deleteCheck(ScheduleList scheduleList){
+        for(int i=0;i<scheduleList.getScheduleArrayList().size();i++) {
+            if(scheduleList.getScheduleArrayList().get(i).getWhere().equals("delete")){
+                scheduleList.getScheduleArrayList().remove(i);}
+        }
+
         return scheduleList;
     }
 
@@ -335,7 +407,7 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         ScheduleList scheduleList = getScheduleFromSp();
         ArrayList<String> place = new ArrayList<>();
 
-        if(scheduleList.getScheduleArrayList()!=null) {
+        if(scheduleList!=null&&scheduleList.getScheduleArrayList()!=null) {
             ArrayList<Schedule> list = scheduleList.getScheduleArrayList();
 
 
@@ -437,7 +509,11 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
-        Collections.sort(scheduleList.getScheduleArrayList());
+        if(type==4) {
+            Collections.sort(scheduleList.getScheduleArrayList());
+        }
+
+        scheduleList = removePastSchedule(scheduleList);
 
         Gson gson = new GsonBuilder().create();
 
@@ -460,6 +536,23 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         //저장완료
     }
 
+    private ScheduleList removePastSchedule(ScheduleList scheduleList) {
+
+        String today = getFutureDay("yyyyMMdd", 0);
+        int intToday = Integer.parseInt(today);
+        //테스트용 더미
+
+        for(int i =0;i<scheduleList.getScheduleArrayList().size();i++) {
+            if(!TextUtils.isEmpty(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate())
+                    &&intToday > Integer.valueOf(scheduleList.getScheduleArrayList().get(i).getScheduleData().getScheduledDate())){
+                scheduleList.getScheduleArrayList().remove(i);
+            }
+        }
+
+        return scheduleList;
+
+    }
+
 
     //단기예보에서 최고기온, 최저기온 뽑아내는 알고리즘
 
@@ -478,7 +571,7 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
 
         LatLonCalculator latLonCalculator = new LatLonCalculator();
 
-        LatLon latLon = latLonCalculator.getLatLonWithAddr(manageAddress(s), mContext);
+        LatLon latLon = latLonCalculator.getLatLonWithAddr(s, mContext);
 
         Map<String, Object> result = latLonCalculator.getGridxy(latLon.getLat(), latLon.getLon());
 
@@ -615,10 +708,14 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
 
         if (place.startsWith("서울") || place.startsWith("인천") || place.startsWith("경기도")) {
             Code = "11B00000";
-        } else if (place.startsWith("강원도영서")) {
-            Code = "11D10000";
-        } else if (place.startsWith("강원도영동")) {
-            Code = "11D20000";
+        } else if (place.startsWith("강원도")) {
+            if(place.contains("고성")||place.contains("속초")||place.contains("양양")
+                    ||place.contains("강릉")||place.contains("동해")||place.contains("삼척")||place.contains("태백"))
+            {//영동
+               Code = "11D20000";}else {
+                //영서
+                Code = "11D10000";
+            }
         } else if (place.startsWith("대전") || place.startsWith("세종") || place.startsWith("충청남도")) {
             Code = "11C20000";
         } else if (place.startsWith("충청북도")) {
@@ -1060,9 +1157,14 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         scheduleList = matchingAdderess(scheduleList, addrResult, scheduleData, position);
 
         setScheduleDataInToSp(scheduleList, type);
-
-        if(receiveCnt>=mTargetPlaces.size()) {
-            lastFunctionIntro();
+        if(type==0||mTargetPlaces.size()==0) {
+            if (receiveCnt >= mTargetPlaces.size()) {
+                lastFunctionIntro();
+            }
+        }else{
+            if(receiveCnt>mTargetPlaces.size()){
+                lastFunctionIntro();
+            }
         }
     }
 
@@ -1099,14 +1201,30 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
             //리스트에 데이터 추가, 기존의 데이터가 있으니 하나하나 집어넣어 줘야함.
 
             //여기에 get(0) 진입이 어려우므로 더미를 깔아준다. 불안정하니 나중에 다시 이해해볼것
-            if(scheduleList.getScheduleArrayList().get(i)==null){
+            if (scheduleList.getScheduleArrayList().get(i) == null) {
                 scheduleList.getScheduleArrayList().get(i).setScheduleData(scheduleData);
-            }else if(scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList()==null){
-                scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().setTempList(scheduleData.getFcst().getTempList());
-            }else if(scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxList()==null){
-                scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().setWxList(scheduleData.getFcst().getWxList());
             }else {
+                //현재날씨 널처리
+                if (scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList() == null) {
+                    scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().setTempList(scheduleData.getFcst().getTempList());
+                } else if (scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList().getItem() == null ||
+                        scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList().getItem().size() == 0) {
+                    scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList().getItem().add(scheduleData.getFcst().getTempList().getItem().get(0));
+                }
 
+                if (scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxList() == null) {
+                    scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().setWxList(scheduleData.getFcst().getWxList());
+                } else if (scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxList().getItem() == null ||
+                        scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxList().getItem().size() == 0) {
+                    scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxList().getItem().add(scheduleData.getFcst().getWxList().getItem().get(0));
+                }
+
+                if (scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxToday() == null
+                        || scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxToday().size() == 0) {
+                    scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().setWxToday(scheduleData.getFcst().getWxToday());
+                }
+
+                //중기예보를 들고 들어올 경우 합집합을 위해 수작업으로 넣어줘야한다.
                 scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList().getItem().get(0).setTaMin0(
                         scheduleData.getFcst().getTempList().getItem().get(0).getTaMin0()
                 );
@@ -1129,9 +1247,6 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
                         scheduleData.getFcst().getTempList().getItem().get(0).getTaMax2()
                 );
 
-                if (scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getTempList().getItem() == null) {
-                    scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxList().getItem().add(dum2);
-                }
                 //날씨정보세팅
                 //강수타입
                 scheduleList.getScheduleArrayList().get(i).getScheduleData().getFcst().getWxList().getItem().get(0).setRnSt0AmType(
@@ -1609,7 +1724,7 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
             from = intent.getStringExtra("from");
         }
 
-        if(from.equals("Main")||mNumOfSchedule>0){
+        if(from.equals("goToWeather")||mNumOfSchedule>0){
             startActivity(new Intent(getApplication(), WeatherActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
             IntroActivity.this.finish();
         }
@@ -1618,7 +1733,7 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
             IntroActivity.this.finish();
         }
         else{
-            startActivity(new Intent(getApplication(), NowWxActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+            startActivity(new Intent(getApplication(), MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
             IntroActivity.this.finish();
         }
 
@@ -1629,4 +1744,161 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         //초반 플래시 화면에서 넘어갈때 뒤로가기 버튼 못누르게 함
     }
 
+    private void clearSchedule(int type) {
+
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        Gson gson = new GsonBuilder().create();
+
+        ScheduleList scheduleList = new ScheduleList();
+
+        //Preference에 정보 객체 저장하기
+        //JSON으로 변환
+        String jsonString = gson.toJson(scheduleList, ScheduleList.class);
+        Log.i("jsonString : ", jsonString);
+
+        //초기화
+        //editor.remove(year + month);
+        if(type==0) {
+            editor.putString("schedule", jsonString);
+        }else if (type==1){
+            editor.putString("bookMark", jsonString);
+        }else if(type==2){
+            editor.putString("currentPlace", jsonString);
+        }
+
+        editor.commit();
+        //저장완료
+    }
+
+    private void goAppStart(){
+
+        startWhereApi();
+
+        //initDummy();
+
+        Intent intent = getIntent();
+        if(!TextUtils.isEmpty(intent.getStringExtra("from"))){
+
+            if(intent.getStringExtra("from").equals("goToNow")){
+
+                startNowWx();
+
+            }
+
+            if(intent.getStringExtra("from").equals("goToWeather")){
+
+                startSync();
+
+            }
+
+        }else{
+            //clearSchedule(0);
+            //clearMonth();
+            startSync();
+        }
+
+    }
+
+    private final static int APP_PERMISSIONS_REQ_MIC = 1000;
+    private final static int APP_PERMISSIONS_REQ_STORAGE = 1100;
+    private final static int APP_PERMISSIONS_REQ_PHONE = 1200;
+    private final static int ACCESS_COARSE_LOCATION = 1300;
+    private final static int ACCESS_FINE_LOCATION = 1400;
+    private final static int SEND_SMS = 1500;
+    private final static int RECEIVE_SMS = 1600;
+
+    private void checkAppAuth(final String a_PermissionReq, final int a_ReqCode) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            int permissionResult = checkSelfPermission(a_PermissionReq);
+
+            if (permissionResult == PackageManager.PERMISSION_DENIED) {
+
+                //사용자가 CALL_PHONE 권한을 한번이라도 거부한 적이 있는 지 조사한다.
+                //거부한 이력이 한번이라도 있다면, true를 리턴한다.
+                //최초로 권한을 요청할 때 권한을 Android OS 에 요청한다.
+                if (shouldShowRequestPermissionRationale(a_PermissionReq)) {
+                    requestPermissions(new String[]{a_PermissionReq}, a_ReqCode);
+                } else {
+                    //최초로 권한을 요청할 때 권한을 Android OS 에 요청한다.
+                    requestPermissions(new String[]{a_PermissionReq}, a_ReqCode);
+                }
+
+            } else {
+                //권한이 있을 때
+                doAfterAuthCheck(a_ReqCode);
+            }
+
+        } else {
+            //앱 시작
+            goAppStart();
+        }
+    }
+
+    /**
+     * doAfterAuthCheck method
+     *
+     * checking one of the permissions has permitted.
+     * @param a_ReqCode
+     */
+    private void doAfterAuthCheck(int a_ReqCode) {
+        if(a_ReqCode == 1) {
+            checkAppAuth("android.permission.RECORD_AUDIO", APP_PERMISSIONS_REQ_MIC);
+        } else if (a_ReqCode == APP_PERMISSIONS_REQ_MIC) {
+            checkAppAuth("android.permission.READ_PHONE_STATE", APP_PERMISSIONS_REQ_PHONE);
+        } else if (a_ReqCode == APP_PERMISSIONS_REQ_PHONE) {
+            checkAppAuth("android.permission.ACCESS_FINE_LOCATION", ACCESS_FINE_LOCATION);
+        } else if (a_ReqCode == ACCESS_FINE_LOCATION) {
+            checkAppAuth("android.permission.ACCESS_COARSE_LOCATION", ACCESS_COARSE_LOCATION);
+        } else if (a_ReqCode == ACCESS_COARSE_LOCATION){
+            checkAppAuth("android.permission.SEND_SMS", SEND_SMS);
+        } else if (a_ReqCode == SEND_SMS){
+            checkAppAuth("android.permission.RECEIVE_SMS", RECEIVE_SMS);
+        } else if (a_ReqCode == RECEIVE_SMS) {
+            goAppStart();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // permission is granted.
+            doAfterAuthCheck(requestCode);
+        } else {
+            // 권한 거부 : 사용자가 해당권한을 거부했을때 해주어야 할 동작을 수행합니다
+            finish();
+        }
+    }
+
+    private void showPermissionDialogView() {
+        //Dialog 생성
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = (View) inflater.inflate(R.layout.permission_notify_popup_view, null);
+        final Dialog dialog = DialogView.getDefaultDialog(this, view);
+
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        //ok click event
+        TextView tv_ok = view.findViewById(R.id.tv_ok);
+
+        tv_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                editor.putBoolean(SHARED_IS_PERMISSION_FIRST, true);
+                editor.apply();
+
+                checkAppAuth("android.permission.RECORD_AUDIO", APP_PERMISSIONS_REQ_MIC);
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
 }

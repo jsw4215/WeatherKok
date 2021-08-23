@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.schedule.ScheduleActivity"
-    android:background="#DFE9F6">
+    android:background="@drawable/bg_bm_weather_list">
 
     <RelativeLayout
         android:id="@+id/rv_where_top_bar"
@@ -68,7 +68,7 @@
         <TextView
             android:layout_margin="20dp"
             android:textSize="20dp"
-            android:background="@drawable/bg_btn_delete"
+            android:background="@drawable/bg_btn_empty"
             android:text="삭제"
             android:textColor="#22215B"
             android:layout_width="wrap_content"

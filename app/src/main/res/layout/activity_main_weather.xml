@@ -8,6 +8,7 @@
     tools:context=".weather.WeatherActivity"
     android:background="@drawable/bg_bm_weather"
     android:orientation="vertical">
+    // tools 가 웨더액티비티 연결된게 맞는지 체크
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,20 +46,28 @@
         android:layout_marginTop="20dp"
         android:id="@+id/rl_bm_weather_center">
 
-        <TextView
-            android:id="@+id/tv_now_weather_go"
-            android:layout_width="35dp"
-            android:layout_height="250dp"
-            android:layout_centerVertical="true"
+        <ImageView
+            android:id="@+id/iv_arrow_left"
+            android:layout_width="34dp"
+            android:layout_height="35dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_vertical_go"
+            android:src="@drawable/arrow_left" />
+
+        <TextView
+            android:id="@+id/tv_now_weather_go"
+            android:layout_width="34dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/iv_arrow_left"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/bg_vertical_go"
             android:fontFamily="@font/cafe24ohsquareair"
             android:gravity="center"
             android:text="@string/now_weather"
-            android:textSize="20dp"></TextView>
+            android:textSize="20dp"
+            android:textStyle="bold"></TextView>
 
         <TextView
             android:id="@+id/tv_bm_weather_dates"
@@ -84,7 +93,7 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/imcresoojin"
             android:text="@string/location"
-            android:autoSizeTextType="uniform"></TextView>
+            android:textSize="30dp"></TextView>
 
         <TextView
             android:id="@+id/tv_bm_weather_condition"
@@ -134,7 +143,7 @@
             android:id="@+id/tv_bm_weather_forecast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_now_weather_go"
+            android:layout_below="@+id/tv_bm_weather_max_min"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:background="@drawable/bg_forecast_line"

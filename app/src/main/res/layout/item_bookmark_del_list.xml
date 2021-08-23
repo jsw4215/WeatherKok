@@ -51,7 +51,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_sun"
+            android:src="@drawable/sunny"
             ></ImageView>
         <ImageView
             android:id="@+id/iv_bm_weather_pm_list"
@@ -59,7 +59,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_cloudy"
+            android:src="@drawable/cloudy"
             ></ImageView>
     </LinearLayout>
 

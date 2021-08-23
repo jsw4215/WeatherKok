@@ -3,7 +3,7 @@
     android:id="@+id/ll_what_is_this_app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DFE9F6"
+    android:background="@drawable/bg_popup"
     android:orientation="vertical">
 
     <LinearLayout

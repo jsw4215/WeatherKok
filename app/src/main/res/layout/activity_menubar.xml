@@ -10,25 +10,25 @@
 
     <ImageView
         android:id="@+id/iv_menu_logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="10dp"
-        android:layout_gravity="center"
+        android:layout_marginLeft="90dp"
         android:src="@drawable/logo"></ImageView>
 
     <TextView
         android:id="@+id/tv_menu_logo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginLeft="100dp"
         android:layout_marginTop="3dp"
         android:text="@string/name_kok"
         android:textSize="20dp"
-        android:fontFamily="@font/imcresoojin"/>
+        android:fontFamily="@font/cafe24ssurroundair"/>
 
     <ImageView
         android:id="@+id/iv_menu_line"
-        android:layout_width="match_parent"
+        android:layout_width="277dp"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -36,11 +36,12 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="277dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/rl_1st"
         >
 
@@ -58,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/iv_menu_alarm"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ssurroundair"
             android:padding="5dp"
             android:text="@string/weather_alarm"
             android:textSize="30dp"></TextView>
@@ -76,12 +77,12 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="277dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        >
+        android:layout_marginTop="10dp">
 
         <ImageView
             android:id="@+id/iv_menu_share"
@@ -92,25 +93,25 @@
             android:src="@drawable/ic_share_24">
         </ImageView>
 
-    <TextView
-        android:id="@+id/tv_menu_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_marginLeft="10dp"
-        android:text="@string/sharing"
-        android:textSize="30dp"
-        android:fontFamily="@font/imcresoojin"></TextView>
+        <TextView
+            android:id="@+id/tv_menu_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/sharing"
+            android:textSize="30dp"
+            android:fontFamily="@font/cafe24ssurroundair"></TextView>
 
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_ad"
-        android:layout_width="match_parent"
+        android:layout_width="277dp"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        >
+        android:layout_marginTop="10dp">
 
         <ImageView
             android:id="@+id/iv_menu_ad_delete"
@@ -126,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/iv_menu_ad_delete"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ssurroundair"
             android:padding="5dp"
             android:text="@string/ad_delete"
             android:textSize="30dp"></TextView>
@@ -140,7 +141,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/bg_ad_line"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ssurroundair"
             android:padding="5dp"
             android:text="@string/ad"
             android:textSize="15dp"></TextView>
@@ -148,12 +149,12 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="277dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        >
+        android:layout_marginTop="10dp">
 
         <ImageView
             android:id="@+id/iv_menu_graph"
@@ -171,7 +172,7 @@
             android:padding="5dp"
             android:layout_marginLeft="10dp"
             android:text="@string/graph"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ssurroundair"
             android:textSize="30dp"></TextView>
     </LinearLayout>
 

@@ -34,20 +34,22 @@
 
     <TextView
         android:id="@+id/tv_dialog_positive"
-        android:background="@drawable/bg_gis_result_items_count"
+        android:background="@drawable/bg_forecast_line"
         android:gravity="center"
         android:layout_weight="1"
         android:text="확인"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cafe24ohsquare"/>
 
     <TextView
         android:id="@+id/tv_dialog_negative"
-        android:background="@drawable/bg_gis_result_items_count"
+        android:background="@drawable/bg_forecast_line"
         android:gravity="center"
         android:layout_weight="1"
         android:text="취소"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cafe24ohsquare"/>

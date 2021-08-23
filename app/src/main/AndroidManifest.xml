@@ -68,9 +68,9 @@
         </activity>
         <activity android:name=".where.WhereActivity">
         </activity>
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".main.MainActivity"> //특정화면만 보고 싶을때 exported 넣어준다.
         </activity>
-        <activity android:name=".when.CalendarActivity">
+        <activity android:name=".when.CalendarActivity" android:exported="true">
         </activity>
     </application>
 

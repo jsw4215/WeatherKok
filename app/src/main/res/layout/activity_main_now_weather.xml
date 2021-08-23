@@ -40,28 +40,37 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_now_weather_center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        android:id="@+id/rl_now_weather_center">
+        android:orientation="horizontal">
+
 
         <TextView
             android:id="@+id/tv_bm_weather_go"
-            android:layout_width="35dp"
-            android:layout_height="250dp"
+            android:layout_width="34dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/iv_arrow_right"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_vertical_go"
             android:fontFamily="@font/cafe24ohsquareair"
             android:gravity="center"
             android:text="@string/bm_weather"
-            android:textSize="20dp"></TextView>
+            android:textSize="20dp"
+            android:textStyle="bold"></TextView>
+
+        <ImageView
+            android:id="@+id/iv_arrow_right"
+            android:layout_width="34dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/bg_vertical_go"
+            android:src="@drawable/arrow_right" />
 
         <TextView
             android:id="@+id/tv_now_weather_place"
@@ -81,7 +90,6 @@
             android:layout_below="@+id/tv_now_weather_place"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -94,13 +102,12 @@
             android:id="@+id/tv_now_weather_condition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="35dp"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/tv_now_weather_location"
-            android:text="@string/weather"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:fontFamily="@font/imcresoojin">
-        </TextView>
+            android:fontFamily="@font/imcresoojin"
+            android:text="@string/weather"
+            android:textSize="35dp"></TextView>
 
         <TextView
             android:id="@+id/tv_now_weather_temperature"
@@ -138,7 +145,7 @@
             android:id="@+id/tv_now_weather_forecast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_bm_weather_go"
+            android:layout_below="@+id/tv_now_weather_max_min"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/bg_forecast_line"
@@ -170,7 +177,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
         android:padding="5dp"
-        android:background="@drawable/bg_now_weather_list"
+        android:background="@drawable/bg_list"
         android:layout_margin="5dp">
         <TextView
             android:id="@+id/tv_now_weather_day_list"
@@ -201,7 +208,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/ic_sun"
+            android:src="@drawable/sunny"
             ></ImageView>
         <ImageView
             android:id="@+id/iv_now_weather_pm_list"
@@ -210,7 +217,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="30dp"
-            android:src="@drawable/ic_cloudy"
+            android:src="@drawable/shower"
             ></ImageView>
 
         <TextView
@@ -243,7 +250,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_now_weather_list"
+        android:background="@drawable/bg_list"
         android:layout_margin="5dp">
         <TextView
             android:layout_width="wrap_content"
@@ -271,7 +278,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/ic_wind"
+            android:src="@drawable/rain_snow"
             ></ImageView>
         <ImageView
             android:layout_weight="1"
@@ -279,7 +286,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="30dp"
-            android:src="@drawable/ic_rain"
+            android:src="@drawable/rain"
             ></ImageView>
 
         <TextView
@@ -309,7 +316,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_now_weather_list"
+        android:background="@drawable/bg_list"
         android:layout_margin="5dp"></LinearLayout>
 
     <LinearLayout
@@ -317,7 +324,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_now_weather_list"
+        android:background="@drawable/bg_list"
         android:layout_margin="5dp"></LinearLayout>
 
 </LinearLayout>

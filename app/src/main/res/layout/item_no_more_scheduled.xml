@@ -11,6 +11,7 @@
         android:layout_gravity="center"
         android:textSize="30dp"
         android:text="추가한 지역이 없습니다."
+        android:fontFamily="@font/cafe24ohsquareair"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

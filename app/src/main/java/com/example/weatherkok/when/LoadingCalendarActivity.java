@@ -1,15 +1,19 @@
-package com.example.weatherkok.when.utils;
+package com.example.weatherkok.when;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.TaskStackBuilder;
 
+import com.example.weatherkok.R;
 import com.example.weatherkok.src.BaseActivity;
-import com.example.weatherkok.when.CalendarActivity;
-import com.example.weatherkok.when.CalendarService;
 import com.example.weatherkok.when.interfaces.RestContract;
 import com.example.weatherkok.when.models.ResponseParams;
 import com.example.weatherkok.when.models.Schedule;
@@ -17,17 +21,21 @@ import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.when.models.base.BaseDateInfo;
 import com.example.weatherkok.when.models.base.BaseDateInfoList;
 import com.example.weatherkok.when.models.single.ResponseSingle;
+import com.example.weatherkok.when.utils.LunaCalendar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
-import static android.content.Context.MODE_PRIVATE;
+public class LoadingCalendarActivity extends BaseActivity implements RestContract.ActivityView, Runnable {
+    private static final String TAG = LoadingCalendarActivity.class.getSimpleName();
 
-//달력의 기본정보를 DB(preference)에 생성하고 저장해주는 작업
-public class CalenderInfoPresenter implements RestContract.ActivityView, Runnable {
-    private static final String TAG = CalenderInfoPresenter.class.getSimpleName();
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     String mYear;
     String mMonth;
@@ -35,15 +43,64 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
     ArrayList<BaseDateInfo> mDateInfoList;
     Context mContext;
     int receiveCnt=0;
+    public ProgressDialog progressDoalog;
 
-    public CalenderInfoPresenter() {
+    @Override
+    protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_splash);
+        progressDoalog = new ProgressDialog(this);
+        progressDoalog.setMax(100);
+        progressDoalog.setMessage("Its loading....");
+        progressDoalog.setTitle("ProgressDialog Spinner example");
+        progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        Intent intent = getIntent();
+        //인텐트 체크 후 없으면, 현재 월, 있으면 해당 월 달력 띄우기
+        if(!TextUtils.isEmpty(intent.getStringExtra("year"))
+                &&!TextUtils.isEmpty(intent.getStringExtra("month"))){
+            mYear = intent.getStringExtra("year");
+            String month = intent.getStringExtra("month");
+
+            run();
+
+        } else {
+
+            getThisYear();
+            run();
+        }
+
+
     }
 
-    public CalenderInfoPresenter(Context context) {
+    private Date getToday(){
+        // 오늘에 날짜를 세팅 해준다.
+        long now = System.currentTimeMillis();
+        final Date date = new Date(now);
+
+        return date;
+    }
+
+    private void getThisYear() {
+        Date date = getToday();
+
+        //연,월,일을 따로 저장
+        final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
+
+        //현재 년,월을 구해 저장한다.(주의:월 정보는 +1해줘야한다)
+        mYear = curYearFormat.format(date);
+
+    }
+
+    public LoadingCalendarActivity() {
+    }
+
+    public LoadingCalendarActivity(Context context) {
         mContext = context;
     }
 
-    public CalenderInfoPresenter(String mYear, Context mContext) {
+    public LoadingCalendarActivity(String mYear, Context mContext) {
         this.mYear = mYear;
         this.mContext = mContext;
     }
@@ -63,11 +120,11 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
     @Override
     public void run() {
-
+        progressDoalog.show();
         for(int i=1;i<13;i++) {
             String temp = String.valueOf(i);
             if(i<10){temp="0"+temp;}
-            initCal(mYear, temp, mContext);
+            initCal(mYear, temp, getBaseContext());
         }
     }
 
@@ -118,7 +175,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
     }
 
     private void clearList(String year, String month) {
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.remove(year + month);
         editor.commit();
@@ -128,7 +185,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
         //Preference에 날씨 정보 객체 불러오기
 
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         Gson gson = new GsonBuilder().create();
@@ -148,7 +205,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
         //Preference에 날씨 정보 객체 불러오기
 
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         Gson gson = new GsonBuilder().create();
@@ -166,7 +223,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
     private void setDateInfoToSP(BaseDateInfoList baseDateInfoList, String year, String month) {
 
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         Gson gson = new GsonBuilder().create();
@@ -200,7 +257,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
         //Preference에 날씨 정보 객체 불러오기
         Log.i(TAG, "year_month key : " + year + month);
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         //preference에 저장되어있는 날짜 정보 가져오기
@@ -285,7 +342,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
         //Preference에 날씨 정보 객체 불러오기
 
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         //preference에 저장되어있는 날짜 정보 가져오기
@@ -308,13 +365,33 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
             }
 
         }
-
+        setDateInfoToSP(baseDateInfoList, assortedList.getYearMonth(), "");
         //데이터 리스트 음력 추가 완료
         receiveCnt++;
         if(receiveCnt>11){
-            //((CalendarActivity)mContext).dismissProgressDialog();
+            progressDoalog.dismiss();
+            lastFunc();
         }
-        setDateInfoToSP(baseDateInfoList, assortedList.getYearMonth(), "");
+
+    }
+
+    private void lastFunc() {
+
+        Intent intent2 = new Intent(LoadingCalendarActivity.this, CalendarActivity.class);
+
+        Intent intent = getIntent();
+        //인텐트 체크 후 없으면, 현재 월, 있으면 해당 월 달력 띄우기
+        if(!TextUtils.isEmpty(intent.getStringExtra("year"))
+                &&!TextUtils.isEmpty(intent.getStringExtra("month"))){
+            mYear = intent.getStringExtra("year");
+            String month = intent.getStringExtra("month");
+
+            intent2.putExtra("year",mYear);
+            intent2.putExtra("month",month);
+
+        }
+
+        startActivity(intent2);
 
     }
 
@@ -331,7 +408,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
 
     @Override
-    public void validateSuccess(boolean isSuccess, ResponseParams responseParams,String year, String month) {
+    public void validateSuccess(boolean isSuccess, ResponseParams responseParams, String year, String month) {
         //데이터를 가져와서 preference 해당 위치에 넣기 - 이름, 날짜
 
         //클래스 하나 만들어서 데이터 저장시키고
@@ -398,9 +475,9 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
     }
 
     @Override
-    public void validateSuccessSingle(boolean isSuccess, ResponseSingle responseSingle,String year,String month) {
+    public void validateSuccessSingle(boolean isSuccess, ResponseSingle responseSingle, String year, String month) {
         //데이터를 가져와서 preference 해당 위치에 넣기 - 이름, 날짜
-        
+
         //클래스 하나 만들어서 데이터 저장시키고
         BaseDateInfo baseDateInfo = new BaseDateInfo();
         BaseDateInfoList baseDateInfoList = new BaseDateInfoList();
@@ -447,14 +524,14 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
         //데이터 저장한 리스트 만들기
         baseDateInfoList.getBaseDateInfoList().add(baseDateInfo);
         baseDateInfoList=matchingScheduleOnDate(baseDateInfoList);
-            setHolidayOnPreference(baseDateInfoList);
+        setHolidayOnPreference(baseDateInfoList);
 
 
     }
 
     public void makeDummySchedule() {
         //preference 동작 준비
-        SharedPreferences sp = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         //더미 스케쥴
         String dummy_year = "2021";
@@ -537,7 +614,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
     private void setScheduleInToSp(ScheduleList scheduleList) {
 
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         Gson gson = new GsonBuilder().create();
@@ -560,7 +637,7 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
 
         //Preference에 날씨 정보 객체 불러오기
 
-        SharedPreferences pref = mContext.getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         Gson gson = new GsonBuilder().create();

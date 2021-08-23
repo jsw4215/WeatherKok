@@ -86,12 +86,26 @@
             android:textSize="30dp"
             android:fontFamily="@font/cafe24ohsquare"/>
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/iv_cal_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/arrow_up"/>
+
+
+            <ImageView
+                android:id="@+id/iv_cal_dialog_arrow_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/arrow_down"/>
+
+        </FrameLayout>
 
         <View
             android:layout_width="0dp"

@@ -30,6 +30,8 @@
 
         <activity android:name=".when.YearActivity"></activity>
 
+        <activity android:name=".when.LoadingCalendarActivity"/>
+
         <activity android:name=".who.kakao.kotlin.WhoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

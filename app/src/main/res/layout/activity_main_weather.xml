@@ -1,43 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/dl_weather_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:openDrawer="start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:id="@+id/ll_weather_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".weather.WeatherActivity"
     android:background="@drawable/bg_bm_weather"
     android:orientation="vertical">
-    // tools 가 웨더액티비티 연결된게 맞는지 체크
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_weather_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_bm_weather_menu"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/ic_menu_24"></ImageView>
-
-        <ImageView
-            android:id="@+id/iv_bm_weather_add"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/ic_add_24"></ImageView>
-
-    </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,14 +35,15 @@
             android:layout_width="34dp"
             android:layout_height="35dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/bg_vertical_go"
+            android:layout_marginTop="100dp"
+            android:background="@color/transparent"
             android:src="@drawable/arrow_left" />
 
         <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/tv_now_weather_go"
             android:layout_width="34dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/iv_arrow_left"
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
@@ -66,7 +51,7 @@
             android:fontFamily="@font/cafe24ohsquareair"
             android:gravity="center"
             android:text="@string/now_weather"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textStyle="bold"></TextView>
 
         <TextView
@@ -230,3 +215,13 @@
 <!--    </LinearLayout>-->
 
 </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navi_header"
+        app:menu="@menu/navi_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

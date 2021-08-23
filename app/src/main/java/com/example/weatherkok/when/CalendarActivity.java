@@ -1,6 +1,7 @@
 package com.example.weatherkok.when;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,7 @@ import com.example.weatherkok.when.models.base.BaseDateInfo;
 import com.example.weatherkok.when.models.base.BaseDateInfoList;
 import com.example.weatherkok.when.utils.CalenderInfoPresenter;
 import com.example.weatherkok.when.utils.DialogDateSelector;
+import com.example.weatherkok.when.utils.DialogDateSelectorMonthly;
 import com.example.weatherkok.when.utils.RecyclerViewAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -44,7 +46,7 @@ public class CalendarActivity extends BaseActivity{
         private TextView tvYearMonthTop;
         String year_month;
         TextView mTvSelBtn;
-        ImageView mTvDialog;
+        public ImageView mTvDialog;
         ImageView mIvBefore;
         ImageView mIvAfter;
         private ArrayList<String> dayList;
@@ -57,6 +59,9 @@ public class CalendarActivity extends BaseActivity{
         TextView mTvYearTerm;
         boolean mLunaChecker=false;
         int mMaxYear;
+        public ProgressDialog progressDoalog;
+        String month;
+        public ImageView mIvCalDown;
 
         private Calendar mCal;
 
@@ -75,26 +80,26 @@ public class CalendarActivity extends BaseActivity{
             super.onCreate(savedInstanceState);
             mContext = getBaseContext();
 
-            initView();
-
-
-            mCal = Calendar.getInstance();
-
+            progressDoalog = new ProgressDialog(this);
+            progressDoalog.setMax(100);
+            progressDoalog.setMessage("Its loading....");
+            progressDoalog.setTitle("ProgressDialog Spinner example");
+            progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
             SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
 
             //when 초기화
-
+            initView();
 
             Intent intent = getIntent();
             //인텐트 체크 후 없으면, 현재 월, 있으면 해당 월 달력 띄우기
             if(!TextUtils.isEmpty(intent.getStringExtra("year"))
                     &&!TextUtils.isEmpty(intent.getStringExtra("month"))){
                 String year = intent.getStringExtra("year");
-                String month = intent.getStringExtra("month");
-                if(year.equals("01")){mIvBefore.setVisibility(View.INVISIBLE);}
-                else if(year.equals("12")){mIvAfter.setVisibility(View.INVISIBLE);}
+                month = intent.getStringExtra("month");
+                if(month.equals("01")){mIvBefore.setVisibility(View.INVISIBLE);}
+                else if(month.equals("12")){mIvAfter.setVisibility(View.INVISIBLE);}
                 initForNotCurr(year, month);
 
             } else {
@@ -104,20 +109,34 @@ public class CalendarActivity extends BaseActivity{
             }
 
 
+
+            mCal = Calendar.getInstance();
+
             //클릭리스너 처리
 
             mTvLuna.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(!mTvLuna.isChecked()){
-                    mTvLuna.setChecked(true);
-                    mTvSolar.setChecked(false);
+                    mTvLuna.setChecked(false);
+                    mTvSolar.setChecked(true);
                     //뷰에 visible invisible
-                    if(mLunaChecker==false) {
-                        mLunaChecker = true;
+                    if(mLunaChecker==true) {
+                        mLunaChecker = false;
 
                         parsingDate(mSelectedDate);
                     }
+                    }
+                    else{
+                        mTvLuna.setChecked(true);
+                        mTvSolar.setChecked(false);
+
+                        if(mLunaChecker==false) {
+                            mLunaChecker = true;
+
+                            parsingDate(mSelectedDate);
+                        }
+
                     }
                 }
             });
@@ -126,14 +145,24 @@ public class CalendarActivity extends BaseActivity{
                 @Override
                 public void onClick(View v) {
                     if(!mTvSolar.isChecked()){
+                        mTvSolar.setChecked(false);
+                        mTvLuna.setChecked(true);
+                        //뷰에 visible invisible
+                        if(mLunaChecker==false) {
+                            mLunaChecker = true;
+
+                            parsingDate(mSelectedDate);
+                        }
+                    }
+                    else{
                         mTvSolar.setChecked(true);
                         mTvLuna.setChecked(false);
-                        //뷰에 visible invisible
                         if(mLunaChecker==true) {
                             mLunaChecker = false;
 
                             parsingDate(mSelectedDate);
                         }
+
                     }
                 }
             });
@@ -162,8 +191,9 @@ public class CalendarActivity extends BaseActivity{
             mTvDialog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    DialogDateSelector dialog = new DialogDateSelector(CalendarActivity.this);
+                    mTvDialog.setVisibility(View.GONE);
+                    mIvCalDown.setVisibility(View.VISIBLE);
+                    DialogDateSelectorMonthly dialog = new DialogDateSelectorMonthly(CalendarActivity.this);
                     dialog.show();
 
                 }
@@ -277,7 +307,8 @@ public class CalendarActivity extends BaseActivity{
 
             mIvAfter = findViewById(R.id.iv_after);
 
-
+            mIvCalDown = findViewById(R.id.iv_cal_dialog_arrow_down);
+            mIvCalDown.setVisibility(View.GONE);
         }
 
         private void initForNotCurr(String year, String month){
@@ -299,7 +330,7 @@ public class CalendarActivity extends BaseActivity{
             //최대 년도 설정
             setMaxYear();
             //DB 세팅 - 처음 보는 날짜일 경우
-            loadScheduleData(year,month);
+            //loadScheduleData(year,month);
             //달력데이터 뷰에 세팅
             setUnselectedCalendar(year, month);
 
@@ -347,14 +378,13 @@ public class CalendarActivity extends BaseActivity{
             setMaxYear();
             //선택일자에 저장
             setmSelectedDate(currentYear+"/"+currentMonth+"/"+currentDay);
-
+            month = currentMonth;
             //현재 날짜 텍스트뷰에 뿌려줌
-            tvYearMonthTop.setText(currentYear + "/" + currentMonth);
-            year_month = tvYearMonthTop.getText().toString();
+
             Log.i(TAG,"month : " + temp + ", stirng : " + currentMonth);
             //년,월의 정보를 갖고 해당 월의 양력,음력,공휴일 정보를 preference에 세팅한다.
             //DB세팅
-            loadScheduleData(currentYear, currentMonth);
+            //loadScheduleData(currentYear, currentMonth);
             //달력 정보 리스트 세팅
             setUnselectedCalendar(currentYear, currentMonth);
 
@@ -433,6 +463,7 @@ public class CalendarActivity extends BaseActivity{
             Log.i(TAG, "starting setCalendarDate : " + year + month + date);
 
             String monthStr = null;
+            monthStr= String.valueOf(month);
             if(month<10) {
                 monthStr = "0"+String.valueOf(month);
             }
@@ -499,6 +530,9 @@ public class CalendarActivity extends BaseActivity{
     private void setUnselectedCalendar(String year, String month) {
         Log.i(TAG, "setUnselectedCalendar");
         //한달 모든 정보 가져오기
+
+        tvYearMonthTop.setText(year + "/" + month);
+        year_month = tvYearMonthTop.getText().toString();
 
         //preference에서 한달의 모든 정보 가져오기
         SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
@@ -569,15 +603,30 @@ public class CalendarActivity extends BaseActivity{
 
     private void loadScheduleData(String year, String month){
 
-        CalenderInfoPresenter baseCalenderInfo = new CalenderInfoPresenter();
-        baseCalenderInfo.run(year, month, mContext);
-        baseCalenderInfo.setDaemon(true);
-        baseCalenderInfo.start();
+        progressDoalog.show();
+
+        //CalenderInfoPresenter baseCalenderInfo = new CalenderInfoPresenter(mContext);
+        Runnable runnable = new CalenderInfoPresenter(year, mContext);
+        runnable.run();
+        Thread thread = new Thread(runnable);
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        dismissProgressDialog();
+        initView();
+        //baseCalenderInfo.run(year, month, mContext);
+        //baseCalenderInfo.setDaemon(true);
+        //baseCalenderInfo.start();
         //preference에 더미 데이터 및 해당 년,월의 음력, 공휴일 데이터를 생성해준다.
 
     }
 
-
+    public void dismissProgressDialog(){
+        progressDoalog.dismiss();
+    }
 
     public boolean getmLunaChecker(){
         return mLunaChecker;

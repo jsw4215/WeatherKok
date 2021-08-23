@@ -5,11 +5,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +31,7 @@ import com.example.weatherkok.weather.utils.WeatherActivityAdapter;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -53,8 +64,12 @@ public class WeatherActivity extends BaseActivity{
     WeatherActivityAdapter mWxAdapter;
     String mScheduledDate;
     ImageView mIvBmWxAdd;
-
-
+    DrawerLayout mDrawerLayout;
+    ImageView mIvBmMenu;
+    NavigationView navigationView;
+    Toolbar mTbWxMain;
+    ActionBar mActionBar;
+    ActionBarDrawerToggle mActionBarDrawerToggle;
     //날씨 정보를 얻는 서비스를 시작하고, 받아와서 정리된 데이터를 가져와 뿌리는 역할만 하는 곳
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +88,10 @@ public class WeatherActivity extends BaseActivity{
             intent.putExtra("from","goToWeather");
             startActivity(intent);
         }
+        initView();
 
         initCenterView();
 
-        initView();
         //지난 스케쥴을 삭제하고, 가장 빠른일자를 골라내는 함수를 한 뒤,
         decorCenter();
         //아래의 나머지 스케쥴 리스트를 연동
@@ -84,12 +99,25 @@ public class WeatherActivity extends BaseActivity{
 
         decorTop();
 
-        mIvBmWxAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //툴바
+        mTbWxMain = findViewById(R.id.tb_weather_main);
+        setSupportActionBar(mTbWxMain);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_24);
 
-                Intent intent = new Intent(WeatherActivity.this, WxListActivity.class);
-                startActivity(intent);
+        //drawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_weather_main);
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
+
+                return true;
             }
         });
 
@@ -103,6 +131,50 @@ public class WeatherActivity extends BaseActivity{
 
             }
         });
+
+
+        //mDrawerLayout.closeDrawers();
+
+//        mIvBmMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showDrawer();
+//                mDrawerLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
+
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.list_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+            case R.id.toolbar_list:{
+                Intent intent = new Intent(WeatherActivity.this, WxListActivity.class);
+                startActivity(intent);
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showDrawer(){
+
+
+
 
     }
 
@@ -140,15 +212,7 @@ public class WeatherActivity extends BaseActivity{
     }
 
     private void decorTop(){
-        mIvBmWxAdd = findViewById(R.id.iv_bm_weather_add);
 
-        mIvBmWxAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WeatherActivity.this, WxListActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -806,11 +870,6 @@ public class WeatherActivity extends BaseActivity{
     }
 
     private void initView() {
-        //나머지 스케쥴이 추가될 리스트
-
-
-
-
 
 
 
@@ -850,4 +909,15 @@ public class WeatherActivity extends BaseActivity{
         super.onResume();
         decorBottom();
     }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+
 }

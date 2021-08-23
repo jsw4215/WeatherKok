@@ -21,6 +21,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.weatherkok.R;
 import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.intro.IntroActivity;
+import com.example.weatherkok.main.dialog.InputErrorDialog;
+import com.example.weatherkok.main.dialog.WhatIsThisAppDialog;
 import com.example.weatherkok.weather.WeatherActivity;
 import com.example.weatherkok.weather.interfaces.WeatherContract;
 import com.example.weatherkok.weather.models.midTemp.MidTempResponse;
@@ -29,6 +31,7 @@ import com.example.weatherkok.weather.models.shortsExpectation.ShortsResponse;
 import com.example.weatherkok.weather.models.xy;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.CalendarActivity;
+import com.example.weatherkok.when.LoadingCalendarActivity;
 import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.where.WhereActivity;
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     Context mContext;
     String TAG = "MainActivity";
+    LinearLayout mLlMainWhatIsTheApp;
     LinearLayout mLlMainWhere;
     LinearLayout mLlMainWhen;
     LinearLayout mLlMainWho;
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         mTvMainWhen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), CalendarActivity.class);
+                Intent intent = new Intent(getBaseContext(), LoadingCalendarActivity.class);
                 finish();
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
@@ -142,8 +146,17 @@ public class MainActivity extends AppCompatActivity {
 
                 }else {
                     //3개가 다 입력되어있지 않으면, 시작 불가능 다이얼로그
-
+                    InputErrorDialog dialog = new InputErrorDialog(MainActivity.this);
+                    dialog.show();
                 }
+            }
+        });
+
+        mLlMainWhatIsTheApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WhatIsThisAppDialog dialog = new WhatIsThisAppDialog(MainActivity.this);
+                dialog.show();
             }
         });
 
@@ -155,18 +168,6 @@ public class MainActivity extends AppCompatActivity {
 //        actionBar.setDisplayHomeAsUpEnabled(true); // true값 전달하면 자동으로 툴바 왼쪽에 버튼 생성
 //        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_24); // 버튼의 이미지 설정
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-                mDrawerLayout.closeDrawers();
-
-                return true;
-            }
-        });
 
     }
 
@@ -217,9 +218,11 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new GsonBuilder().create();
         String loaded = pref.getString("schedule","");
 
-        ScheduleList loadedFromSP = gson.fromJson(loaded,ScheduleList.class);
+        ScheduleList loadedFromSP = new ScheduleList();
+        loadedFromSP = gson.fromJson(loaded,ScheduleList.class);
         ArrayList<Schedule> temp = new ArrayList<>();
-        if(loadedFromSP.getScheduleArrayList()==null){
+        if(loadedFromSP==null||loadedFromSP.getScheduleArrayList()==null){
+            loadedFromSP = new ScheduleList();
             loadedFromSP.setScheduleArrayList(temp);
         }
         loadedFromSP.getScheduleArrayList().add(schedule);
@@ -285,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
         mTvMainWhen = findViewById(R.id.tv_main_when);
         mTvMainWho = findViewById(R.id.tv_main_who);
         mTvMainStart = findViewById(R.id.tv_main_start);
+        mLlMainWhatIsTheApp = findViewById(R.id.ll_main_what_is_the_app);
 
     }
 

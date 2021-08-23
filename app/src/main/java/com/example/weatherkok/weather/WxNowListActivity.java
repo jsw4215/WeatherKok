@@ -42,6 +42,7 @@ public class WxNowListActivity extends BaseActivity {
     ScheduleList mScheduleList;
     TextView mTvBmWxListDelete;
     TextView mTvBmWxListAdd;
+    ImageView mIvBackArrow;
     ImageView mIvBmTrash;
     ImageView mIvNowAm;
     ImageView mIvNowPm;
@@ -293,6 +294,13 @@ public class WxNowListActivity extends BaseActivity {
 
                 setScheduleDataInToSp(mScheduleList);
 
+            }
+        });
+
+        mIvBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

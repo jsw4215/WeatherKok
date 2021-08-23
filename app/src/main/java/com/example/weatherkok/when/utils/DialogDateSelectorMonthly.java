@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -17,13 +15,10 @@ import com.example.weatherkok.R;
 import com.example.weatherkok.when.CalendarActivity;
 import com.example.weatherkok.when.LoadingCalendarActivity;
 import com.example.weatherkok.when.YearActivity;
-import com.example.weatherkok.when.interfaces.DateSelectorListener;
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
-public class DialogDateSelector extends Dialog {
+public class DialogDateSelectorMonthly  extends Dialog {
     private static final String TAG = DialogDateSelector.class.getSimpleName();
     TextView mTvDialogPositive;
     TextView mTvDialogNegative;
@@ -36,7 +31,7 @@ public class DialogDateSelector extends Dialog {
     Context mContext;
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
 
-    public DialogDateSelector(@NonNull Context context) {
+    public DialogDateSelectorMonthly(@NonNull Context context) {
         super(context);
         mContext = context;
     }
@@ -95,8 +90,8 @@ public class DialogDateSelector extends Dialog {
             @Override
             public void onClick(View v) {
 
-                ((YearActivity) mContext).mTvDialog.setVisibility(View.VISIBLE);
-                ((YearActivity) mContext).mIvDown.setVisibility(View.GONE);
+                ((CalendarActivity) mContext).mTvDialog.setVisibility(View.VISIBLE);
+                ((CalendarActivity) mContext).mIvCalDown.setVisibility(View.GONE);
 
                 dismiss();
             }

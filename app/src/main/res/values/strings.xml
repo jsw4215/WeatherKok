@@ -8,7 +8,7 @@
     <string name="what_is_this_app_title">날씨콕</string>
     <string name="when_calendar">달력</string>
     <string name="where_hint_search">동/읍/면 주소 입력</string>
-    <string name="input_error_title">일정이 입력되지 않았습니다!</string>
+    <string name="input_error_title">모든 일정이 입력되지 않았습니다!</string>
     <string name="input_error_contents">- 정보를 확인해 주세요</string>
     <string name="schedule_hint">등록된 날씨콕</string>
     <string name="what_is_this_app_contents">가고자하는 지역, 가는날짜를 지정해두시면\n
@@ -82,4 +82,6 @@
     <string name="permission_ok">허용하기</string>
     <string name="noti_channel_id">지금 동기화 중입니다.</string>
 
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
 </resources>

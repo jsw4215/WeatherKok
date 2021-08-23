@@ -54,7 +54,8 @@ public class YearActivity extends BaseActivity{
     RecyclerView Nov;
     RecyclerView Dec;
     RecyclerView Choose;
-    ImageView mTvDialog;
+    public ImageView mTvDialog;
+    public ImageView mIvDown;
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     String mYearForCalendar;
     int mMaxYear;
@@ -90,48 +91,11 @@ public class YearActivity extends BaseActivity{
         mTvDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mTvDialog.setVisibility(View.GONE);
+                mIvDown.setVisibility(View.VISIBLE);
                 DialogDateSelector dialog = new DialogDateSelector(YearActivity.this);
                 dialog.show();
 
-            }
-        });
-
-        // 이전 연도 넘어가게 하는건데 안되네..
-        mIvYearBefore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String yearForAfter = mYear.substring(0,4);
-                int a = Integer.parseInt(yearForAfter)-1;
-
-                if(!(a<2010)){
-                    Intent intent = new Intent(YearActivity.this, YearActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra("year",yearForAfter);
-                    finish();
-                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
-                    startActivity(intent);
-                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
-                }
-            }
-        });
-
-        // 이후 연도 넘어가게 하는건데 안되네..
-        mIvYearAfter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String yearForBefore = mYear.substring(0,4);
-                int a = Integer.parseInt(yearForBefore)+1;
-
-                if(!(a>mMaxYear)){
-                    Intent intent = new Intent(YearActivity.this, YearActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra("year",yearForBefore);
-                    finish();
-                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
-                    startActivity(intent);
-                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
-                }
             }
         });
 
@@ -165,8 +129,8 @@ public class YearActivity extends BaseActivity{
         setContentView(R.layout.activity_year);
 
         mTvDialog = findViewById(R.id.iv_year_cal_dialog);
-        mIvYearBefore = findViewById(R.id.iv_year_before);
-        mIvYearAfter = findViewById(R.id.iv_year_after);
+        mIvDown = findViewById(R.id.iv_year_cal_down_arrow);
+        mIvDown.setVisibility(View.GONE);
 
         Jan = findViewById(R.id.rv_year_jan);
         Feb = findViewById(R.id.rv_year_feb);

@@ -44,7 +44,7 @@
     <string name="weather">맑음</string>
     <string name="temperature">34\u00B0</string>
     <string name="max_min_temper">최고 36\u00B0 최저 22\u00B0</string>
-    <string name="forecast">기상청</string>
+    <string name="forecast">&#160;기상청\n&#160;&#160;&#160;보기</string>
     <string name="ad_kor">광고</string>
     <string name="dates_list1">9/13(금)</string>
     <string name="dates_list2">날짜없음</string>
@@ -64,17 +64,17 @@
     <string name="snow">눈</string>
     <string name="shower">소나기</string>
     <string name="permission_title">날씨콕 이용안내</string>
-    <string name="permission_info">지메이트 헬스케어를 사용하려면,\n아래의 권한을 허용해 주세요.</string>
+    <string name="permission_info">날씨콕을 이용하려면,\n아래의 권한을 허용해 주세요.</string>
 
     <string name="permission_audio">혈당 측정기와 통신하기 위해 필요합니다.</string>
     <string name="permission_audio_title">오디오 녹음</string>
     <string name="permission_storage">측정결과를 파일로 공유하기 위해 필요합니다.</string>
     <string name="permission_storage_title">외부 저장소 쓰기</string>
-    <string name="permission_phone_state">사용자의 국가에 맞는 혈당 단위를 설정하기 위해 필요합니다.</string>
-    <string name="permission_phone_state_title">전화 상태 읽기</string>
-    <string name="permission_location">블루투스 기기(혈압계, 체중계, 스마트 밴드 등)와 통신하기 위해 필요합니다.</string>
+    <string name="permission_phone_state">사용자의 국가를 설정하기 위해 필요합니다.</string>
+    <string name="permission_phone_state_title">문자메세지</string>
+    <string name="permission_location">현재 위치에 대한 날씨를 가져오기 위해 필요합니다.</string>
     <string name="permission_location_title">위치 접근</string>
-    <string name="permission_camera">처방전 촬영과 QR코드를 인식하기 위해 필요합니다.</string>
+    <string name="permission_camera">사진 촬영과 QR코드를 인식하기 위해 필요합니다.</string>
     <string name="permission_camera_title">카메라</string>
     <string name="withdraw_title">회원 탈퇴</string>
     <string name="withdraw_msg">동의하시면 지금 로그인된 %1$s 으로 로그인할 수 없고, 같은 이메일로는 다시 재가입할 수 없습니다.</string>

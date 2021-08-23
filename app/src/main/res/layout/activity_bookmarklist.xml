@@ -27,10 +27,10 @@
             android:id="@+id/tv_bml_title_top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24ohsquare"
             android:gravity="center"
             android:text="등록된 날씨콕"
-            android:textSize="30dp"
-            android:fontFamily="@font/cafe24ohsquareair"/>
+            android:textSize="25dp" />
 
 
     </RelativeLayout>

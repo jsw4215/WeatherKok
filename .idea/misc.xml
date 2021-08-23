@@ -39,8 +39,8 @@
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_calendar.xml" value="0.264" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_data_list.xml" value="0.15208333333333332" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_gps_weather.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_main_now_weather.xml" value="0.19550173010380623" />
+        <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_main_now_weather.xml" value="0.4" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_main_weather.xml" value="0.264" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_menu.xml" value="0.17543859649122806" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/activity_menubar.xml" value="0.536" />
@@ -67,7 +67,8 @@
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/item_schedule.xml" value="0.536" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/item_solar_calendar.xml" value="0.184375" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/item_year_calendar.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/navi_header.xml" value="0.2" />
+        <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/navi_header.xml" value="0.264" />
+        <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/permission_notify_popup_view.xml" value="0.264" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/what_is_this_app_dialog.xml" value="0.264" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/layout/where_contents.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/dan/AndroidStudioProjects/WeatherKok/app/src/main/res/menu/navi_menu.xml" value="0.264" />

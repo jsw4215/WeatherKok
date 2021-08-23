@@ -19,7 +19,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_weather_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -77,6 +78,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/imcresoojin"
+            android:gravity="center"
             android:text="@string/location"
             android:textSize="30dp"></TextView>
 
@@ -136,7 +138,7 @@
             android:padding="5dp"
             android:text="@string/forecast"
             android:textColor="#FFFFFF"
-            android:textSize="20dp"></TextView>
+            android:textSize="15dp"></TextView>
 
     </RelativeLayout>
 

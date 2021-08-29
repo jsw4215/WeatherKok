@@ -19,10 +19,16 @@
             android:textSize="30sp"
             android:fontFamily="@font/imcresoojin"/>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <ImageView
             android:id="@+id/iv_close"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginRight="20dp"
             android:layout_gravity="end|center_vertical"
             android:src="@drawable/ic_close_black_24dp" />
     </LinearLayout>
@@ -31,9 +37,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:paddingTop="15dp"
         android:text="@string/what_is_this_app_contents"
         android:textSize="20dp"
+        android:lineSpacingExtra="15dp"
         android:fontFamily="@font/cafe24ssurroundair"
         android:background="@drawable/bg_calendar"/>
+
 
 </LinearLayout>

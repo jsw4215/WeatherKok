@@ -30,6 +30,8 @@
 
         <activity android:name=".when.YearActivity"></activity>
 
+        <activity android:name=".when.LoadingCalendarActivity"/>
+
         <activity android:name=".who.kakao.kotlin.WhoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -68,9 +70,9 @@
         </activity>
         <activity android:name=".where.WhereActivity">
         </activity>
-        <activity android:name=".main.MainActivity"> //특정화면만 보고 싶을때 exported 넣어준다.
+        <activity android:name=".main.MainActivity">
         </activity>
-        <activity android:name=".when.CalendarActivity" android:exported="true">
+        <activity android:name=".when.CalendarActivity">
         </activity>
     </application>
 

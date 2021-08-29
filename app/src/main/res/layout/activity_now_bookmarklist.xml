@@ -5,6 +5,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_alignParentTop="true"
         android:id="@+id/rl_bml_top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,32 +24,25 @@
         <TextView
             android:gravity="center"
             android:id="@+id/tv_bml_title_top_bar"
-            android:textSize="40dp"
-            android:text="등록된 날씨콕"
+            android:textSize="30dp"
+            android:text="현재 날씨"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <ImageView
-            android:layout_margin="5dp"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/iv_bml_wrong_mark_top_bar"
-            android:src="@drawable/close_mark"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-
     </RelativeLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        android:layout_below="@id/rl_bml_top_bar"
+        android:background="@drawable/bg_bm_weather_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_alignParentTop="true"
+            android:id="@+id/ll_gps_weather"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/bg_bm_weather_list"
             android:layout_margin="5dp">
 
             <TextView
@@ -93,22 +91,17 @@
                 ></ImageView>
         </LinearLayout>
 
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/ll_gps_weather"
+        android:layout_above="@+id/ll_bottom"
         android:id="@+id/rv_bmlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    </ScrollView>
-
 
     <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -152,4 +145,6 @@
             android:text="지역 추가하기" />
 
     </LinearLayout>
+    </RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>

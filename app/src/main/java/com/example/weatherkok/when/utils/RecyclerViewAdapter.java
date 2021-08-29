@@ -230,10 +230,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (!TextUtils.isEmpty(List.getBaseDateInfoList().get(positionItem).getNameOfDay())) {
                 ((ViewHolder) viewHolder).tv.setTextColor(mContext.getResources().getColor(R.color.red));
                 }
-
+                Drawable today = mContext.getResources().getDrawable(R.drawable.bg_btn_yellow);
                 //오늘 날짜 black
                 if (mToday.equals(String.valueOf(item))) { //오늘 day 텍스트 컬러 변경
-                    ((ViewHolder) viewHolder).tv.setTextColor(mContext.getResources().getColor(R.color.black));
+                    ((ViewHolder) viewHolder).tv.setBackground(today);
                 }
 
                 if (seldate == List.getBaseDateInfoList().get(positionItem).getDate()) {

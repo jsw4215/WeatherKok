@@ -5,6 +5,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_bml_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
         android:id="@+id/rl_bml_top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,44 +21,36 @@
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_alignParentStart="true"
-            android:layout_alignBottom="@+id/iv_bml_wrong_mark_top_bar"
             android:src="@drawable/back_arrow" />
 
         <TextView
             android:id="@+id/tv_bml_title_top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_bml_wrong_mark_top_bar"
             android:fontFamily="@font/cafe24ohsquare"
             android:gravity="center"
             android:text="등록된 날씨콕"
             android:textSize="25dp" />
 
-        <ImageView
-            android:layout_margin="5dp"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/iv_bml_wrong_mark_top_bar"
-            android:src="@drawable/close_mark"
-            android:layout_marginRight="5dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
 
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_weight="1"
+    <RelativeLayout
+        android:background="@drawable/bg_bm_weather_list"
+        android:layout_below="@+id/rl_bml_top_bar"
+        android:id="@+id/rl_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_alignParentTop="true"
         android:id="@+id/rv_bmlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    </ScrollView>
-
-
     <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -97,4 +94,6 @@
             android:text="지역 추가하기" />
 
     </LinearLayout>
+    </RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>

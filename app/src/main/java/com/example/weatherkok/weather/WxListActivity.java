@@ -33,6 +33,7 @@ public class WxListActivity extends BaseActivity {
     ScheduleList mScheduleList;
     TextView mTvBmWxListDelete;
     TextView mTvBmWxListAdd;
+    ImageView mIvBackArrow;
     ImageView mIvBmTrash;
     boolean mTrashChecker = false;
     ArrayList<Boolean> mDelList = new ArrayList<>();
@@ -60,6 +61,8 @@ public class WxListActivity extends BaseActivity {
         mTvBmWxListDelete = findViewById(R.id.tv_bmlist_deletion);
 
         mIvBmTrash = findViewById(R.id.iv_bml_trashcan);
+
+        mIvBackArrow = findViewById(R.id.iv_bml_back_arrow_top_bar);
 
         mIvBmTrash.setVisibility(View.GONE);
     }
@@ -111,6 +114,13 @@ public class WxListActivity extends BaseActivity {
                     startActivity(intent);
                 }
 
+            }
+        });
+
+        mIvBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

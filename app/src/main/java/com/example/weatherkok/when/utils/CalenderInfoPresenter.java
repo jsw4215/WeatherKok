@@ -1,9 +1,14 @@
 package com.example.weatherkok.when.utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weatherkok.src.BaseActivity;
+import com.example.weatherkok.when.CalendarActivity;
 import com.example.weatherkok.when.CalendarService;
 import com.example.weatherkok.when.interfaces.RestContract;
 import com.example.weatherkok.when.models.ResponseParams;
@@ -21,7 +26,7 @@ import java.util.Calendar;
 import static android.content.Context.MODE_PRIVATE;
 
 //달력의 기본정보를 DB(preference)에 생성하고 저장해주는 작업
-public class CalenderInfoPresenter extends Thread implements RestContract.ActivityView {
+public class CalenderInfoPresenter implements RestContract.ActivityView, Runnable {
     private static final String TAG = CalenderInfoPresenter.class.getSimpleName();
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
     String mYear;
@@ -29,12 +34,18 @@ public class CalenderInfoPresenter extends Thread implements RestContract.Activi
     BaseDateInfoList mBaseDateInfoList = new BaseDateInfoList();
     ArrayList<BaseDateInfo> mDateInfoList;
     Context mContext;
+    int receiveCnt=0;
 
     public CalenderInfoPresenter() {
     }
 
     public CalenderInfoPresenter(Context context) {
         mContext = context;
+    }
+
+    public CalenderInfoPresenter(String mYear, Context mContext) {
+        this.mYear = mYear;
+        this.mContext = mContext;
     }
 
     public void initCal(String year, String month, Context context) {
@@ -51,12 +62,12 @@ public class CalenderInfoPresenter extends Thread implements RestContract.Activi
     }
 
     @Override
-    public void run(String year, String month, Context context) {
-        super.run();
+    public void run() {
+
         for(int i=1;i<13;i++) {
             String temp = String.valueOf(i);
             if(i<10){temp="0"+temp;}
-            initCal(year, temp, context);
+            initCal(mYear, temp, mContext);
         }
     }
 
@@ -299,7 +310,10 @@ public class CalenderInfoPresenter extends Thread implements RestContract.Activi
         }
 
         //데이터 리스트 음력 추가 완료
-
+        receiveCnt++;
+        if(receiveCnt>11){
+            //((CalendarActivity)mContext).dismissProgressDialog();
+        }
         setDateInfoToSP(baseDateInfoList, assortedList.getYearMonth(), "");
 
     }

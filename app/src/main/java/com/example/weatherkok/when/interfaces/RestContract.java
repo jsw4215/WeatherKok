@@ -12,8 +12,6 @@ public interface RestContract {
 
     interface ActivityView {
 
-        void run(String year, String month, Context context);
-
         void validateSuccess(boolean isSuccess, ResponseParams responseInBody,String year, String month);
 
         void validateSuccessSingle(boolean isSuccess, ResponseSingle responseSingle,String year, String month);

@@ -108,15 +108,6 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         SharedPreferences pref = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
         //권한 알림 팝업
 
-            boolean isPermissionPopupFirst = pref.getBoolean(SHARED_IS_PERMISSION_FIRST, false);
-            if(isPermissionPopupFirst) {
-                checkAppAuth("android.permission.RECORD_AUDIO", APP_PERMISSIONS_REQ_MIC);
-            } else {
-                showPermissionDialogView();
-            }
-
-
-
         progressDoalog = new ProgressDialog(this);
         progressDoalog.setMax(100);
         progressDoalog.setMessage("Its loading....");
@@ -126,7 +117,12 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         setContentView(R.layout.activity_splash);
         mToday = calculateToday();
 
-
+            boolean isPermissionPopupFirst = pref.getBoolean(SHARED_IS_PERMISSION_FIRST, false);
+            if(isPermissionPopupFirst) {
+                checkAppAuth("android.permission.RECORD_AUDIO", APP_PERMISSIONS_REQ_MIC);
+            } else {
+                showPermissionDialogView();
+            }
     }
 
     private void startWhereApi() {
@@ -337,11 +333,14 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
     }
 
     private ScheduleList deleteCheck(ScheduleList scheduleList){
-        for(int i=0;i<scheduleList.getScheduleArrayList().size();i++) {
-            if(scheduleList.getScheduleArrayList().get(i).getWhere().equals("delete")){
-                scheduleList.getScheduleArrayList().remove(i);}
+        if(scheduleList!=null&&scheduleList.getScheduleArrayList()!=null
+        &&scheduleList.getScheduleArrayList().size()>0) {
+            for (int i = 0; i < scheduleList.getScheduleArrayList().size(); i++) {
+                if (scheduleList.getScheduleArrayList().get(i).getWhere().equals("delete")) {
+                    scheduleList.getScheduleArrayList().remove(i);
+                }
+            }
         }
-
         return scheduleList;
     }
 

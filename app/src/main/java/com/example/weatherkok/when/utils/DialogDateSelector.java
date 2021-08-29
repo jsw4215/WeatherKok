@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 
 import com.example.weatherkok.R;
 import com.example.weatherkok.when.CalendarActivity;
+import com.example.weatherkok.when.LoadingCalendarActivity;
+import com.example.weatherkok.when.YearActivity;
 import com.example.weatherkok.when.interfaces.DateSelectorListener;
 
 import org.w3c.dom.Text;
@@ -82,7 +84,7 @@ public class DialogDateSelector extends Dialog {
                     monthStr = "0" + String.valueOf(month);
                 }
 
-                Intent intent = new Intent(mContext, CalendarActivity.class);
+                Intent intent = new Intent(mContext, LoadingCalendarActivity.class);
                 intent.putExtra("year",String.valueOf(year));
                 intent.putExtra("month",monthStr);
                 mContext.startActivity(intent);
@@ -92,6 +94,10 @@ public class DialogDateSelector extends Dialog {
         mTvDialogNegative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ((YearActivity) mContext).mTvDialog.setVisibility(View.VISIBLE);
+                ((YearActivity) mContext).mIvDown.setVisibility(View.GONE);
+
                 dismiss();
             }
         });

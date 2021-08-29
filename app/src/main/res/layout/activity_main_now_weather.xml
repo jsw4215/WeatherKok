@@ -8,7 +8,6 @@
     tools:context=".weather.WeatherActivity"
     android:background="@drawable/bg_now_weather"
     android:orientation="vertical">
-    // tools 가 웨더액티비티 연결된게 맞는지 체크
 
     <RelativeLayout
         android:layout_width="match_parent"

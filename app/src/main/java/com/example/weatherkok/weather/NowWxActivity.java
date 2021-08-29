@@ -8,12 +8,20 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +33,7 @@ import com.example.weatherkok.weather.utils.NowWxActivityAdapter;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.where.utils.GpsTracker;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -62,6 +71,11 @@ public class NowWxActivity extends BaseActivity {
     public static Context mNowWxContext;
     ImageView mIvBmWxAdd;
     TextView tvBmNoList;
+    DrawerLayout mDrawerLayout;
+    ImageView mIvBmMenu;
+    NavigationView navigationView;
+    Toolbar mTbWxMain;
+    ActionBar mActionBar;
 
     //날씨 정보를 얻는 서비스를 시작하고, 받아와서 정리된 데이터를 가져와 뿌리는 역할만 하는 곳
     @Override
@@ -83,15 +97,28 @@ public class NowWxActivity extends BaseActivity {
 
         decorTop();
 
-        mIvBmWxAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //툴바
+        mTbWxMain = findViewById(R.id.tb_weather_main);
+        setSupportActionBar(mTbWxMain);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_24);
 
-                Intent intent = new Intent(NowWxActivity.this, WxNowListActivity.class);
-                intent.putExtra("from","now");
-                startActivity(intent);
+        //drawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_weather_main);
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
+
+                return true;
             }
         });
+
 
         tvGotoNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,16 +133,32 @@ public class NowWxActivity extends BaseActivity {
 
     }
 
-    private void decorTop(){
-        mIvBmWxAdd = findViewById(R.id.iv_bm_weather_add);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.list_menu, menu);
 
-        mIvBmWxAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NowWxActivity.this, WxListActivity.class);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+            case R.id.toolbar_list:{
+                Intent intent = new Intent(NowWxActivity.this, WxNowListActivity.class);
                 startActivity(intent);
             }
-        });
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void decorTop(){
+
 
     }
 
@@ -171,6 +214,7 @@ public class NowWxActivity extends BaseActivity {
         tvBmWxTemperature = findViewById(R.id.tv_bm_weather_temperature);
         tvBmWxTempMaxMin = findViewById(R.id.tv_bm_weather_max_min);
         tvGotoNow = findViewById(R.id.tv_now_weather_go);
+        tvGotoNow.setText("날씨콕 보러가기");
         tvGoToFcstWeb = findViewById(R.id.tv_bm_weather_forecast);
     }
 
@@ -544,6 +588,15 @@ public class NowWxActivity extends BaseActivity {
     protected void onRestart() {
         super.onRestart();
         decorBottom();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+        }else {
+            super.onBackPressed();
+        }
     }
 
 }

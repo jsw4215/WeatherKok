@@ -12,22 +12,32 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.WorkManager;
 
 import com.example.weatherkok.R;
+import com.example.weatherkok.alarm.Constants;
+import com.example.weatherkok.alarm.NotificationHelper;
+import com.example.weatherkok.alarm.PreferenceHelper;
 import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.intro.IntroActivity;
+import com.example.weatherkok.main.MainActivity;
 import com.example.weatherkok.src.BaseActivity;
 import com.example.weatherkok.weather.utils.NowWxActivityAdapter;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
@@ -48,6 +58,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static com.example.weatherkok.alarm.Constants.SHARED_PREF_NOTIFICATION_KEY;
 
 public class NowWxActivity extends BaseActivity {
     private static final String TAG = NowWxActivity.class.getSimpleName();
@@ -76,6 +88,9 @@ public class NowWxActivity extends BaseActivity {
     NavigationView navigationView;
     Toolbar mTbWxMain;
     ActionBar mActionBar;
+    Switch switchActivateNotify;
+    MenuItem mAlarm;
+    LinearLayout mLlWxPage;
 
     //날씨 정보를 얻는 서비스를 시작하고, 받아와서 정리된 데이터를 가져와 뿌리는 역할만 하는 곳
     @Override
@@ -109,15 +124,21 @@ public class NowWxActivity extends BaseActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_weather_main);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-                mDrawerLayout.closeDrawers();
+        initSwitchLayout(WorkManager.getInstance(getApplicationContext()));
 
-                return true;
-            }
-        });
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                item.setChecked(true);
+//                switch (item.getItemId())
+//                {
+//                    case R.id.menu_alarm:
+//
+//                }
+//
+//                return true;
+//            }
+//        });
 
 
         tvGotoNow.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +152,40 @@ public class NowWxActivity extends BaseActivity {
             }
         });
 
+
+
+    }
+
+    // 푸시알림 설정
+    private void initSwitchLayout(final WorkManager workManager) {
+
+        navigationView.getMenu().findItem(R.id.menu_alarm).setActionView(new Switch(this));
+        ((Switch) navigationView.getMenu().findItem(R.id.menu_alarm).getActionView()).setChecked(PreferenceHelper.getBoolean(getApplicationContext(), SHARED_PREF_NOTIFICATION_KEY));
+
+
+        ((Switch) navigationView.getMenu().findItem(R.id.menu_alarm).getActionView())
+                .setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if(isChecked) {
+                        Toast.makeText(NowWxActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+
+                        //알람 등록
+                        boolean isChannelCreated = NotificationHelper.isNotificationChannelCreated(getApplicationContext());
+                        if (isChannelCreated) {
+                            PreferenceHelper.setBoolean(getApplicationContext(), SHARED_PREF_NOTIFICATION_KEY, true);
+                            NotificationHelper.setScheduledNotification(workManager);
+                        } else {
+                            NotificationHelper.createNotificationChannel(getApplicationContext());
+                        }
+                    } else {
+                        Toast.makeText(NowWxActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+                        //알람 해제
+
+                        PreferenceHelper.setBoolean(getApplicationContext(), SHARED_PREF_NOTIFICATION_KEY, false);
+                        workManager.cancelAllWork();
+
+
+                    }
+                });
     }
 
     @Override
@@ -216,6 +271,7 @@ public class NowWxActivity extends BaseActivity {
         tvGotoNow = findViewById(R.id.tv_now_weather_go);
         tvGotoNow.setText("날씨콕 보러가기");
         tvGoToFcstWeb = findViewById(R.id.tv_bm_weather_forecast);
+        mLlWxPage = findViewById(R.id.ll_weather_page);
     }
 
     private void decorCenter(){
@@ -292,6 +348,7 @@ public class NowWxActivity extends BaseActivity {
         //POP 강수확률
         //- 하늘상태(SKY) 코드 : 맑음(1), 구름많음(3), 흐림(4)
         //- 강수형태(PTY) 코드 : (단기) 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4)
+        String wx= "맑음";
 
         for (int i = 0; i < scheduleData.getFcst().getTempToday().size(); i++) {
             if (scheduleData.getFcst().getTempToday().get(i).getTimeHhmm().equals(strCurHH)) {
@@ -311,10 +368,13 @@ public class NowWxActivity extends BaseActivity {
 
                     if (scheduleData.getFcst().getWxToday().get(i).getWeather() == 1) {
                         tvBmWxCondition.setText("맑음");
+                        setBackgroundWxImage("맑음");
                     } else if (scheduleData.getFcst().getWxToday().get(i).getWeather() == 3) {
                         tvBmWxCondition.setText("구름많음");
+                        setBackgroundWxImage("구름많음");
                     } else if (scheduleData.getFcst().getWxToday().get(i).getWeather() == 4) {
                         tvBmWxCondition.setText("흐림");
+                        setBackgroundWxImage("흐림");
                     }
 
 
@@ -323,15 +383,19 @@ public class NowWxActivity extends BaseActivity {
                     if (scheduleData.getFcst().getWxToday().get(i).getRainType() == 1) {
                         //비
                         tvBmWxCondition.setText(R.string.rain);
+                        setBackgroundWxImage("비");
                     } else if (scheduleData.getFcst().getWxToday().get(i).getRainType() == 2) {
                         //비눈
                         tvBmWxCondition.setText(R.string.rain_snow);
+                        setBackgroundWxImage("비/눈");
                     } else if (scheduleData.getFcst().getWxToday().get(i).getRainType() == 3) {
                         //눈
                         tvBmWxCondition.setText(R.string.snow);
+                        setBackgroundWxImage("눈");
                     } else if (scheduleData.getFcst().getWxToday().get(i).getRainType() == 4) {
                         //소나기
                         tvBmWxCondition.setText(R.string.shower);
+                        setBackgroundWxImage("눈");
                     }
 
                 }
@@ -340,6 +404,27 @@ public class NowWxActivity extends BaseActivity {
             }
 
         }
+    }
+
+    private void setBackgroundWxImage(String wx) {
+
+        if(wx.contains("맑음")){
+            mLlWxPage.setBackground(R.drawable.bg_sunny);
+        }else if(wx.contains("구름")){
+            mLlWxPage.setBackground(R.drawable.bg_cloudy);
+        }else if(wx.contains("흐림")){
+            mLlWxPage.setBackground(R.drawable.bg_gray);
+        }else if(wx.equals("비")){
+            mLlWxPage.setBackground(R.drawable.bg_rain);
+        }else if(wx.equals("비/눈")){
+            mLlWxPage.setBackground(R.drawable.bg_snow_rain);
+        }else if(wx.equals("눈")){
+            mLlWxPage.setBackground(R.drawable.bg_snow);
+        }else if(wx.equals("소나기")){
+            mLlWxPage.setBackground(R.drawable.bg_shower);
+        }
+
+
     }
 
     private ScheduleList getCurPlaceWxFromSp() {

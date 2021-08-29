@@ -50,6 +50,9 @@ public class ApplicationClass extends Application {
         if (sSharedPreferences == null) {
             sSharedPreferences = getApplicationContext().getSharedPreferences(TAG, Context.MODE_PRIVATE);
         }
+
+        //NotificationHelper.createNotificationChannel(getApplicationContext());
+
     }
 
     public static Retrofit getRetrofit() {

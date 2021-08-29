@@ -1,14 +1,21 @@
 package com.example.weatherkok.weather.utils;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.weatherkok.weather.models.LatLon;
+import com.google.gson.Gson;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,6 +24,9 @@ import java.util.Map;
 
 public class LatLonCalculator {
     private static final String TAG = LatLonCalculator.class.getSimpleName();
+    private String NAVER_CLIENT_ID = "stitoiw5z3";
+    private String NAVER_CLIENT_SECRET = "U0T84fCEXuNS1BZ0K4NsckKRjpSWpeu95YKBTT3F";
+
 
     public LatLon getLatLonWithAddr(String address, Context context) {
         LatLon resultLatLon = new LatLon();
@@ -30,6 +40,7 @@ public class LatLonCalculator {
             list = geocoder.getFromLocationName(address, 10);
         } catch (IOException e) {
             e.printStackTrace();
+            list = getPointFromNaver(address);
             Log.e(TAG, "주소 -> 위도경도 변환 오류");
         }
 
@@ -146,5 +157,60 @@ public class LatLonCalculator {
             Log.i(TAG, "x,y" + map.get("x") + map.get("y"));
             return map;
         }
+
+    private List<Address> getPointFromNaver(String addr) {
+        List<Address> list = new ArrayList<>();
+
+        String json = null;
+        String clientId = NAVER_CLIENT_ID;// 애플리케이션 클라이언트 아이디값";
+        String clientSecret = NAVER_CLIENT_SECRET;// 애플리케이션 클라이언트 시크릿값";
+        try {
+            addr = URLEncoder.encode(addr, "UTF-8");
+            String apiURL = "https://openapi.naver.com/v1/map/geocode?query=" + addr; // json
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("X-Naver-Client-Id", clientId);
+            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if (responseCode == 200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else { // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            json = response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (json == null) {
+            Log.e(TAG, "네이버 지도 api 주소 -> 위도경도 null");
+            return list;
+        }
+
+        Log.d("TEST2", "json => " + json);
+
+        Gson gson = new Gson();
+        NaverData data = new NaverData();
+        try {
+            data = gson.fromJson(json, NaverData.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (data.result != null) {
+            list.get(0).setLatitude(data.result.items.get(0).point.x);
+            list.get(0).setLongitude(data.result.items.get(0).point.y);
+        }
+
+        return list;
+    }
 
     }

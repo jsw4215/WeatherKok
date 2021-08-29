@@ -234,6 +234,13 @@ public class CalenderInfoPresenter implements RestContract.ActivityView, Runnabl
             Log.i(TAG, String.valueOf(calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + 1));
             Log.i(TAG, String.valueOf(calendar.getActualMaximum(Calendar.DAY_OF_MONTH)));
             int a = calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + 1;
+
+            if (intMonth == 1 && intYear % 4 == 0 && intYear % 100 != 0 || intYear % 400 == 0) {
+                a = 29; //윤년이 아닐 때
+            }else {
+                a = 28; //윤년
+            }
+
             for (int i = 1; i < a; i++) {
                 String date = String.valueOf(i);
 

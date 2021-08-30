@@ -155,8 +155,8 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         //날짜차이만큼에 해당하는 예보 정보를 띄워준다.
         //POP 강수확률

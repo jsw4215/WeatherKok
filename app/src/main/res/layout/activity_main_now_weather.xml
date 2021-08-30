@@ -251,7 +251,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/sunny"
+            android:src="@drawable/ic_sun"
             ></ImageView>
         <ImageView
             android:id="@+id/iv_now_weather_pm_list"
@@ -260,7 +260,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="30dp"
-            android:src="@drawable/shower"
+            android:src="@drawable/ic_shower"
             ></ImageView>
 
         <TextView
@@ -321,7 +321,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/rain_snow"
+            android:src="@drawable/ic_rain_snow"
             ></ImageView>
         <ImageView
             android:layout_weight="1"
@@ -329,7 +329,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="30dp"
-            android:src="@drawable/rain"
+            android:src="@drawable/ic_rain"
             ></ImageView>
 
         <TextView

@@ -17,7 +17,7 @@
             android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"
             android:text="@string/weather_icon"
-            android:textSize="30sp"
+            android:textSize="30dp"
             android:fontFamily="@font/imcresoojin"/>
 
         <View
@@ -46,40 +46,46 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/sunny"/>
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_sun"/>
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:text="@string/weather"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/cloudy"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_cloudy"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:text="@string/cloudy"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/gray"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_gray"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:text="@string/gray"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
         </LinearLayout>
 
     <LinearLayout
@@ -88,41 +94,47 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/rain"/>
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_rain"/>
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:text="@string/rain"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/shower"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_shower"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:text="@string/shower"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:autoSizeTextType="uniform" />
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/rain_snow"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_rain_snow"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:text="@string/rain_snow"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -131,16 +143,18 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/snow"/>
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_snow"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:text="@string/snow"
+            android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
     </LinearLayout>
 
     </LinearLayout>

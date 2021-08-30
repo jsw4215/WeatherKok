@@ -40,42 +40,46 @@ public class LatLonCalculator {
             list = geocoder.getFromLocationName(address, 10);
         } catch (IOException e) {
             e.printStackTrace();
-            list = getPointFromNaver(address);
             Log.e(TAG, "주소 -> 위도경도 변환 오류");
         }
 
 
         if (list.size() == 0) {
 
-            List<String> splitAddr = Arrays.asList(address.split(" "));
+//            list = getPointFromNaver(address);
+//
+//            resultLatLon.setLat(list.get(0).getLatitude());
+//            resultLatLon.setLon(list.get(0).getLongitude());
 
-            ArrayList<String> temp = new ArrayList<>();
+//            List<String> splitAddr = Arrays.asList(address.split(" "));
+//
+//            ArrayList<String> temp = new ArrayList<>();
+//
+//            for(int i=0;i<splitAddr.size();i++) {
+//                temp.add(splitAddr.get(i));
+//            }
+//
+//            temp.remove(temp.size()-1);
+//
+//            address = "";
+//            for(int i =0;i<temp.size();i++) {
+//
+//                if(!(i==(temp.size()-1))){
+//                    address = address + temp.get(i) + " ";
+//                }else{
+//                    address = address + temp.get(i);
+//                }
 
-            for(int i=0;i<splitAddr.size();i++) {
-                temp.add(splitAddr.get(i));
-            }
+        //    }
 
-            temp.remove(temp.size()-1);
-
-            address = "";
-            for(int i =0;i<temp.size();i++) {
-
-                if(!(i==(temp.size()-1))){
-                    address = address + temp.get(i) + " ";
-                }else{
-                    address = address + temp.get(i);
-                }
-
-            }
-
-            Log.i(TAG, "주소 동 제외" + address);
-            getLatLonWithAddr(address, context);
+        //    Log.i(TAG, "주소 동 제외" + address);
+        //    getLatLonWithAddr(address, context);
 
             Toast.makeText(context, "주소와 일치하는 위도, 경도값을 찾을 수 없습니다.", Toast.LENGTH_SHORT);
+        }else {
+            resultLatLon.setLat(list.get(0).getLatitude());
+            resultLatLon.setLon(list.get(0).getLongitude());
         }
-
-        resultLatLon.setLat(list.get(0).getLatitude());
-        resultLatLon.setLon(list.get(0).getLongitude());
 
         return resultLatLon;
     }
@@ -158,7 +162,9 @@ public class LatLonCalculator {
             return map;
         }
 
-    private List<Address> getPointFromNaver(String addr) {
+    public LatLon getPointFromNaver(String addr) {
+        LatLon resultLatLon = new LatLon();
+
         List<Address> list = new ArrayList<>();
 
         String json = null;
@@ -166,12 +172,12 @@ public class LatLonCalculator {
         String clientSecret = NAVER_CLIENT_SECRET;// 애플리케이션 클라이언트 시크릿값";
         try {
             addr = URLEncoder.encode(addr, "UTF-8");
-            String apiURL = "https://openapi.naver.com/v1/map/geocode?query=" + addr; // json
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + addr; // json
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("X-Naver-Client-Id", clientId);
-            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+            con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
             int responseCode = con.getResponseCode();
             BufferedReader br;
             if (responseCode == 200) { // 정상 호출
@@ -192,7 +198,7 @@ public class LatLonCalculator {
 
         if (json == null) {
             Log.e(TAG, "네이버 지도 api 주소 -> 위도경도 null");
-            return list;
+            return resultLatLon;
         }
 
         Log.d("TEST2", "json => " + json);
@@ -205,12 +211,12 @@ public class LatLonCalculator {
             e.printStackTrace();
         }
 
-        if (data.result != null) {
-            list.get(0).setLatitude(data.result.items.get(0).point.x);
-            list.get(0).setLongitude(data.result.items.get(0).point.y);
+        if (data.getAddresses() != null) {
+            resultLatLon.setLat(Double.parseDouble(data.getAddresses().get(0).getX()));
+            resultLatLon.setLon(Double.parseDouble(data.getAddresses().get(0).getY()));
         }
 
-        return list;
+        return resultLatLon;
     }
 
     }

@@ -2,13 +2,11 @@ package com.example.weatherkok.weather.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -18,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherkok.R;
 import com.example.weatherkok.datalist.data.ScheduleData;
-import com.example.weatherkok.weather.WxListActivity;
 import com.example.weatherkok.weather.WxNowListActivity;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.when.utils.RecyclerViewAdapter;
@@ -309,8 +306,8 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         for (int i = 0; i < scheduleData.getFcst().getWxToday().size(); i++) {
 
@@ -386,8 +383,8 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         for (int i = 0; i < scheduleData.getFcst().getWxToday().size(); i++) {
 

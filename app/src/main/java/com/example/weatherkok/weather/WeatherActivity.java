@@ -2,6 +2,7 @@ package com.example.weatherkok.weather;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -808,20 +809,28 @@ public class WeatherActivity extends BaseActivity{
 
     private void setBackgroundWxImage(String wx) {
 
+        Drawable sunny = getResources().getDrawable(R.drawable.bg_sunny);
+        Drawable cloudy = getResources().getDrawable(R.drawable.bg_cloudy);
+        Drawable gray = getResources().getDrawable(R.drawable.bg_gray);
+        Drawable rain = getResources().getDrawable(R.drawable.bg_rain);
+        Drawable snowRain = getResources().getDrawable(R.drawable.bg_snow_rain);
+        Drawable snow = getResources().getDrawable(R.drawable.bg_snow);
+        Drawable shower = getResources().getDrawable(R.drawable.bg_shower);
+
         if(wx.contains("맑음")){
-            mLlWxPage.setBackground(R.drawable.bg_sunny);
+            mLlWxPage.setBackground(sunny);
         }else if(wx.contains("구름")){
-            mLlWxPage.setBackground(R.drawable.bg_cloudy);
+            mLlWxPage.setBackground(cloudy);
         }else if(wx.contains("흐림")){
-            mLlWxPage.setBackground(R.drawable.bg_gray);
+            mLlWxPage.setBackground(gray);
         }else if(wx.equals("비")){
-            mLlWxPage.setBackground(R.drawable.bg_rain);
+            mLlWxPage.setBackground(rain);
         }else if(wx.equals("비/눈")){
-            mLlWxPage.setBackground(R.drawable.bg_snow_rain);
+            mLlWxPage.setBackground(snowRain);
         }else if(wx.equals("눈")){
-            mLlWxPage.setBackground(R.drawable.bg_snow);
+            mLlWxPage.setBackground(snow);
         }else if(wx.equals("소나기")){
-            mLlWxPage.setBackground(R.drawable.bg_shower);
+            mLlWxPage.setBackground(shower);
         }
 
 

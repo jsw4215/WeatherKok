@@ -278,8 +278,8 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
             //날짜차이만큼에 해당하는 예보 정보를 띄워준다.
             //POP 강수확률
@@ -359,8 +359,8 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         if(diffDays==0){
             //오늘이면 시간비교를 해서 해당 시간의 날씨예보를 담을것

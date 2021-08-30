@@ -2,13 +2,11 @@ package com.example.weatherkok.weather.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -337,8 +335,8 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         String strCurHH = makingStrHour();
 
@@ -719,8 +717,8 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         //날짜차이만큼에 해당하는 예보 정보를 띄워준다.
         //POP 강수확률
@@ -789,8 +787,8 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         //날짜차이만큼에 해당하는 예보 정보를 띄워준다.
         //POP 강수확률
@@ -860,8 +858,8 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         String strCurHH = makingStrHour();
 

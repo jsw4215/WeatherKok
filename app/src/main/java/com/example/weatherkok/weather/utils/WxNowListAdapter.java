@@ -1,6 +1,7 @@
 package com.example.weatherkok.weather.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -16,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherkok.R;
 import com.example.weatherkok.datalist.data.ScheduleData;
+import com.example.weatherkok.weather.SingleWxActivity;
 import com.example.weatherkok.weather.WxNowListActivity;
+import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.when.utils.RecyclerViewAdapter;
 
@@ -242,6 +245,7 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         //TextView tvTemp;
         ImageView ivPm;
         ImageView ivAm;
+        TextView tvNoWx;
 
         ViewHolder(View view) {
             super(view);
@@ -250,6 +254,8 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             //tvTemp = view.findViewById(R.id.tv_item_nowtemper);
             ivAm = view.findViewById(R.id.iv_bm_weather_am_list);
             ivPm = view.findViewById(R.id.iv_bm_weather_pm_list);
+            tvNoWx = view.findViewById(R.id.tv_bm_no_wx);
+            tvNoWx.setVisibility(View.GONE);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -271,6 +277,7 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ImageView ivPm;
         ImageView ivAm;
         RadioButton rbBmList;
+        TextView tvNoWx;
 
         DelViewHolder(View view) {
             super(view);
@@ -281,19 +288,21 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ivPm = view.findViewById(R.id.iv_bm_weather_pm_list);
             rbBmList = view.findViewById(R.id.rb_item_list);
             rbBmList.setVisibility(View.VISIBLE);
+            tvNoWx = view.findViewById(R.id.tv_bm_no_wx);
+            tvNoWx.setVisibility(View.GONE);
 
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
 
+                    //클릭시
+                    Intent intent = new Intent(mContext, SingleWxActivity.class);
+                    intent.putExtra("position",pos);
+                    mContext.startActivity(intent);
 
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    //클릭시
-//
-//
-//
-//                }
-//            });
+                }
+            });
         }
 
     }

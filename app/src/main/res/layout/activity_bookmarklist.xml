@@ -50,8 +50,7 @@
 
         <LinearLayout
             android:id="@+id/ll_bottom"
-            android:layout_below="@+id/rv_bmlist"
-            android:layout_marginTop="320dp"
+            android:layout_above="@+id/tv_bml_ads"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

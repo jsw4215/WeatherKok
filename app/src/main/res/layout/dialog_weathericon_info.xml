@@ -119,7 +119,8 @@
             android:text="@string/shower"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:autoSizeTextType="uniform" />
         <ImageView
             android:layout_width="65dp"
             android:layout_height="65dp"

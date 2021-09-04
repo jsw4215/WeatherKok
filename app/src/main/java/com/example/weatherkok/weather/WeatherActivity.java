@@ -2,6 +2,7 @@ package com.example.weatherkok.weather;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,8 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -22,8 +26,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.WorkManager;
 
 import com.example.weatherkok.R;
+import com.example.weatherkok.alarm.NotificationHelper;
+import com.example.weatherkok.alarm.PreferenceHelper;
 import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.intro.IntroActivity;
 import com.example.weatherkok.src.BaseActivity;
@@ -43,6 +50,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.example.weatherkok.alarm.Constants.SHARED_PREF_NOTIFICATION_KEY;
 
 public class WeatherActivity extends BaseActivity{
     String TAG = "WeatherActivity";
@@ -70,6 +79,7 @@ public class WeatherActivity extends BaseActivity{
     Toolbar mTbWxMain;
     ActionBar mActionBar;
     ActionBarDrawerToggle mActionBarDrawerToggle;
+    LinearLayout mLlWxPage;
     //날씨 정보를 얻는 서비스를 시작하고, 받아와서 정리된 데이터를 가져와 뿌리는 역할만 하는 곳
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,15 +121,7 @@ public class WeatherActivity extends BaseActivity{
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_weather_main);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-                mDrawerLayout.closeDrawers();
-
-                return true;
-            }
-        });
+        initSwitchLayout(WorkManager.getInstance(getApplicationContext()));
 
         tvGotoNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +130,7 @@ public class WeatherActivity extends BaseActivity{
                 Intent intent = new Intent(WeatherActivity.this, IntroActivity.class);
                 intent.putExtra("from","goToNow");
                 startActivity(intent);
-
+                overridePendingTransition(R.anim.left_in,R.anim.right_out);
             }
         });
 
@@ -171,11 +173,36 @@ public class WeatherActivity extends BaseActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDrawer(){
+    // 푸시알림 설정
+    private void initSwitchLayout(final WorkManager workManager) {
+
+        navigationView.getMenu().findItem(R.id.menu_alarm).setActionView(new Switch(this));
+        ((Switch) navigationView.getMenu().findItem(R.id.menu_alarm).getActionView()).setChecked(PreferenceHelper.getBoolean(getApplicationContext(), SHARED_PREF_NOTIFICATION_KEY));
 
 
+        ((Switch) navigationView.getMenu().findItem(R.id.menu_alarm).getActionView())
+                .setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if(isChecked) {
+                        Toast.makeText(WeatherActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+
+                        //알람 등록
+                        boolean isChannelCreated = NotificationHelper.isNotificationChannelCreated(getApplicationContext());
+                        if (isChannelCreated) {
+                            PreferenceHelper.setBoolean(getApplicationContext(), SHARED_PREF_NOTIFICATION_KEY, true);
+                            NotificationHelper.setScheduledNotification(workManager);
+                        } else {
+                            NotificationHelper.createNotificationChannel(getApplicationContext());
+                        }
+                    } else {
+                        Toast.makeText(WeatherActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+                        //알람 해제
+
+                        PreferenceHelper.setBoolean(getApplicationContext(), SHARED_PREF_NOTIFICATION_KEY, false);
+                        workManager.cancelAllWork();
 
 
+                    }
+                });
     }
 
     private void decorBottom() {
@@ -208,6 +235,7 @@ public class WeatherActivity extends BaseActivity{
         tvBmWxTempMaxMin = findViewById(R.id.tv_bm_weather_max_min);
         tvGotoNow = findViewById(R.id.tv_now_weather_go);
         tvGoToFcstWeb = findViewById(R.id.tv_bm_weather_forecast);
+        mLlWxPage = findViewById(R.id.ll_weather_page);
 
     }
 
@@ -232,7 +260,11 @@ public class WeatherActivity extends BaseActivity{
 
         tvBmWxDate.setText(schedule.getYear() + "/" + schedule.getMonth() + "/" + schedule.getDate() + " (" + scheduleData.getDay() + ")");
 
-        tvBmWxPlace.setText(schedule.getWhere());
+        String where = schedule.getWhere();
+
+        where=removeAdminArea(where);
+
+        tvBmWxPlace.setText(where);
 
         boolean checker = checkAMPM();
 
@@ -248,6 +280,26 @@ public class WeatherActivity extends BaseActivity{
         //matchingCurTimeGetTemp(currentHour, schedule);
         //첫날 적용 후 삭제
         mScheduleList.getScheduleArrayList().remove(0);
+    }
+
+    private String removeAdminArea(String location) {
+
+        String[] splited = location.split(" ");
+        String temp2="";
+        if(splited.length==2){
+            temp2 = splited[1];
+        } else if(splited.length==3) {
+            temp2 = splited[1] + " " + splited[2];
+        } else if(splited.length==4) {
+            temp2 = splited[1] + " " + splited[2] + " " + splited[3];
+        } else if(splited.length==5){
+            temp2 = splited[1] + " " + splited[2] + " " + splited[3] + " " + splited[4];
+        } else {
+            temp2 = splited[0] + splited[1];
+        }
+
+        return temp2;
+
     }
 
     private long howFarFromToday(String dateCompared) {
@@ -273,6 +325,8 @@ public class WeatherActivity extends BaseActivity{
     }
 
     private void findScheduleDateWxData(ScheduleData scheduleData, boolean checker, int diffDays, int currHh) {
+
+        String wx = "맑음";
 
         String strCurHH = "";
 
@@ -304,36 +358,46 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Am()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf1Am());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf1Am();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Am()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Am()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Am()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Am()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }else {
 
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Pm()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf1Pm());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf1Pm();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Pm()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Pm()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Pm()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt1Pm()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }
@@ -349,36 +413,46 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Am()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf2Am());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf2Am();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Am()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Am()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Am()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Am()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }else {
 
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Pm()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf2Pm());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf2Pm();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Pm()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Pm()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Pm()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt2Pm()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }
@@ -395,36 +469,46 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Am()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf3Am());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf3Am();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Am()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Am()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Am()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Am()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }else {
 
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Pm()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf3Pm());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf3Pm();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Pm()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Pm()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Pm()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt3Pm()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }
@@ -441,36 +525,46 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Am()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf4Am());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf4Am();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Am()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Am()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Am()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Am()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }else {
 
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Pm()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf4Pm());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf4Pm();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Pm()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Pm()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Pm()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt4Pm()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }
@@ -487,36 +581,46 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Am()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf5Am());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf5Am();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Am()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Am()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Am()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Am()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }else {
 
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Pm()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf5Pm());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf5Pm();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Pm()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Pm()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Pm()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt5Pm()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }
@@ -533,36 +637,46 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Am()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf6Am());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf6Am();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Am()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Am()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Am()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Am()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }else {
 
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Pm()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf6Pm());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf6Pm();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Pm()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Pm()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Pm()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt6Pm()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }
@@ -579,36 +693,46 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Am()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf7Am());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf7Am();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Am()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Am()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Am()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Am()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }else {
 
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Pm()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf7Pm());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf7Pm();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Pm()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx = "비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Pm()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx = "비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Pm()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx = "눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt7Pm()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx = "소나기";
                 }
 
             }
@@ -624,18 +748,23 @@ public class WeatherActivity extends BaseActivity{
                 //비가 안오면,
                 if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt8()==0){
                     tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf8());
+                    wx = scheduleData.getFcst().getWxList().getItem().get(0).getWf8();
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt8()==1){
                     //비
                     tvBmWxCondition.setText(R.string.rain);
+                    wx="비";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt8()==2){
                     //비눈
                     tvBmWxCondition.setText(R.string.rain_snow);
+                    wx="비/눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt8()==3){
                     //눈
                     tvBmWxCondition.setText(R.string.snow);
+                    wx="눈";
                 }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt8()==4){
                     //소나기
                     tvBmWxCondition.setText(R.string.shower);
+                    wx="소나기";
                 }
         }
         else if(diffDays==9){
@@ -649,18 +778,23 @@ public class WeatherActivity extends BaseActivity{
             //비가 안오면,
             if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt9()==0){
                 tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf9());
+                wx=scheduleData.getFcst().getWxList().getItem().get(0).getWf9();
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt9()==1){
                 //비
                 tvBmWxCondition.setText(R.string.rain);
+                wx="비";
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt9()==2){
                 //비눈
                 tvBmWxCondition.setText(R.string.rain_snow);
+                wx="비/눈";
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt9()==3){
                 //눈
                 tvBmWxCondition.setText(R.string.snow);
+                wx="눈";
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt9()==4){
                 //소나기
                 tvBmWxCondition.setText(R.string.shower);
+                wx="소나기";
             }
         }
         else if(diffDays==10){
@@ -674,20 +808,55 @@ public class WeatherActivity extends BaseActivity{
             //비가 안오면,
             if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt10()==0){
                 tvBmWxCondition.setText(scheduleData.getFcst().getWxList().getItem().get(0).getWf10());
+                wx=scheduleData.getFcst().getWxList().getItem().get(0).getWf10();
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt10()==1){
                 //비
                 tvBmWxCondition.setText(R.string.rain);
+                wx="비";
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt10()==2){
                 //비눈
                 tvBmWxCondition.setText(R.string.rain_snow);
+                wx="비/눈";
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt10()==3){
                 //눈
                 tvBmWxCondition.setText(R.string.snow);
+                wx="눈";
             }else if(scheduleData.getFcst().getWxList().getItem().get(0).getRnSt10()==4){
                 //소나기
                 tvBmWxCondition.setText(R.string.shower);
+                wx="소나기";
             }
         }
+        setBackgroundWxImage(wx);
+
+    }
+
+    private void setBackgroundWxImage(String wx) {
+
+        Drawable sunny = getResources().getDrawable(R.drawable.bg_sunny);
+        Drawable cloudy = getResources().getDrawable(R.drawable.bg_cloudy);
+        Drawable gray = getResources().getDrawable(R.drawable.bg_gray);
+        Drawable rain = getResources().getDrawable(R.drawable.bg_rain);
+        Drawable snowRain = getResources().getDrawable(R.drawable.bg_snow_rain);
+        Drawable snow = getResources().getDrawable(R.drawable.bg_snow);
+        Drawable shower = getResources().getDrawable(R.drawable.bg_shower);
+
+        if(wx.contains("맑음")){
+            mLlWxPage.setBackground(sunny);
+        }else if(wx.contains("구름")){
+            mLlWxPage.setBackground(cloudy);
+        }else if(wx.contains("흐림")){
+            mLlWxPage.setBackground(gray);
+        }else if(wx.equals("비")){
+            mLlWxPage.setBackground(rain);
+        }else if(wx.equals("비/눈")){
+            mLlWxPage.setBackground(snowRain);
+        }else if(wx.equals("눈")){
+            mLlWxPage.setBackground(snow);
+        }else if(wx.equals("소나기")){
+            mLlWxPage.setBackground(shower);
+        }
+
 
     }
 

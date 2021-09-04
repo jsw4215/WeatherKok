@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherkok.R;
 import com.example.weatherkok.datalist.data.ScheduleData;
-import com.example.weatherkok.main.MainActivity;
 import com.example.weatherkok.src.BaseActivity;
 import com.example.weatherkok.weather.utils.WxNowListAdapter;
 import com.example.weatherkok.when.models.Schedule;
@@ -31,8 +30,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
-
-import static com.example.weatherkok.weather.NowWxActivity.mNowWxContext;
 
 public class WxNowListActivity extends BaseActivity {
     private static final String TAG = WxNowListActivity.class.getSimpleName();
@@ -139,8 +136,8 @@ public class WxNowListActivity extends BaseActivity {
         Drawable snow = getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = getResources().getDrawable(R.drawable.ic_rain_snow);
 
 
         //날짜차이만큼에 해당하는 예보 정보를 띄워준다.
@@ -222,6 +219,8 @@ public class WxNowListActivity extends BaseActivity {
         mIvBmTrash = findViewById(R.id.iv_bml_trashcan);
 
         mIvBmTrash.setVisibility(View.GONE);
+
+        mIvBackArrow = findViewById(R.id.iv_bml_back_arrow_top_bar);
     }
 
     private ScheduleList getValueWithKeyFromSp(String key) {

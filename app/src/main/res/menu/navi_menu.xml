@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_alarm"
+            android:icon="@drawable/ic_alarm_24"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/weather_alarm"
+            />
 
+        <item
+            android:id="@+id/menu_share"
+            android:icon="@drawable/ic_share_24"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/sharing"
+            />
+        <item
+            android:id="@+id/menu_ad_delete"
+            android:icon="@drawable/ic_ad_delete_24"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/ad_delete"
+            />
+        <item
+            android:id="@+id/menu_graph"
+            android:icon="@drawable/ic_graph_24"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/graph"
+            />
+    </group>
 </menu>

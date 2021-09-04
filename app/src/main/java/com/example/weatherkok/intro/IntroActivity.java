@@ -29,9 +29,11 @@ import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.datalist.data.wxdata.Wx;
 import com.example.weatherkok.main.MainActivity;
 import com.example.weatherkok.src.BaseActivity;
+import com.example.weatherkok.weather.NaverService;
 import com.example.weatherkok.weather.NowWxActivity;
 import com.example.weatherkok.weather.WeatherActivity;
 import com.example.weatherkok.weather.WeatherService;
+import com.example.weatherkok.weather.interfaces.NaverContract;
 import com.example.weatherkok.weather.interfaces.WeatherContract;
 import com.example.weatherkok.weather.models.LatLon;
 import com.example.weatherkok.weather.models.midTemp.MidTempResponse;
@@ -45,6 +47,7 @@ import com.example.weatherkok.weather.models.shortsExpectation.todayTemp;
 import com.example.weatherkok.weather.models.shortsExpectation.todayWx;
 import com.example.weatherkok.weather.models.xy;
 import com.example.weatherkok.weather.utils.LatLonCalculator;
+import com.example.weatherkok.weather.utils.NaverData;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
@@ -71,7 +74,7 @@ import java.util.Map;
 import static androidx.core.app.ActivityCompat.requestPermissions;
 import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
-public class IntroActivity extends BaseActivity implements WeatherContract.ActivityView {
+public class IntroActivity extends BaseActivity implements WeatherContract.ActivityView, NaverContract {
     private static final String TAG = IntroActivity.class.getSimpleName();
 
     WxKokDataPresenter mWxKokDataPresenter;
@@ -346,14 +349,18 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
 
     //단기예보는 그때 그때 쏴야함
 
-    private ArrayList<xy> getXYlist(ArrayList<String> mTargetPlaces) {
-
+    private ArrayList<xy> getXYlist(ArrayList<String> mTargetPlaces, int type) {
+        ArrayList<Integer> toNaver = new ArrayList<>();
         ArrayList<xy> temp = new ArrayList<>();
         xy tempObj = new xy();
         for (int i = 0; i < mTargetPlaces.size(); i++) {
             Map<String, Object> xyMap = getXYWithCalculator(mTargetPlaces.get(i));
-
             String nx = String.valueOf(xyMap.get("x"));
+            Double tempX = Double.valueOf(nx);
+            if(tempX<0){
+                toNaver.add(i);
+                continue;
+            }
             String ny = String.valueOf(xyMap.get("y"));
             String lat = String.valueOf(xyMap.get("lat"));
             String lon = String.valueOf(xyMap.get("lng"));
@@ -366,6 +373,10 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
             temp.add(tempObj);
 
         }
+        //네이버 api 처리
+        for(int i=0;i<toNaver.size();i++) {
+            naverApi(mTargetPlaces.get(toNaver.get(i)),type,toNaver.get(i));
+        }
 
         return temp;
 
@@ -376,7 +387,7 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         xyList = new ArrayList<xy>();
 
 
-        xyList = getXYlist(addresses);
+        xyList = getXYlist(addresses, type);
 
         //주소로 nx, ny 구하기
         //단기예보
@@ -389,7 +400,7 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
 
         xyList = new ArrayList<xy>();
 
-        xyList = getXYlist(mTargetPlaces);
+        xyList = getXYlist(mTargetPlaces, type);
 
         //주소로 nx, ny 구하기
         //단기예보
@@ -575,6 +586,17 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         Map<String, Object> result = latLonCalculator.getGridxy(latLon.getLat(), latLon.getLon());
 
         return result;
+    }
+
+    private void naverApi(String s, int type, int position) {
+
+        String id = "stitoiw5z3";
+        String secret = "U0T84fCEXuNS1BZ0K4NsckKRjpSWpeu95YKBTT3F";
+        String address = s;
+
+        NaverService naverService = new NaverService(this, mContext);
+        naverService.getNaverGeo(id, secret, s, type, position);
+
     }
 
     private Date getToday() {
@@ -1899,5 +1921,39 @@ public class IntroActivity extends BaseActivity implements WeatherContract.Activ
         });
 
         dialog.show();
+    }
+
+    @Override
+    public void naverSuccess(boolean isSuccess, NaverData naverData,int type, int position) {
+        LatLon resultNaver = new LatLon();
+        //두개가 바뀌어있다.
+        resultNaver.setLat(Double.parseDouble(naverData.getAddresses().get(0).getY()));
+        resultNaver.setLon(Double.parseDouble(naverData.getAddresses().get(0).getX()));
+
+        LatLonCalculator latLonCalculator = new LatLonCalculator();
+
+        Map<String, Object> xyMap = latLonCalculator.getGridxy(resultNaver.getLat(), resultNaver.getLon());
+
+        xy tempObj = new xy();
+        String nx = String.valueOf(xyMap.get("x"));
+        String ny = String.valueOf(xyMap.get("y"));
+        String lat = String.valueOf(xyMap.get("lat"));
+        String lon = String.valueOf(xyMap.get("lng"));
+
+        tempObj.setX(nx);
+        tempObj.setY(ny);
+        tempObj.setLon(lon);
+        tempObj.setLat(lat);
+
+        //주소로 nx, ny 구하기
+        //단기예보
+            shortWxService(calculateToday(), "0500",tempObj, position, type);
+
+
+    }
+
+    @Override
+    public void naverFailure(String message) {
+        Log.i(TAG, "naverFailure");
     }
 }

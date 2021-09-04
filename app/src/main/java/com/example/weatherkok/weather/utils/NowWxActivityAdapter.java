@@ -75,7 +75,9 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
 
         String[] splited = location.split(" ");
         String temp2 = "";
-        if (splited.length == 3) {
+        if(splited.length==2){
+            temp2 = splited[1];
+        } else if (splited.length == 3) {
             temp2 = splited[1] + " " + splited[2];
         } else if (splited.length == 4) {
             temp2 = splited[1] + " " + splited[2] + " " + splited[3];
@@ -93,7 +95,7 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
 
         String today = getFutureDay("yyyyMMdd", 0);
 
-        holder.tvDate.setText(today);
+        //holder.tvDate.setText(today);
     }
 
     public static String getFutureDay(String pattern, int gap) {
@@ -155,8 +157,8 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         //날짜차이만큼에 해당하는 예보 정보를 띄워준다.
         //POP 강수확률

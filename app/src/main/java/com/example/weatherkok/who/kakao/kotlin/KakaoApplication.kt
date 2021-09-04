@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.util.Log
+import com.example.weatherkok.alarm.NotificationHelper
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.link.LinkClient
@@ -21,7 +22,8 @@ class KakaoApplication : Application() {
 
         // kakao SDK 초기화
         KakaoSdk.init(this, "c205ec1957a41d51611ca6e373e3d815" );
-
+        NotificationHelper.createNotificationChannel(applicationContext);
+        NotificationHelper.refreshScheduledNotification(applicationContext);
         //sendKakaoMessage(context)
     }
 

@@ -52,7 +52,9 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
 
-            String scheduledDate = setDate(holder, position);
+            setDate(holder, position);
+
+            String scheduledDate = scheduleList.getScheduleArrayList().get(position).getScheduleData().getScheduledDate();
 
             setLocation(holder, position);
 
@@ -73,7 +75,9 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
 
         String[] splited = location.split(" ");
         String temp2="";
-        if(splited.length==3) {
+        if(splited.length==2){
+            temp2 = splited[1];
+        } else if(splited.length==3) {
             temp2 = splited[1] + " " + splited[2];
         } else if(splited.length==4) {
             temp2 = splited[1] + " " + splited[2] + " " + splited[3];
@@ -87,13 +91,17 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
 
     }
 
-    private String setDate(ViewHolder holder, int position) {
+    private void setDate(ViewHolder holder, int position) {
 
         String scheduledDate = scheduleList.getScheduleArrayList().get(position).getScheduleData().getScheduledDate();
-
+        ScheduleData scheduleData = new ScheduleData();
+        scheduleData.getDateDay(scheduledDate);
+        String day = scheduleList.getScheduleArrayList().get(position).getScheduleData().getDay();
+        String month = scheduledDate.substring(4,6);
+        String date = scheduledDate.substring(6);
+        scheduledDate = month + " / " + date + "(" + scheduleData.getDay() + ")";
         holder.tvDate.setText(scheduledDate);
 
-        return scheduledDate;
     }
 
 
@@ -113,10 +121,11 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
         //오후
 
         ScheduleData scheduleData = scheduleList.getScheduleArrayList().get(positionItem).getScheduleData();
-        Drawable xMark = mContext.getResources().getDrawable(R.drawable.close_mark);
+        //Drawable xMark = mContext.getResources().getDrawable(R.drawable.close_mark);
         if(gap>10) {
-            viewHolder.ivAm.setImageDrawable(xMark);
-            viewHolder.ivPm.setImageDrawable(xMark);
+            viewHolder.ivAm.setVisibility(View.GONE);
+            viewHolder.ivPm.setVisibility(View.GONE);
+            viewHolder.tvNoWx.setVisibility(View.VISIBLE);
         }else {
             findScheduleDateWxData(viewHolder, scheduleData, amPm, gap, hour);
         }
@@ -250,6 +259,7 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
         TextView tvLoc;
         ImageView ivAm;
         ImageView ivPm;
+        TextView tvNoWx;
 
         ViewHolder(View view) {
             super(view);
@@ -257,6 +267,8 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
             tvLoc = view.findViewById(R.id.tv_bm_weather_location_list);
             ivAm = view.findViewById(R.id.iv_bm_weather_am_list);
             ivPm = view.findViewById(R.id.iv_bm_weather_pm_list);
+            tvNoWx = view.findViewById(R.id.tv_bm_no_wx);
+            tvNoWx.setVisibility(View.GONE);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -278,8 +290,8 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
             //날짜차이만큼에 해당하는 예보 정보를 띄워준다.
             //POP 강수확률
@@ -359,8 +371,8 @@ public class WeatherActivityAdapter extends RecyclerView.Adapter<WeatherActivity
         Drawable snow = mContext.getResources().getDrawable(R.drawable.ic_snow);
         Drawable shower = mContext.getResources().getDrawable(R.drawable.ic_shower);
         Drawable rain = mContext.getResources().getDrawable(R.drawable.ic_rain);
-        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_wind);
-        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_snowing);
+        Drawable wind = mContext.getResources().getDrawable(R.drawable.ic_gray);
+        Drawable snowRain = mContext.getResources().getDrawable(R.drawable.ic_rain_snow);
 
         if(diffDays==0){
             //오늘이면 시간비교를 해서 해당 시간의 날씨예보를 담을것

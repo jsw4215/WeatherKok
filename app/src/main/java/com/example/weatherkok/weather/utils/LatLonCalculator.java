@@ -1,14 +1,21 @@
 package com.example.weatherkok.weather.utils;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.weatherkok.weather.models.LatLon;
+import com.google.gson.Gson;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,6 +24,9 @@ import java.util.Map;
 
 public class LatLonCalculator {
     private static final String TAG = LatLonCalculator.class.getSimpleName();
+    private String NAVER_CLIENT_ID = "stitoiw5z3";
+    private String NAVER_CLIENT_SECRET = "U0T84fCEXuNS1BZ0K4NsckKRjpSWpeu95YKBTT3F";
+
 
     public LatLon getLatLonWithAddr(String address, Context context) {
         LatLon resultLatLon = new LatLon();
@@ -36,35 +46,40 @@ public class LatLonCalculator {
 
         if (list.size() == 0) {
 
-            List<String> splitAddr = Arrays.asList(address.split(" "));
+//            list = getPointFromNaver(address);
+//
+//            resultLatLon.setLat(list.get(0).getLatitude());
+//            resultLatLon.setLon(list.get(0).getLongitude());
 
-            ArrayList<String> temp = new ArrayList<>();
+//            List<String> splitAddr = Arrays.asList(address.split(" "));
+//
+//            ArrayList<String> temp = new ArrayList<>();
+//
+//            for(int i=0;i<splitAddr.size();i++) {
+//                temp.add(splitAddr.get(i));
+//            }
+//
+//            temp.remove(temp.size()-1);
+//
+//            address = "";
+//            for(int i =0;i<temp.size();i++) {
+//
+//                if(!(i==(temp.size()-1))){
+//                    address = address + temp.get(i) + " ";
+//                }else{
+//                    address = address + temp.get(i);
+//                }
 
-            for(int i=0;i<splitAddr.size();i++) {
-                temp.add(splitAddr.get(i));
-            }
+        //    }
 
-            temp.remove(temp.size()-1);
-
-            address = "";
-            for(int i =0;i<temp.size();i++) {
-
-                if(!(i==(temp.size()-1))){
-                    address = address + temp.get(i) + " ";
-                }else{
-                    address = address + temp.get(i);
-                }
-
-            }
-
-            Log.i(TAG, "주소 동 제외" + address);
-            getLatLonWithAddr(address, context);
+        //    Log.i(TAG, "주소 동 제외" + address);
+        //    getLatLonWithAddr(address, context);
 
             Toast.makeText(context, "주소와 일치하는 위도, 경도값을 찾을 수 없습니다.", Toast.LENGTH_SHORT);
+        }else {
+            resultLatLon.setLat(list.get(0).getLatitude());
+            resultLatLon.setLon(list.get(0).getLongitude());
         }
-
-        resultLatLon.setLat(list.get(0).getLatitude());
-        resultLatLon.setLon(list.get(0).getLongitude());
 
         return resultLatLon;
     }
@@ -146,5 +161,62 @@ public class LatLonCalculator {
             Log.i(TAG, "x,y" + map.get("x") + map.get("y"));
             return map;
         }
+
+    public LatLon getPointFromNaver(String addr) {
+        LatLon resultLatLon = new LatLon();
+
+        List<Address> list = new ArrayList<>();
+
+        String json = null;
+        String clientId = NAVER_CLIENT_ID;// 애플리케이션 클라이언트 아이디값";
+        String clientSecret = NAVER_CLIENT_SECRET;// 애플리케이션 클라이언트 시크릿값";
+        try {
+            addr = URLEncoder.encode(addr, "UTF-8");
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + addr; // json
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+            con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if (responseCode == 200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else { // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            json = response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (json == null) {
+            Log.e(TAG, "네이버 지도 api 주소 -> 위도경도 null");
+            return resultLatLon;
+        }
+
+        Log.d("TEST2", "json => " + json);
+
+        Gson gson = new Gson();
+        NaverData data = new NaverData();
+        try {
+            data = gson.fromJson(json, NaverData.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (data.getAddresses() != null) {
+            resultLatLon.setLat(Double.parseDouble(data.getAddresses().get(0).getX()));
+            resultLatLon.setLon(Double.parseDouble(data.getAddresses().get(0).getY()));
+        }
+
+        return resultLatLon;
+    }
 
     }

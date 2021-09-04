@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.example.weatherkok.when.interfaces.DateSelectorListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class DialogDateSelector extends Dialog {
@@ -33,8 +35,10 @@ public class DialogDateSelector extends Dialog {
     int year;
     int month;
     int date;
+    int mMaxDateOfMonth;
     Context mContext;
     String PREFERENCE_KEY = "WeatherKok.SharedPreference";
+    Calendar calendar;
 
     public DialogDateSelector(@NonNull Context context) {
         super(context);
@@ -56,7 +60,7 @@ public class DialogDateSelector extends Dialog {
 
         setNpMonth();
 
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
 
         mNpYear.setDescendantFocusability(
                 NumberPicker.FOCUS_BLOCK_DESCENDANTS
@@ -118,22 +122,35 @@ public class DialogDateSelector extends Dialog {
         mNpMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Calendar calendar = Calendar.getInstance();
-
 
                 if (!(newVal==0)) {
+                    month = newVal;
                     calendar.set(Calendar.MONTH,newVal-1);
                     //실제 월 -1
-                    int temp = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                    mMaxDateOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+                    checkFeb29();
 
                     mNpDate.setWrapSelectorWheel(false);
                     mNpDate.setMinValue(1);
                     //월별 일자 가져와서 정하기
-                    mNpDate.setMaxValue(temp);
+                    mNpDate.setMaxValue(mMaxDateOfMonth);
                     mNpDate.setEnabled(true);
                 }
             }
         });
+
+    }
+
+    private void checkFeb29() {
+
+
+        if (month == 2 && year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+            mMaxDateOfMonth = 29; //윤년이 아닐 때
+        }else {
+            mMaxDateOfMonth = 28; //윤년
+        }
+
 
     }
 

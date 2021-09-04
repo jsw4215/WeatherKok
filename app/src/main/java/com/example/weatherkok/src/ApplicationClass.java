@@ -27,6 +27,8 @@ public class ApplicationClass extends Application {
     public static String BASE_URL2 = "http://apis.data.go.kr/1360000/MidFcstInfoService/";
     public static String BASE_URL3 = "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/";
     public static String BASE_URL4 = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/";
+    public static String BASE_URL5 = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/";
+
 
     public static SharedPreferences sSharedPreferences = null;
 
@@ -50,6 +52,9 @@ public class ApplicationClass extends Application {
         if (sSharedPreferences == null) {
             sSharedPreferences = getApplicationContext().getSharedPreferences(TAG, Context.MODE_PRIVATE);
         }
+
+        //NotificationHelper.createNotificationChannel(getApplicationContext());
+
     }
 
     public static Retrofit getRetrofit() {
@@ -147,6 +152,24 @@ public class ApplicationClass extends Application {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
+
+
+        return retrofit;
+    }
+
+    public static Retrofit getNaverRetrofit() {
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(5000, TimeUnit.MILLISECONDS)
+                .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                .addNetworkInterceptor(new XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+                .build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL5)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
 
         return retrofit;

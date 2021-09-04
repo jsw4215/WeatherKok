@@ -130,7 +130,7 @@ public class WeatherActivity extends BaseActivity{
                 Intent intent = new Intent(WeatherActivity.this, IntroActivity.class);
                 intent.putExtra("from","goToNow");
                 startActivity(intent);
-
+                overridePendingTransition(R.anim.left_in,R.anim.right_out);
             }
         });
 
@@ -260,7 +260,11 @@ public class WeatherActivity extends BaseActivity{
 
         tvBmWxDate.setText(schedule.getYear() + "/" + schedule.getMonth() + "/" + schedule.getDate() + " (" + scheduleData.getDay() + ")");
 
-        tvBmWxPlace.setText(schedule.getWhere());
+        String where = schedule.getWhere();
+
+        where=removeAdminArea(where);
+
+        tvBmWxPlace.setText(where);
 
         boolean checker = checkAMPM();
 
@@ -276,6 +280,26 @@ public class WeatherActivity extends BaseActivity{
         //matchingCurTimeGetTemp(currentHour, schedule);
         //첫날 적용 후 삭제
         mScheduleList.getScheduleArrayList().remove(0);
+    }
+
+    private String removeAdminArea(String location) {
+
+        String[] splited = location.split(" ");
+        String temp2="";
+        if(splited.length==2){
+            temp2 = splited[1];
+        } else if(splited.length==3) {
+            temp2 = splited[1] + " " + splited[2];
+        } else if(splited.length==4) {
+            temp2 = splited[1] + " " + splited[2] + " " + splited[3];
+        } else if(splited.length==5){
+            temp2 = splited[1] + " " + splited[2] + " " + splited[3] + " " + splited[4];
+        } else {
+            temp2 = splited[0] + splited[1];
+        }
+
+        return temp2;
+
     }
 
     private long howFarFromToday(String dateCompared) {

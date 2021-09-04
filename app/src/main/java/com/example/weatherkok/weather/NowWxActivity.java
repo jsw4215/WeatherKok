@@ -39,6 +39,7 @@ import com.example.weatherkok.alarm.PreferenceHelper;
 import com.example.weatherkok.datalist.data.ScheduleData;
 import com.example.weatherkok.intro.IntroActivity;
 import com.example.weatherkok.main.MainActivity;
+import com.example.weatherkok.main.dialog.WeatherIconDialog;
 import com.example.weatherkok.src.BaseActivity;
 import com.example.weatherkok.weather.utils.NowWxActivityAdapter;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
@@ -92,12 +93,13 @@ public class NowWxActivity extends BaseActivity {
     Switch switchActivateNotify;
     MenuItem mAlarm;
     LinearLayout mLlWxPage;
+    ImageView mIvNowInfo;
 
     //날씨 정보를 얻는 서비스를 시작하고, 받아와서 정리된 데이터를 가져와 뿌리는 역할만 하는 곳
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_weather);
+        setContentView(R.layout.activity_main_now_weather);
         mNowWxContext = getBaseContext();
 
         Log.i(TAG, "weather");
@@ -149,11 +151,18 @@ public class NowWxActivity extends BaseActivity {
                 Intent intent = new Intent(NowWxActivity.this, IntroActivity.class);
                 intent.putExtra("from","goToWeather");
                 startActivity(intent);
-
+                overridePendingTransition(R.anim.right_in,R.anim.left_out);
             }
         });
 
+        mIvNowInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                WeatherIconDialog weatherIconDialog = new WeatherIconDialog(getBaseContext());
+                weatherIconDialog.show();
+            }
+        });
 
     }
 
@@ -224,6 +233,7 @@ public class NowWxActivity extends BaseActivity {
 
         mRvBmWxList = (RecyclerView) findViewById(R.id.rv_bookmark_wx_list);
         tvBmNoList = findViewById(R.id.tv_bm_weather_no_list);
+        mIvNowInfo = findViewById(R.id.iv_now_info);
 
         if(mScheduleList==null||mScheduleList.getScheduleArrayList()==null||mScheduleList.getScheduleArrayList().size()==0) {
             tvBmNoList.setVisibility(View.VISIBLE);
@@ -263,15 +273,13 @@ public class NowWxActivity extends BaseActivity {
     private void initCenterView() {
         //스케쥴에서 가장 일찍 다가올 스케쥴을 여기에 덮는다.
 
-        rlBmWxCtr = findViewById(R.id.rl_bm_weather_center);
-        tvBmWxDate = findViewById(R.id.tv_bm_weather_dates);
-        tvBmWxPlace = findViewById(R.id.tv_bm_weather_location);
-        tvBmWxCondition = findViewById(R.id.tv_bm_weather_condition);
-        tvBmWxTemperature = findViewById(R.id.tv_bm_weather_temperature);
-        tvBmWxTempMaxMin = findViewById(R.id.tv_bm_weather_max_min);
-        tvGotoNow = findViewById(R.id.tv_now_weather_go);
-        tvGotoNow.setText("날씨콕 보러가기");
-        tvGoToFcstWeb = findViewById(R.id.tv_bm_weather_forecast);
+        rlBmWxCtr = findViewById(R.id.rl_now_weather_center);
+        tvBmWxPlace = findViewById(R.id.tv_now_weather_location);
+        tvBmWxCondition = findViewById(R.id.tv_now_weather_condition);
+        tvBmWxTemperature = findViewById(R.id.tv_now_weather_temperature);
+        tvBmWxTempMaxMin = findViewById(R.id.tv_now_weather_max_min);
+        tvGotoNow = findViewById(R.id.tv_bm_weather_go);
+        tvGoToFcstWeb = findViewById(R.id.tv_now_weather_forecast);
         mLlWxPage = findViewById(R.id.ll_weather_page);
     }
 
@@ -279,9 +287,9 @@ public class NowWxActivity extends BaseActivity {
 
         String today =getFutureDay("yyyyMMdd",0);
 
-        tvBmWxDate.setText(today + " (" + getDateDay(today) + ")");
+        //tvBmWxDate.setText(today + " (" + getDateDay(today) + ")");
 
-        tvBmWxPlace.setText(getGpsPosition());
+        //tvBmWxPlace.setText(getGpsPosition());
 
         Date dateToday = getToday();
 

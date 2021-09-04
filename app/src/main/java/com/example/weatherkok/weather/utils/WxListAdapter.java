@@ -21,6 +21,7 @@ import com.example.weatherkok.when.models.ScheduleList;
 import com.example.weatherkok.when.utils.RecyclerViewAdapter;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -122,7 +123,9 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         String[] splited = location.split(" ");
         String temp2="";
-        if(splited.length==3) {
+        if(splited.length==2){
+            temp2 = splited[1];
+        } else if(splited.length==3) {
             temp2 = splited[1] + " " + splited[2];
         } else if(splited.length==4) {
             temp2 = splited[1] + " " + splited[2] + " " + splited[3];
@@ -153,8 +156,13 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         int diffDays = (int) howFarFromToday(scheduleData.getScheduledDate());
 
-        findScheduleDateWxData(holder, scheduleData, checker, diffDays);
-
+        if(diffDays>10){
+            ((ViewHolder) holder).tvNoWx.setVisibility(View.VISIBLE);
+            ((ViewHolder) holder).ivAm.setVisibility(View.GONE);
+            ((ViewHolder) holder).ivPm.setVisibility(View.GONE);
+        }else{
+            findScheduleDateWxData(holder, scheduleData, checker, diffDays);
+        }
     }
 
     private void setDelDate(RecyclerView.ViewHolder holder, int position) {
@@ -180,8 +188,13 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         int diffDays = (int) howFarFromToday(scheduleData.getScheduledDate());
 
-        findScheduleDateWxDataDel(holder, scheduleData, checker, diffDays);
-
+        if(diffDays>10){
+            ((DelViewHolder) holder).tvNoWx.setVisibility(View.VISIBLE);
+            ((DelViewHolder) holder).ivAm.setVisibility(View.GONE);
+            ((DelViewHolder) holder).ivPm.setVisibility(View.GONE);
+        }else{
+            findScheduleDateWxData(holder, scheduleData, checker, diffDays);
+        }
     }
 
     private Date getToday(){
@@ -257,6 +270,7 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         //TextView tvTemp;
         ImageView ivPm;
         ImageView ivAm;
+        TextView tvNoWx;
 
         ViewHolder(View view) {
             super(view);
@@ -265,7 +279,8 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //tvTemp = view.findViewById(R.id.tv_item_nowtemper);
             ivAm = view.findViewById(R.id.iv_bm_weather_am_list);
             ivPm = view.findViewById(R.id.iv_bm_weather_pm_list);
-
+            tvNoWx = view.findViewById(R.id.tv_bm_no_wx);
+            tvNoWx.setVisibility(View.GONE);
         }
 
     }
@@ -277,6 +292,7 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ImageView ivPm;
         ImageView ivAm;
         RadioButton rbBmList;
+        TextView tvNoWx;
 
         DelViewHolder(View view) {
             super(view);
@@ -285,6 +301,8 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //tvTemp = view.findViewById(R.id.tv_item_nowtemper);
             ivAm = view.findViewById(R.id.iv_bm_weather_am_list);
             ivPm = view.findViewById(R.id.iv_bm_weather_pm_list);
+            tvNoWx = view.findViewById(R.id.tv_bm_no_wx);
+            tvNoWx.setVisibility(View.GONE);
             rbBmList = view.findViewById(R.id.rb_item_list);
             rbBmList.setVisibility(View.VISIBLE);
         }

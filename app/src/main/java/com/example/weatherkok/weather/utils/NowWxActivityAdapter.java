@@ -75,7 +75,9 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
 
         String[] splited = location.split(" ");
         String temp2 = "";
-        if (splited.length == 3) {
+        if(splited.length==2){
+            temp2 = splited[1];
+        } else if (splited.length == 3) {
             temp2 = splited[1] + " " + splited[2];
         } else if (splited.length == 4) {
             temp2 = splited[1] + " " + splited[2] + " " + splited[3];
@@ -93,7 +95,7 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
 
         String today = getFutureDay("yyyyMMdd", 0);
 
-        holder.tvDate.setText(today);
+        //holder.tvDate.setText(today);
     }
 
     public static String getFutureDay(String pattern, int gap) {

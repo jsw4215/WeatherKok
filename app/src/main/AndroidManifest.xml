@@ -21,20 +21,27 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WeatherKok">
+        android:theme="@style/Theme.WeatherKok"
+        >
 
-        <activity android:name=".datalist.DataListActivity"></activity>
-        <activity android:name=".weather.WeatherActivity">
+        <activity android:name=".datalist.DataListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".weather.WeatherActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".main.schedule.ScheduleActivity"></activity>
+        <activity android:name=".main.schedule.ScheduleActivity"
+            android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".when.YearActivity"></activity>
+        <activity android:name=".when.YearActivity"
+            android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".when.LoadingCalendarActivity"/>
+        <activity android:name=".when.LoadingCalendarActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".who.kakao.kotlin.WhoActivity">
+        <activity android:name=".who.kakao.kotlin.WhoActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -46,7 +53,8 @@
                     android:scheme="kakao{c205ec1957a41d51611ca6e373e3d815}" />
             </intent-filter>
         </activity>
-        <activity android:name=".who.WhoActivity">
+        <activity android:name=".who.WhoActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -58,22 +66,30 @@
                     android:scheme="kakao{c205ec1957a41d51611ca6e373e3d815}" />
             </intent-filter>
         </activity>
-        <activity android:name=".when.WhenActivity" />
-        <activity android:name=".weather.NowWxActivity"/>
-        <activity android:name=".weather.WxNowListActivity"/>
-        <activity android:name=".weather.WxListActivity">
+        <activity android:name=".when.WhenActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".weather.NowWxActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".weather.WxNowListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".weather.WxListActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".intro.IntroActivity">
+        <activity android:name=".intro.IntroActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".where.WhereActivity">
+        <activity android:name=".where.WhereActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".main.MainActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".when.CalendarActivity">
+        <activity android:name=".when.CalendarActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

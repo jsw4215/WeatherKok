@@ -219,6 +219,8 @@ public class WxNowListActivity extends BaseActivity {
         mIvBmTrash = findViewById(R.id.iv_bml_trashcan);
 
         mIvBmTrash.setVisibility(View.GONE);
+
+        mIvBackArrow = findViewById(R.id.iv_bml_back_arrow_top_bar);
     }
 
     private ScheduleList getValueWithKeyFromSp(String key) {

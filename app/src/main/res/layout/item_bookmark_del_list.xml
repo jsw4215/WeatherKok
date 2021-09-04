@@ -9,59 +9,82 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_margin="5dp"
         android:background="@color/transparent"
-        android:layout_margin="5dp">
+        android:orientation="horizontal">
 
 
         <RadioButton
             android:id="@+id/rb_item_list"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tv_bm_weather_dates_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:autoSizeTextType="uniform"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_margin="15dp"
             android:layout_gravity="center"
-            android:text="@string/dates_list1"
-            android:fontFamily="@font/imcresoojin">
-        </TextView>
+            android:layout_margin="10dp"
+            android:autoSizeTextType="uniform"
+            android:ellipsize="end"
+            android:fontFamily="@font/imcresoojin"
+            android:maxLines="1"
+            android:text="@string/dates_list1"></TextView>
 
         <TextView
             android:id="@+id/tv_bm_weather_location_list"
             android:layout_width="wrap_content"
-            android:layout_height="11dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="15dp"
             android:layout_weight="1"
-            android:maxLines="2"
-            android:ellipsize="end"
             android:autoSizeTextType="uniform"
+            android:ellipsize="end"
             android:fontFamily="@font/imcresoojin"
             android:gravity="center"
+            android:maxLines="2"
             android:text="@string/location_list1"
             android:textAlignment="center"></TextView>
-        <ImageView
-            android:id="@+id/iv_bm_weather_am_list"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/ic_sun"
-            ></ImageView>
-        <ImageView
-            android:id="@+id/iv_bm_weather_pm_list"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/ic_cloudy"
-            ></ImageView>
+            android:layout_marginRight="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_bm_weather_am_list"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_sun"></ImageView>
+
+                <ImageView
+                    android:id="@+id/iv_bm_weather_pm_list"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cloudy"></ImageView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_bm_list_no_wx"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:fontFamily="@font/imcresoojin"
+                android:gravity="center"
+                android:paddingEnd="10dp"
+                android:text="날씨없음"
+                android:textSize="20dp" />
+
+        </FrameLayout>
+
     </LinearLayout>
 
 </LinearLayout>

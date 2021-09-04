@@ -114,14 +114,16 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     Log.i(TAG, "몇번" + position);
         String scheduledDate = scheduleList.getScheduleArrayList().get(position).getScheduleData().getScheduledDate();
 
-        ((ViewHolder) holder).tvDate.setText(scheduledDate);
+        //((ViewHolder) holder).tvDate.setText(scheduledDate);
     }
 
     private String removeAdminArea(String location) {
 
         String[] splited = location.split(" ");
         String temp2="";
-        if(splited.length==3) {
+        if(splited.length==2){
+            temp2 = splited[1];
+        } else if(splited.length==3) {
             temp2 = splited[1] + " " + splited[2];
         } else if(splited.length==4) {
             temp2 = splited[1] + " " + splited[2] + " " + splited[3];
@@ -161,7 +163,7 @@ public class WxNowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Log.i(TAG, "몇번" + position);
         String scheduledDate = scheduleList.getScheduleArrayList().get(position).getScheduleData().getScheduledDate();
 
-        ((DelViewHolder) holder).tvDate.setText(scheduledDate);
+        //((DelViewHolder) holder).tvDate.setText(scheduledDate);
     }
 
     private void setDelLocation(RecyclerView.ViewHolder holder, int position) {

@@ -114,8 +114,23 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private void setDate(RecyclerView.ViewHolder holder, int position) {
     Log.i(TAG, "몇번" + position);
-        String scheduledDate = scheduleList.getScheduleArrayList().get(position).getScheduleData().getScheduledDate();
 
+
+        String scheduledDate = scheduleList.getScheduleArrayList().get(position).getScheduleData().getScheduledDate();
+        ScheduleData scheduleData = new ScheduleData();
+        scheduleData.getDateDay(scheduledDate);
+        String day = scheduleList.getScheduleArrayList().get(position).getScheduleData().getDay();
+        String month = scheduledDate.substring(4,6);
+        //09 -> 9로 바꾸기
+        int intMonth = Integer.parseInt(month);
+        month = String.valueOf(intMonth);
+
+        String date = scheduledDate.substring(6);
+
+        int intDate = Integer.parseInt(date);
+        date = String.valueOf(intDate);
+
+        scheduledDate = month + " / " + date + "(" + scheduleData.getDay() + ")";
         ((ViewHolder) holder).tvDate.setText(scheduledDate);
     }
 
@@ -168,7 +183,20 @@ public class WxListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private void setDelDate(RecyclerView.ViewHolder holder, int position) {
         Log.i(TAG, "몇번" + position);
         String scheduledDate = scheduleList.getScheduleArrayList().get(position).getScheduleData().getScheduledDate();
+        ScheduleData scheduleData = new ScheduleData();
+        scheduleData.getDateDay(scheduledDate);
+        String day = scheduleList.getScheduleArrayList().get(position).getScheduleData().getDay();
+        String month = scheduledDate.substring(4,6);
+        //09 -> 9로 바꾸기
+        int intMonth = Integer.parseInt(month);
+        month = String.valueOf(intMonth);
 
+        String date = scheduledDate.substring(6);
+
+        int intDate = Integer.parseInt(date);
+        date = String.valueOf(intDate);
+
+        scheduledDate = month + " / " + date + "(" + scheduleData.getDay() + ")";
         ((DelViewHolder) holder).tvDate.setText(scheduledDate);
     }
 

@@ -34,7 +34,7 @@ public class SingleWxActivity extends BaseActivity {
             schedule = scheduleList.getScheduleArrayList().get(position);
         }
 
-
+        
 
     }
 

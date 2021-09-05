@@ -272,6 +272,7 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
         TextView tvLoc;
         ImageView ivAm;
         ImageView ivPm;
+        TextView tvNoWx;
 
         ViewHolder(View view) {
             super(view);
@@ -279,6 +280,8 @@ public class NowWxActivityAdapter extends RecyclerView.Adapter<NowWxActivityAdap
             tvLoc = view.findViewById(R.id.tv_bm_weather_location_list);
             ivAm = view.findViewById(R.id.iv_bm_weather_am_list);
             ivPm = view.findViewById(R.id.iv_bm_weather_pm_list);
+            tvNoWx = view.findViewById(R.id.tv_bm_no_wx);
+            tvNoWx.setVisibility(View.GONE);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

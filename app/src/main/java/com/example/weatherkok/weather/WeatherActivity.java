@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -298,7 +299,52 @@ public class WeatherActivity extends BaseActivity{
             temp2 = splited[0] + splited[1];
         }
 
+        splited[0]=setAdminString(splited[0]);
+
+        temp2 = splited[0] + " " + temp2;
+
         return temp2;
+
+    }
+
+    private String setAdminString(String s) {
+
+    if(s.startsWith("서울")){
+        s="서울";
+    }else if(s.startsWith("경기")){
+        s="경기";
+
+    }else if(s.startsWith("강원")){
+        s="강원";
+    }else if(s.startsWith("충청북")){
+        s="충북";
+    }else if(s.startsWith("충청남")){
+        s="충남";
+    }else if(s.startsWith("경상북")){
+        s="경북";
+    }else if(s.startsWith("경상남")){
+        s="경남";
+    }else if(s.startsWith("전라남")){
+        s="전남";
+    }else if(s.startsWith("전라북")){
+        s="전북";
+    }else if(s.startsWith("세종")){
+        s="세종";
+    }else if(s.startsWith("대구")){
+        s="대구";
+    }else if(s.startsWith("대전")){
+        s="대전";
+    }else if(s.startsWith("부산")){
+        s="부산";
+    }else if(s.startsWith("울산")){
+        s="울산";
+    }else if(s.startsWith("제주")){
+        s="제주도";
+    }else if(s.startsWith("광주")){
+        s="광주";
+    }
+
+    return s;
 
     }
 
@@ -857,6 +903,12 @@ public class WeatherActivity extends BaseActivity{
             mLlWxPage.setBackground(shower);
         }
 
+        ViewGroup.LayoutParams params = mLlWxPage.getLayoutParams();
+
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        mLlWxPage.setLayoutParams(params);
 
     }
 

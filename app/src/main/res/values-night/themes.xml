@@ -15,6 +15,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:datePickerStyle">@style/CustomDatePicker</item>
+
     </style>
     <style name="CustomDatePicker">
         <item name="android:datePickerMode">spinner</item>

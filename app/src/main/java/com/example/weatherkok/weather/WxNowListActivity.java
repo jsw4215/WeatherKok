@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -81,6 +82,20 @@ public class WxNowListActivity extends BaseActivity {
 
         String today = getFutureDay("yyyyMMdd",0);
 
+        String day = getDateDay(today);
+
+        String month = today.substring(4,6);
+        //09 -> 9로 바꾸기
+        int intMonth = Integer.parseInt(month);
+        month = String.valueOf(intMonth);
+
+        String date = today.substring(6);
+
+        int intDate = Integer.parseInt(date);
+        date = String.valueOf(intDate);
+
+        today = month + " / " + date + "(" + day + ")";
+
         mTvDate.setText(today);
 
         mTvPlace.setText(scheduleList.getScheduleArrayList().get(0).getScheduleData().getPlace());
@@ -88,6 +103,50 @@ public class WxNowListActivity extends BaseActivity {
         String hh = makingStrHour();
         findScheduleDateWxData(scheduleList.getScheduleArrayList().get(0).getScheduleData(),true,0, hh);
 
+    }
+
+    public String getDateDay(String date) {
+
+        String day = "";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date nDate = null;
+        try {
+            nDate = dateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(nDate);
+
+        int dayNum = cal.get(Calendar.DAY_OF_WEEK);
+
+        switch (dayNum) {
+            case 1:
+                day = "일";
+                break;
+            case 2:
+                day = "월";
+                break;
+            case 3:
+                day = "화";
+                break;
+            case 4:
+                day = "수";
+                break;
+            case 5:
+                day = "목";
+                break;
+            case 6:
+                day = "금";
+                break;
+            case 7:
+                day = "토";
+                break;
+
+        }
+        return day;
     }
 
     public static String getFutureDay(String pattern, int gap) {

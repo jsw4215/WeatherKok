@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -441,6 +442,12 @@ public class NowWxActivity extends BaseActivity {
             mLlWxPage.setBackground(shower);
         }
 
+        ViewGroup.LayoutParams params = mLlWxPage.getLayoutParams();
+
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        mLlWxPage.setLayoutParams(params);
 
     }
 

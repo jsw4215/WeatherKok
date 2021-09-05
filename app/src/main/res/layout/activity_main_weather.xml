@@ -8,19 +8,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/ll_weather_page"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-<LinearLayout
-    android:id="@+id/ll_weather_page"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".weather.WeatherActivity"
-    android:background="@drawable/bg_rain"
-    android:orientation="vertical">
-
-
+        android:layout_height="match_parent"
+        tools:context=".weather.WeatherActivity"
+        android:background="@drawable/bg_rain"
+        android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_weather_main"
@@ -29,6 +23,15 @@
         android:layout_marginTop="5dp">
 
     </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -168,8 +171,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bookmark_wx_list"
         android:layout_width="match_parent"
-
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -222,9 +224,10 @@
 <!--            android:fontFamily="@font/imcresoojin">-->
 <!--        </TextView>-->
 <!--    </LinearLayout>-->
-</LinearLayout>
-
+            </LinearLayout>
     </ScrollView>
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"

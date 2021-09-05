@@ -38,6 +38,7 @@ import com.example.weatherkok.weather.utils.WeatherActivityAdapter;
 import com.example.weatherkok.weather.utils.WxKokDataPresenter;
 import com.example.weatherkok.when.models.Schedule;
 import com.example.weatherkok.when.models.ScheduleList;
+import com.example.weatherkok.who.kakao.kotlin.WhoActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -203,6 +204,33 @@ public class WeatherActivity extends BaseActivity{
 
                     }
                 });
+
+            navigationView.getMenu().findItem(R.id.menu_share).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    Intent share = new Intent(getBaseContext(), WhoActivity.class);
+                    finish();
+                    share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(share);
+
+                    return false;
+                }
+            });
+
+            navigationView.getMenu().findItem(R.id.menu_email).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.setType("plain/text");
+                    String[] address = {"weatherkok@gmail.com"};
+                    email.putExtra(Intent.EXTRA_EMAIL, address);
+                    email.putExtra(Intent.EXTRA_SUBJECT, "(안드로이드) 날씨콕 - 문의하기");
+                    email.putExtra(Intent.EXTRA_TEXT,"하고 싶은말 : ");
+                    startActivity(email);
+
+                    return true;
+                }
+            });
     }
 
     private void decorBottom() {

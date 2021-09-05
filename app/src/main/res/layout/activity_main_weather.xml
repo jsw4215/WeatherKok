@@ -96,9 +96,9 @@
             android:layout_below="@+id/tv_bm_weather_location"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:fontFamily="@font/imcresoojin"
+            android:fontFamily="@font/cafe24ssurroundair"
             android:text="@string/weather"
-            android:textSize="35dp"></TextView>
+            android:textSize="25dp"></TextView>
 
         <TextView
             android:id="@+id/tv_bm_weather_temperature"
@@ -124,7 +124,6 @@
             android:layout_below="@+id/tv_bm_weather_temperature"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -179,7 +178,8 @@
         android:textSize="20dp"
         android:text="지역이 없습니다."
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:fontFamily="@font/cafe24ohsquareair"/>
 
 </FrameLayout>
 

@@ -12,22 +12,25 @@
         android:layout_alignParentTop="true"
         android:id="@+id/rl_bml_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:layout_alignParentStart="true"
             android:src="@drawable/back_arrow"
             android:id="@+id/iv_bml_back_arrow_top_bar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"/>
 
         <TextView
-            android:gravity="center"
             android:id="@+id/tv_bml_title_top_bar"
-            android:textSize="30dp"
-            android:text="현재 날씨"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24ohsquare"
+            android:gravity="center"
+            android:text="현재 날씨"
+            android:textSize="25dp" />
 
     </RelativeLayout>
 
@@ -75,16 +78,16 @@
 
             <ImageView
                 android:id="@+id/iv_bm_weather_am_now"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_sun"
                 ></ImageView>
             <ImageView
                 android:id="@+id/iv_bm_weather_pm_now"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_cloudy"
@@ -93,7 +96,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bmlist"
-        android:layout_below="@+id/ll_gps_weather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
@@ -148,12 +150,16 @@
             android:text="지역 추가하기" />
 
     </LinearLayout>
+
         <TextView
             android:id="@+id/tv_bml_ads"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/bg_ad_line"
             android:gravity="center"
             android:padding="8dp"

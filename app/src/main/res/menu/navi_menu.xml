@@ -26,5 +26,11 @@
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:title="@string/graph"
             />
+        <item
+            android:id="@+id/menu_email"
+            android:icon="@drawable/ic_mail_24"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/contact"
+            />
     </group>
 </menu>

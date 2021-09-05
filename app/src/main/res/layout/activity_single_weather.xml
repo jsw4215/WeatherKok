@@ -69,21 +69,9 @@
 
 
                     <TextView
-                        android:id="@+id/tv_now_weather_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:fontFamily="@font/cafe24ssurroundair"
-                        android:text="@string/now_place"
-                        android:textSize="20dp"></TextView>
-
-                    <TextView
                         android:id="@+id/tv_now_weather_location"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_now_weather_place"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center"
                         android:layout_marginStart="5dp"
@@ -181,12 +169,12 @@
                         android:layout_weight="2" />
 
                     <TextView
-                        android:id="@+id/tv_weekly_fcst"
+                        android:id="@+id/tv_AmPm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/cafe24ohsquareair"
-                        android:text="@string/weekly_fcst"
+                        android:text="@string/AmPm"
                         android:textSize="15dp" />
 
                     <View
@@ -201,7 +189,7 @@
                         android:layout_gravity="right"
                         android:layout_marginRight="3dp"
                         android:fontFamily="@font/cafe24ohsquareair"
-                        android:text="@string/degrees"
+                        android:text="@string/min_max"
                         android:textSize="15dp" />
 
                     <ImageView

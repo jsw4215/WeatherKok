@@ -181,12 +181,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/cafe24ohsquareair"
-<<<<<<< HEAD
                         android:layout_marginStart="40dp"
                         android:text="@string/AmPm"
-=======
-                        android:text="@string/weekly_fcst"
->>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
                         android:textSize="15dp" />
 
                     <View
@@ -198,28 +194,16 @@
                         android:id="@+id/tv_degrees"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-<<<<<<< HEAD
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="15dp"
                         android:fontFamily="@font/cafe24ohsquareair"
                         android:text="@string/min_max"
-=======
-                        android:layout_gravity="right"
-                        android:layout_marginRight="3dp"
-                        android:fontFamily="@font/cafe24ohsquareair"
-                        android:text="@string/degrees"
->>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
                         android:textSize="15dp" />
 
                     <ImageView
                         android:id="@+id/iv_now_info"
-<<<<<<< HEAD
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-=======
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
->>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="6dp"
                         android:src="@drawable/ic_info_24" />

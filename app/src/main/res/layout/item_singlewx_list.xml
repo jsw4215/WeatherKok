@@ -25,7 +25,6 @@
             android:maxLines="1"
             android:text="@string/dates_list1"></TextView>
 
-<<<<<<< HEAD
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,57 +52,6 @@
                 android:src="@drawable/ic_cloudy"></ImageView>
         </LinearLayout>
 
-=======
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_now_weather_am_list"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="50dp"
-                    android:src="@drawable/ic_rain"></ImageView>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_now_weather_pm_list"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="50dp"
-                    android:src="@drawable/ic_cloudy"></ImageView>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_now_no_wx"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:fontFamily="@font/imcresoojin"
-                android:gravity="center"
-                android:paddingEnd="10dp"
-                android:text="날씨없음"
-                android:textSize="20dp" />
-
-        </FrameLayout>
->>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
 
         <TextView
             android:id="@+id/tv_now_weather_degrees"
@@ -116,10 +64,7 @@
             android:fontFamily="@font/imcresoojin"
             android:gravity="center"
             android:maxLines="2"
-<<<<<<< HEAD
             android:paddingEnd="20dp"
-=======
->>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
             android:text="@string/degrees"
             android:textAlignment="center"></TextView>
 

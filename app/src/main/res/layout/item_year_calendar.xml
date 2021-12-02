@@ -9,6 +9,7 @@
 
     <TextView
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="8dp"
         android:layout_margin="1dp"
         android:layout_weight="3"

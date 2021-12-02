@@ -17,7 +17,7 @@
             android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"
             android:text="@string/weather_icon"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:fontFamily="@font/imcresoojin"/>
 
         <View
@@ -27,9 +27,9 @@
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
             android:layout_gravity="end|center_vertical"
             android:src="@drawable/ic_close_black_24dp" />
     </LinearLayout>
@@ -46,46 +46,46 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_sun"/>
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/weather"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_cloudy"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/cloudy"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_gray"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/gray"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
         </LinearLayout>
 
     <LinearLayout
@@ -94,47 +94,47 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_rain"/>
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/rain"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_shower"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/shower"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:autoSizeTextType="uniform" />
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_rain_snow"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/rain_snow"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -143,18 +143,18 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_snow"/>
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/snow"
             android:gravity="center"
             android:fontFamily="@font/cafe24ohsquareair"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
     </LinearLayout>
 
     </LinearLayout>

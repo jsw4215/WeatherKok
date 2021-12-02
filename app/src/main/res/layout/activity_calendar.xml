@@ -157,33 +157,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/tv_today"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:text="오늘"
-            android:textSize="15dp"
-            android:background="@drawable/bg_btn_yellow"
-            android:fontFamily="@font/cafe24ohsquare"/>
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/tv_cal_solar"-->
-        <!--        android:layout_margin="10dp"-->
-        <!--        android:padding="10dp"-->
-        <!--        android:text="양력"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"/>-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_cal_luna"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_margin="10dp"-->
-        <!--            android:padding="10dp"-->
-        <!--            android:text="일정" />-->
-
-
     </LinearLayout>
 
     <TextView

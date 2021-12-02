@@ -25,6 +25,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <ScrollView
+            android:fillViewport="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -81,19 +82,22 @@
 
                     <TextView
                         android:id="@+id/tv_now_weather_location"
-                        android:layout_width="200dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_now_weather_place"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:autoSizeTextType="uniform"
                         android:fontFamily="@font/imcresoojin"
                         android:gravity="center"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:text="@string/location"
-                        android:textSize="30dp"></TextView>
+                        android:textSize="20dp"></TextView>
 
                     <TextView
                         android:id="@+id/tv_now_weather_condition"
@@ -102,9 +106,9 @@
                         android:layout_below="@+id/tv_now_weather_location"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/imcresoojin"
+                        android:fontFamily="@font/cafe24ssurroundair"
                         android:text="@string/weather"
-                        android:textSize="35dp"></TextView>
+                        android:textSize="25dp"></TextView>
 
                     <TextView
                         android:id="@+id/tv_now_weather_temperature"
@@ -154,33 +158,32 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_now_weather_ads"
+                <FrameLayout
+                    android:id="@+id/admob_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/now_weather"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/bg_ad_line"
-                    android:gravity="center"
-                    android:padding="6dp"
-                    android:text="@string/ad_kor"
-                    android:textSize="15dp"></TextView>
+                    android:layout_height="wrap_content">
+
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="2" />
+
                     <TextView
-                        android:id="@+id/tv_weekly_fcst"
+                        android:id="@+id/tv_AmPm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="150dp"
-                        android:fontFamily="@font/imcresoojin"
-                        android:text="@string/weekly_fcst"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/cafe24ohsquareair"
+                        android:layout_marginStart="40dp"
+                        android:text="@string/AmPm"
+                        android:textSize="15dp" />
 
                     <View
                         android:layout_width="0dp"
@@ -192,15 +195,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="3dp"
-                        android:fontFamily="@font/imcresoojin"
-                        android:text="@string/degrees"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/cafe24ohsquareair"
+                        android:text="@string/min_max"
                         android:textSize="15dp" />
 
                     <ImageView
                         android:id="@+id/iv_now_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="6dp"
                         android:src="@drawable/ic_info_24" />
 
@@ -208,12 +212,13 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:nestedScrollingEnabled="false"
                         android:id="@+id/rv_bookmark_wx_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="550dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
@@ -223,7 +228,8 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="지역이 없습니다."
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:fontFamily="@font/cafe24ohsquareair"/>
 
                 </FrameLayout>
 

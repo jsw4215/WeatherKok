@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.weatherkok">
+    package="com.devpilot.weatherkok">
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 인터넷 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 인터넷 연결 확인 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
 
     <application
-        android:name=".who.kakao.kotlin.KakaoApplication"
+        android:name="com.devpilot.weatherkok.who.kakao.kotlin.KakaoApplication"
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,24 +22,30 @@
         android:theme="@style/Theme.WeatherKok"
         >
 
-        <activity android:name=".datalist.DataListActivity"
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ad_mob_id"/>
+
+        <activity android:name="com.devpilot.weatherkok.datalist.DataListActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".weather.WeatherActivity"
+        <activity android:name="com.devpilot.weatherkok.weather.WeatherActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".main.schedule.ScheduleActivity"
+        <activity android:name="com.devpilot.weatherkok.main.schedule.ScheduleActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".when.YearActivity"
+        <activity android:name="com.devpilot.weatherkok.when.YearActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".when.LoadingCalendarActivity"
+        <activity android:name="com.devpilot.weatherkok.when.LoadingCalendarActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".who.kakao.kotlin.WhoActivity"
-            android:screenOrientation="portrait">
+        <activity android:name="com.devpilot.weatherkok.who.kakao.kotlin.WhoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -50,11 +54,13 @@
                 <!-- "kakao{YOUR_NATIVE_APP_KEY}://kakaolink" 형식의 앱 실행 스킴을 설정하는데 사용 -->
                 <data
                     android:host="kakaolink"
-                    android:scheme="kakao{c205ec1957a41d51611ca6e373e3d815}" />
+                    android:scheme="kakao{8840e96dccbe4d47b743fac5571c312c}" />
             </intent-filter>
         </activity>
-        <activity android:name=".who.WhoActivity"
-            android:screenOrientation="portrait">
+        <activity android:name="com.devpilot.weatherkok.who.WhoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -63,34 +69,73 @@
                 <!-- "kakao{YOUR_NATIVE_APP_KEY}://kakaolink" 형식의 앱 실행 스킴을 설정하는데 사용 -->
                 <data
                     android:host="kakaolink"
-                    android:scheme="kakao{c205ec1957a41d51611ca6e373e3d815}" />
+                    android:scheme="kakao{8840e96dccbe4d47b743fac5571c312c}" />
             </intent-filter>
         </activity>
-        <activity android:name=".when.WhenActivity"
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider515975726169096"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.VIEW" />
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+                <category
+                    android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.devpilot.weatherkok.when.WhenActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".weather.NowWxActivity"
+        <activity android:name="com.devpilot.weatherkok.weather.NowWxActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".weather.WxNowListActivity"
+        <activity android:name="com.devpilot.weatherkok.weather.WxNowListActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".weather.WxListActivity"
+        <activity android:name="com.devpilot.weatherkok.weather.WxListActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".intro.IntroActivity"
+        <activity android:name="com.devpilot.weatherkok.weather.SingleWxActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.devpilot.weatherkok.intro.IntroActivity"
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".where.WhereActivity"
+        <activity android:name="com.devpilot.weatherkok.where.WhereActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".main.MainActivity"
+        <activity android:name="com.devpilot.weatherkok.main.MainActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".when.CalendarActivity"
+        <activity android:name="com.devpilot.weatherkok.when.CalendarActivity"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity android:name=".weather.webview.WebViewActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
     </application>
 
 

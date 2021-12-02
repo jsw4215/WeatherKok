@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/transparent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_bm_weather_dates_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:autoSizeTextType="uniform"
+            android:ellipsize="end"
+            android:fontFamily="@font/imcresoojin"
+            android:maxLines="1"
+            android:text="@string/dates_list1"></TextView>
+
+        <TextView
+            android:id="@+id/tv_bm_weather_location_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:autoSizeTextType="uniform"
+            android:ellipsize="end"
+            android:fontFamily="@font/imcresoojin"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/location_list1"
+            android:textAlignment="center"></TextView>
+
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp">
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginEnd="40dp"
+                    android:layout_weight="1"
+                    android:id="@+id/iv_bm_weather_am_list"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_rain"></ImageView>
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/iv_bm_weather_pm_list"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cloudy"></ImageView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_bm_no_wx"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/imcresoojin"
+                android:gravity="center"
+                android:text="날씨없음"
+                android:textSize="20dp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

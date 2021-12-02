@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:id="@+id/ll_bottom"
-            android:layout_above="@+id/tv_bml_ads"
+            android:layout_above="@+id/admob_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -94,17 +94,12 @@
                 android:textSize="20dp" />
 
         </LinearLayout>
-        <TextView
-            android:id="@+id/tv_bml_ads"
+        <FrameLayout
             android:layout_alignParentBottom="true"
+            android:id="@+id/admob_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@drawable/bg_ad_line"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/ad_kor"
-            android:textSize="20dp"></TextView>
+            android:layout_height="wrap_content">
+        </FrameLayout>
     </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -1,0 +1,5 @@
+pass : weatherkok123
+
+alias : weatherKok_Key
+password : weatherkok123
+

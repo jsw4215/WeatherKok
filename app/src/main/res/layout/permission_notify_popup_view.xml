@@ -16,23 +16,9 @@
         android:textDirection="locale"
         android:textSize="19dp" />
 
-    <TextView
-        android:id="@+id/tv_ok"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:background="#A2D1FD"
-        android:gravity="center"
-        android:text="@string/permission_ok"
-        android:textColor="#0C1D43"
-        android:textDirection="locale"
-        android:textSize="19dp"
-        android:fontFamily="@font/cafe24ohsquare" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_ok"
         android:layout_below="@+id/tv_title"
         android:fillViewport="true">
 
@@ -120,69 +106,6 @@
 
             </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:background="@drawable/layout_circle_white_10radius_solid"
-                            android:elevation="10dp"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="20dp"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_sms_24" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:text="@string/permission_phone_state_title"
-                                    android:textColor="@color/black_232323"
-                                    android:textDirection="locale"
-                                    android:textSize="17dp"
-                                    android:fontFamily="@font/cafe24ohsquareair" />
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_centerVertical="true"
-                                android:background="@color/black_ee" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginEnd="20dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginBottom="20dp"
-                                android:text="@string/permission_phone_state"
-                                android:textColor="@color/black_75"
-                                android:textDirection="locale"
-                                android:textSize="14dp"
-                                android:fontFamily="@font/cafe24ohsquareair"/>
-
-                        </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,69 +169,19 @@
 
             </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="50dp"
-                            android:background="@drawable/layout_circle_white_10radius_solid"
-                            android:elevation="10dp"
-                            android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="20dp"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_camera_24" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:text="@string/permission_camera_title"
-                                    android:textColor="@color/black_232323"
-                                    android:textDirection="locale"
-                                    android:textSize="17dp"
-                                    android:fontFamily="@font/cafe24ohsquareair"/>
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_centerVertical="true"
-                                android:background="@color/black_ee" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginEnd="20dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginBottom="20dp"
-                                android:text="@string/permission_camera"
-                                android:textColor="@color/black_75"
-                                android:textDirection="locale"
-                                android:textSize="14dp"
-                                android:fontFamily="@font/cafe24ohsquareair"/>
-
-                        </LinearLayout>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/tv_ok"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#A2D1FD"
+                android:gravity="center"
+                android:text="@string/permission_ok"
+                android:textColor="#0C1D43"
+                android:textDirection="locale"
+                android:textSize="19dp"
+                android:fontFamily="@font/cafe24ohsquare" />
 
         </LinearLayout>
 

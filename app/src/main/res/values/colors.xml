@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FFFF0000</color>
+    <color name="dim_transparent">#1A000000</color>
 
 
     <color name="ListitemBackground">#59C1E8</color>

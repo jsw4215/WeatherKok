@@ -37,11 +37,147 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+<<<<<<< HEAD
                     <LinearLayout
                         android:id="@+id/center_no_schedule_container"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+=======
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:id="@+id/rl_bm_weather_center">
+
+        <ImageView
+            android:id="@+id/iv_arrow_left"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/transparent"
+            android:src="@drawable/arrow_left" />
+
+        <TextView
+            android:id="@+id/tv_now_weather_go"
+            android:layout_width="30dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/iv_arrow_left"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_vertical_go"
+            android:fontFamily="@font/cafe24ohsquareair"
+            android:gravity="center"
+            android:text="@string/now_weather"
+            android:textSize="18dp"
+            android:textStyle="bold"></TextView>
+
+
+        <TextView
+            android:id="@+id/tv_bm_weather_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/cafe24ssurroundair"
+            android:text="@string/dates"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_bm_weather_location"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tv_bm_weather_dates"
+            android:layout_gravity="center"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/imcresoojin"
+            android:gravity="center"
+            android:text="@string/location"
+            android:textSize="30dp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_bm_weather_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bm_weather_location"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:fontFamily="@font/cafe24ssurroundair"
+            android:text="@string/weather"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_bm_weather_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bm_weather_condition"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/imcresoojin"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/temperature"
+            android:textSize="80dp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_bm_weather_max_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bm_weather_temperature"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/cafe24ssurroundair"
+            android:text="@string/max_min_temper"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_bm_weather_forecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bm_weather_max_min"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_forecast_line"
+            android:fontFamily="@font/cafe24ohsquareair"
+            android:padding="5dp"
+            android:text="@string/forecast"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"></TextView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_bm_weather_ads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/now_weather"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_ad_line"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="@string/ad_kor"
+        android:textSize="15dp"></TextView>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
 
                         <LinearLayout
                             android:id="@+id/ll_go_to_now"
@@ -73,6 +209,7 @@
                             android:textSize="18dp"
                             android:textStyle="bold"></TextView>
 
+<<<<<<< HEAD
                         </LinearLayout>
 
                     <LinearLayout
@@ -261,6 +398,61 @@
         </ScrollView>
 
     </LinearLayout>
+=======
+    <TextView
+        android:id="@+id/tv_bm_weather_no_list"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="지역이 없습니다."
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/cafe24ohsquareair"/>
+
+</FrameLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@drawable/bg_bm_weather_list"-->
+<!--        android:layout_margin="5dp">-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="20dp"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="@string/dates_list2"-->
+<!--            android:fontFamily="@font/imcresoojin">-->
+<!--        </TextView>-->
+<!--        <TextView-->
+<!--            android:layout_weight="2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="20dp"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:gravity="center"-->
+<!--            android:textAlignment="center"-->
+<!--            android:text="@string/location_list2"-->
+<!--            android:fontFamily="@font/imcresoojin">-->
+<!--        </TextView>-->
+<!--        <TextView-->
+<!--            android:layout_weight="2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="20dp"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:gravity="center"-->
+<!--            android:text="@string/weather_list1"-->
+<!--            android:fontFamily="@font/imcresoojin">-->
+<!--        </TextView>-->
+<!--    </LinearLayout>-->
+</LinearLayout>
+
+    </ScrollView>
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"

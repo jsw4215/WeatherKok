@@ -44,7 +44,10 @@
     <string name="ad">AD</string>
     <string name="graph">인기어플</string>
     <string name="contact">문의하기</string>
+<<<<<<< HEAD
     <string name="terms">개인정보처리방침</string>
+=======
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
 
     <string name="dates">8월 20일 (금)</string>
     <string name="location">서귀포시 서흥동</string>
@@ -66,8 +69,13 @@
     <string name="max_temper">36\u00B0</string>
     <string name="weekly_fcst">주&#160;간&#160;예&#160;보</string>
     <string name="degrees">기온단위(\u00B0C)</string>
+<<<<<<< HEAD
     <string name="AmPm">오전&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;오후</string>
     <string name="min_max">최고/최저</string>
+=======
+    <string name="AmPm">오전&#160;&#160;&#160;&#160;&#160;&#160;오후</string>
+    <string name="min_max">최저/최고</string>
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
     <string name="weather_icon">날씨 아이콘</string>
 
     <string name="weather">맑음</string>
@@ -97,6 +105,7 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="share_not_install">설치되지 않았습니다.</string>
+<<<<<<< HEAD
     <string name="facebook_app_id">554714239145809</string>
     <string name="facebook_client_token">3be229a7293e3277df40e20f784bfe3f</string>
     <string name="fb_login_protocol_scheme">3be229a7293e3277df40e20f784bfe3f</string>
@@ -126,4 +135,10 @@
 
     <string name="naver_client_id">wvxfkhqxo1</string>
     <string name="naver_client_secret">DXSRXGF8wpxx8mHLVb79OI0EsmD7n84DBZQYAh9x</string>
+=======
+    <string name="facebook_app_id">515975726169096</string>
+    <string name="fb_login_protocol_scheme">fb515975726169096</string>
+
+
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
 </resources>

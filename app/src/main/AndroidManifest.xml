@@ -100,7 +100,38 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity android:name="com.devpilot.weatherkok.when.WhenActivity"
+=======
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider515975726169096"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.VIEW" />
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+                <category
+                    android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".when.WhenActivity"
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
             android:screenOrientation="portrait"/>
         <activity android:name="com.devpilot.weatherkok.weather.NowWxActivity"
             android:screenOrientation="portrait"/>

@@ -1,4 +1,4 @@
-package com.devpilot.weatherkok.who;
+package com.example.weatherkok.who;
 
 public class FacebookActivity {
 }

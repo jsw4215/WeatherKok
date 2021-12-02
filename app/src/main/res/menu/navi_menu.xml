@@ -26,6 +26,7 @@
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:title="@string/graph"
             />
+<<<<<<< HEAD
 <!--        <item-->
 <!--            android:id="@+id/menu_email"-->
 <!--            android:icon="@drawable/ic_mail_24"-->
@@ -38,6 +39,13 @@
             android:icon="@drawable/ic_info_24"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:title="@string/terms"
+=======
+        <item
+            android:id="@+id/menu_email"
+            android:icon="@drawable/ic_mail_24"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/contact"
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
             />
     </group>
 </menu>

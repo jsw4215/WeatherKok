@@ -29,7 +29,11 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/cafe24ohsquare"
             android:gravity="center"
+<<<<<<< HEAD
             android:text="등록된 현재 날씨"
+=======
+            android:text="현재 날씨"
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
             android:textSize="25dp" />
 
     </RelativeLayout>
@@ -97,7 +101,10 @@
         </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+<<<<<<< HEAD
         android:layout_below="@+id/ll_gps_weather"
+=======
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
         android:id="@+id/rv_bmlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,12 +161,29 @@
 
     </LinearLayout>
 
+<<<<<<< HEAD
         <FrameLayout
             android:layout_alignParentBottom="true"
             android:id="@+id/admob_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </FrameLayout>
+=======
+        <TextView
+            android:id="@+id/tv_bml_ads"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_ad_line"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/ad_kor"
+            android:textSize="20dp"></TextView>
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
     </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

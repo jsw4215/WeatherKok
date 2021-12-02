@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -30,6 +31,54 @@
         android:maxLines="1"
         android:text="@string/input_error_contents"
         android:textSize="20dp" />
+=======
+    android:orientation="vertical"
+    android:layout_width="360dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="355dp"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:background="@drawable/bg_calendar"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="10dp">-->
+
+        <ImageView
+            android:id="@+id/iv_back_arrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/ic_close_black_24dp"
+            android:layout_gravity="end" />
+        <TextView
+            android:layout_margin="20dp"
+            android:textSize="20dp"
+            android:text="@string/input_error_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24ohsquareair"/>
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:text="@string/input_error_contents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24ohsquareair"/>
+
+        <ImageView
+            android:id="@+id/iv_sorry_cat"
+            android:src="@drawable/sorry_cat"
+            android:layout_gravity="end"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"/>
+
+<!--    </LinearLayout>-->
+>>>>>>> bf5f93840116430a1a1916dde84260ef469ebeed
 
     <ImageView
         android:id="@+id/iv_sorry_cat"

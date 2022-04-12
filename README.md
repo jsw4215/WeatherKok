@@ -4,13 +4,13 @@
 <br>
 <br>
 
-## 📌 프로젝트 소개
+<h3 align="center">📌 프로젝트 소개</h3>
 
 - "약속있는 그 날, 그 시간에 날씨가 궁금해?" <br>
 - 스케쥴관리와 함께 그날의 날씨예보를 확인해보자!
 <br><br> 
 
-<h3><b>🎞 플레이스토어 URL 🎞</b></h3>
+<h3 align="center"><b>🎞 플레이스토어 URL 🎞</b></h3>
 
 [플레이스토어 바로가기](https://play.google.com/store/apps/details?id=com.devpilot.weatherkok)
 

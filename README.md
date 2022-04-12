@@ -34,6 +34,7 @@
 <h3 align="center"><b>🏷 API Table 🏷</b></h3>
 
 [기상청 단기예보](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
+<br>
 [기상청 중기예보](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
 
 <br><br>

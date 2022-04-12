@@ -32,10 +32,10 @@
 <br><br>
 
 <h3 align="center"><b>🏷 API Table 🏷</b></h3>
-<p align="center">
+<b align="center">
 [기상청 단기예보](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
 [기상청 중기예보](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
-
+</b>
 <br><br>
 
 ---
